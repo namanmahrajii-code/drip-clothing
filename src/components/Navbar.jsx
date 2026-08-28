@@ -75,27 +75,27 @@ const Navbar = () => {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
           {/* Mobile Menu Trigger & Logo Area */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 sm:gap-4 min-w-0">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden p-1.5 text-black hover:text-crimson transition-colors focus:outline-none"
+              className="lg:hidden p-1 text-black hover:text-crimson transition-colors focus:outline-none shrink-0"
               aria-label="Toggle menu"
             >
               {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
             </button>
 
             {/* Logo */}
-            <Link to="/" className="flex items-center gap-2.5 group">
+            <Link to="/" className="flex items-center gap-2 group min-w-0">
               <img
                 src="/images/logo.png"
                 alt="Drip Clothing Logo"
-                className="h-9 sm:h-11 w-auto object-contain transition-transform group-hover:scale-105"
+                className="h-8 sm:h-10 w-auto object-contain transition-transform group-hover:scale-105 shrink-0"
               />
-              <div className="flex flex-col">
-                <span className="font-display font-black text-lg sm:text-xl tracking-[0.18em] text-black group-hover:text-neutral-700 transition-colors uppercase leading-none">
+              <div className="flex flex-col min-w-0">
+                <span className="font-display font-black text-sm sm:text-lg tracking-[0.14em] sm:tracking-[0.18em] text-black group-hover:text-neutral-700 transition-colors uppercase leading-none truncate">
                   DRIP CLOTHING
                 </span>
-                <span className="text-[8px] font-sans uppercase tracking-[0.45em] text-neutral-500 font-bold mt-0.5">
+                <span className="text-[7px] sm:text-[8px] font-sans uppercase tracking-[0.3em] sm:tracking-[0.45em] text-neutral-500 font-bold mt-0.5 truncate">
                   HALDWANI • STREETWEAR
                 </span>
               </div>
@@ -125,14 +125,14 @@ const Navbar = () => {
             })}
           </div>
 
-          {/* Action Icons: Instagram, Search, Wishlist, Bag */}
-          <div className="flex items-center gap-3 sm:gap-4">
-            {/* Instagram Link */}
+          {/* Action Icons: Instagram (Desktop), Search, Wishlist, Bag */}
+          <div className="flex items-center gap-1 sm:gap-3 shrink-0">
+            {/* Instagram Link (Desktop only; available in mobile drawer) */}
             <a
               href="https://www.instagram.com/drip__clothing__/"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-1.5 text-neutral-700 hover:text-pink-600 transition-colors flex items-center gap-1 text-xs font-bold"
+              className="hidden md:flex p-1.5 text-neutral-700 hover:text-pink-600 transition-colors items-center gap-1 text-xs font-bold"
               aria-label="Instagram @drip__clothing__"
               title="Instagram @drip__clothing__"
             >
