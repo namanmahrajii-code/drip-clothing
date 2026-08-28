@@ -212,10 +212,10 @@ const Home = () => {
 
             <div
               ref={wafflesScroll}
-              className="flex gap-4 sm:gap-6 overflow-x-auto hide-scrollbar pb-4"
+              className="flex gap-3 sm:gap-6 overflow-x-auto hide-scrollbar pb-3 snap-x"
             >
               {waffles.map((product) => (
-                <div key={product.id} className="min-w-[220px] sm:min-w-[280px] shrink-0">
+                <div key={product.id} className="w-[165px] sm:w-[230px] md:w-[270px] shrink-0 snap-start">
                   <ProductCard product={product} />
                 </div>
               ))}
@@ -226,14 +226,14 @@ const Home = () => {
 
       {/* 4. HORIZONTAL SCROLLABLE SHELF: GRAPHIC TEES */}
       {graphicTees.length > 0 && (
-        <section className="py-12 bg-neutral-50 border-b border-neutral-200">
+        <section className="py-10 sm:py-12 bg-neutral-50 border-b border-neutral-200">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex items-end justify-between mb-6">
+            <div className="flex items-end justify-between mb-4 sm:mb-6">
               <div>
                 <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-neutral-500">
                   280 GSM Combed Cotton
                 </span>
-                <h3 className="text-xl sm:text-2xl font-display font-black uppercase tracking-wider text-black">
+                <h3 className="text-lg sm:text-2xl font-display font-black uppercase tracking-wider text-black">
                   GRAPHIC T-SHIRTS
                 </h3>
               </div>
@@ -247,27 +247,27 @@ const Home = () => {
                 </Link>
                 <button
                   onClick={() => scrollContainer(graphicTeesScroll, 'left')}
-                  className="w-9 h-9 bg-white border border-neutral-300 hover:bg-black hover:text-white flex items-center justify-center transition-colors shadow-xs"
+                  className="w-8 h-8 sm:w-9 sm:h-9 bg-white border border-neutral-300 hover:bg-black hover:text-white flex items-center justify-center transition-colors shadow-2xs"
                   aria-label="Scroll left"
                 >
-                  <ChevronLeft size={18} />
+                  <ChevronLeft size={16} />
                 </button>
                 <button
                   onClick={() => scrollContainer(graphicTeesScroll, 'right')}
-                  className="w-9 h-9 bg-white border border-neutral-300 hover:bg-black hover:text-white flex items-center justify-center transition-colors shadow-xs"
+                  className="w-8 h-8 sm:w-9 sm:h-9 bg-white border border-neutral-300 hover:bg-black hover:text-white flex items-center justify-center transition-colors shadow-2xs"
                   aria-label="Scroll right"
                 >
-                  <ChevronRight size={18} />
+                  <ChevronRight size={16} />
                 </button>
               </div>
             </div>
 
             <div
               ref={graphicTeesScroll}
-              className="flex gap-4 sm:gap-6 overflow-x-auto hide-scrollbar pb-4"
+              className="flex gap-3 sm:gap-6 overflow-x-auto hide-scrollbar pb-3 snap-x"
             >
               {graphicTees.map((product) => (
-                <div key={product.id} className="min-w-[220px] sm:min-w-[280px] shrink-0">
+                <div key={product.id} className="w-[165px] sm:w-[230px] md:w-[270px] shrink-0 snap-start">
                   <ProductCard product={product} />
                 </div>
               ))}
@@ -277,21 +277,21 @@ const Home = () => {
       )}
 
       {/* 5. BRAND STATEMENT BANNER */}
-      <section className="py-16 sm:py-20 bg-neutral-900 text-white relative overflow-hidden">
+      <section className="py-14 sm:py-20 bg-neutral-900 text-white relative overflow-hidden">
         <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
-          <span className="text-[10px] uppercase tracking-[0.4em] text-neutral-400 font-bold mb-3 block">
+          <span className="text-[10px] uppercase tracking-[0.4em] text-neutral-400 font-bold mb-2 block">
             ABOUT OUR STORE
           </span>
-          <h2 className="text-2xl sm:text-4xl font-display font-black uppercase tracking-wider leading-tight text-white mb-6">
+          <h2 className="text-xl sm:text-4xl font-display font-black uppercase tracking-wider leading-tight text-white mb-4 sm:mb-6">
             DRIP CLOTHING HALDWANI
           </h2>
-          <p className="text-neutral-300 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto mb-8 font-normal">
+          <p className="text-neutral-300 text-xs sm:text-base leading-relaxed max-w-2xl mx-auto mb-6 sm:mb-8 font-normal">
             "Drip Clothing Haldwani is a streetwear-focused clothing store bringing trending graphic tees, jerseys, waffle long sleeves, sweatshirts, shirts and everyday streetwear to Haldwani."
           </p>
-          <div className="flex flex-wrap justify-center gap-4">
+          <div className="flex flex-wrap justify-center gap-3">
             <Link
               to="/about"
-              className="inline-flex items-center gap-2 bg-white text-black hover:bg-brandYellow px-6 py-3 text-xs font-black uppercase tracking-[0.2em] transition-colors"
+              className="inline-flex items-center gap-2 bg-white text-black hover:bg-brandYellow px-5 py-2.5 sm:px-6 sm:py-3 text-xs font-black uppercase tracking-[0.2em] transition-colors"
             >
               <span>ABOUT US</span>
               <ArrowRight size={14} />
@@ -300,7 +300,7 @@ const Home = () => {
               href="https://www.instagram.com/drip__clothing__/"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-neutral-800 hover:bg-pink-600 border border-neutral-700 text-white px-6 py-3 text-xs font-bold uppercase tracking-[0.2em] transition-colors"
+              className="inline-flex items-center gap-2 bg-neutral-800 hover:bg-pink-600 border border-neutral-700 text-white px-5 py-2.5 sm:px-6 sm:py-3 text-xs font-bold uppercase tracking-[0.2em] transition-colors"
             >
               <Instagram size={14} />
               <span>@drip__clothing__</span>
@@ -310,12 +310,12 @@ const Home = () => {
       </section>
 
       {/* 6. VISIT OUR STORE SECTION */}
-      <section className="py-16 sm:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-14 sm:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="bg-neutral-900 text-white border border-neutral-800 grid grid-cols-1 lg:grid-cols-12 overflow-hidden shadow-2xl">
           {/* Store Info Column */}
-          <div className="lg:col-span-6 p-8 sm:p-12 flex flex-col justify-between space-y-6">
+          <div className="lg:col-span-6 p-6 sm:p-12 flex flex-col justify-between space-y-6">
             <div>
-              <div className="inline-flex items-center gap-2 bg-crimson text-white text-[9px] font-black uppercase tracking-widest px-2.5 py-1 mb-4">
+              <div className="inline-flex items-center gap-2 bg-crimson text-white text-[9px] font-black uppercase tracking-widest px-2.5 py-1 mb-3">
                 <span>VISIT OUR STORE</span>
               </div>
 
@@ -373,12 +373,12 @@ const Home = () => {
               </div>
             </div>
 
-            <div className="flex flex-wrap gap-4 pt-4">
+            <div className="flex flex-wrap gap-3 pt-2">
               <a
                 href={googleMapsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-white text-black hover:bg-brandYellow hover:text-black px-6 py-3 text-xs font-black uppercase tracking-widest transition-colors flex items-center gap-2 shadow"
+                className="bg-white text-black hover:bg-brandYellow hover:text-black px-5 py-2.5 sm:px-6 sm:py-3 text-xs font-black uppercase tracking-widest transition-colors flex items-center gap-2 shadow"
               >
                 <span>GET DIRECTIONS</span>
                 <ExternalLink size={14} />
@@ -388,7 +388,7 @@ const Home = () => {
                 href="https://www.instagram.com/drip__clothing__/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-neutral-800 hover:bg-pink-600 text-white px-6 py-3 text-xs font-bold uppercase tracking-widest transition-colors border border-neutral-700 flex items-center gap-2"
+                className="bg-neutral-800 hover:bg-pink-600 text-white px-5 py-2.5 sm:px-6 sm:py-3 text-xs font-bold uppercase tracking-widest transition-colors border border-neutral-700 flex items-center gap-2"
               >
                 <Instagram size={15} />
                 <span>INSTAGRAM PAGE</span>
@@ -397,66 +397,77 @@ const Home = () => {
           </div>
 
           {/* Interactive Map Embed */}
-          <div className="lg:col-span-6 min-h-[350px] relative bg-neutral-800">
+          <div className="lg:col-span-6 min-h-[300px] sm:min-h-[350px] relative bg-neutral-800">
             <iframe
               title="Drip Clothing Haldwani Store Map"
               src="https://maps.google.com/maps?q=5FWQ%2BF9,+Haldwani,+Uttarakhand&t=&z=16&ie=UTF8&iwloc=&output=embed"
-              className="w-full h-full min-h-[350px] border-0 grayscale hover:grayscale-0 transition-all duration-500"
+              className="w-full h-full min-h-[300px] border-0 grayscale hover:grayscale-0 transition-all duration-500"
               loading="lazy"
             />
           </div>
         </div>
       </section>
 
-      {/* 7. WALL OF LOVE / TESTIMONIALS */}
-      <section className="py-16 sm:py-24 bg-neutral-50 border-t border-neutral-200">
+      {/* 7. HORIZONTAL MINIMAL & COZY CUSTOMER REVIEWS */}
+      <section className="py-12 sm:py-20 bg-[#fbfbfb] border-t border-neutral-200/80 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-xl mx-auto mb-12">
-            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-neutral-500 block mb-1">
-              Customer Reviews
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-display font-black uppercase tracking-wider text-black">
-              STORE RATINGS & REVIEWS
-            </h2>
-            <div className="flex items-center justify-center gap-1.5 text-amber-500 mt-2">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} size={15} fill="currentColor" />
-              ))}
-              <span className="text-xs font-bold text-black ml-1.5">★ 4.6 Google Rating • 19 Reviews • Haldwani, Uttarakhand</span>
+          {/* Header */}
+          <div className="flex items-end justify-between mb-8 pb-4 border-b border-neutral-200/70">
+            <div>
+              <div className="flex items-center gap-2 text-amber-500 mb-1.5">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} size={13} fill="currentColor" />
+                ))}
+                <span className="text-[11px] font-bold text-neutral-600 ml-1">
+                  4.6 / 5.0 (19 Verified Reviews)
+                </span>
+              </div>
+              <h2 className="text-xl sm:text-3xl font-display font-black uppercase tracking-wider text-neutral-900">
+                WHAT CUSTOMERS SAY
+              </h2>
+            </div>
+
+            <div className="hidden sm:flex items-center gap-2">
+              <span className="text-[11px] font-medium text-neutral-400 uppercase tracking-wider">
+                Swipe to read
+              </span>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {wallOfLoveReviews.slice(0, 3).map((review) => (
+          {/* Horizontal Cozy Scroll Track */}
+          <div className="flex gap-4 sm:gap-5 overflow-x-auto hide-scrollbar pb-4 pt-1 snap-x">
+            {wallOfLoveReviews.map((review) => (
               <div
                 key={review.id}
-                className="bg-white p-6 sm:p-8 border border-neutral-200 shadow-xs flex flex-col justify-between space-y-4"
+                className="w-[280px] sm:w-[340px] shrink-0 bg-white p-5 sm:p-6 rounded-none border border-neutral-200/90 shadow-[0_2px_12px_rgba(0,0,0,0.03)] flex flex-col justify-between space-y-4 snap-start hover:border-neutral-900 transition-all group"
               >
                 <div>
-                  <div className="flex items-center gap-1 text-amber-400 mb-3">
-                    {[...Array(review.rating)].map((_, i) => (
-                      <Star key={i} size={14} fill="currentColor" />
-                    ))}
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center gap-1 text-amber-400">
+                      {[...Array(review.rating)].map((_, i) => (
+                        <Star key={i} size={12} fill="currentColor" />
+                      ))}
+                    </div>
+                    <span className="text-[9px] font-bold tracking-wider text-emerald-700 bg-emerald-50 px-2 py-0.5 border border-emerald-200 uppercase">
+                      VERIFIED BUYER
+                    </span>
                   </div>
 
-                  <p className="text-xs sm:text-sm text-neutral-800 leading-relaxed font-normal italic">
+                  <p className="text-xs sm:text-[13px] text-neutral-700 leading-relaxed font-normal italic">
                     "{review.comment}"
                   </p>
                 </div>
 
-                <div className="pt-4 border-t border-neutral-100 flex items-center justify-between">
+                <div className="pt-3 border-t border-neutral-100 flex items-center justify-between">
                   <div>
-                    <h4 className="text-xs font-bold uppercase tracking-wider text-black flex items-center gap-1.5">
-                      <span>{review.name}</span>
-                      <span className="text-[9px] text-emerald-600 font-bold bg-emerald-50 px-1.5 py-0.2 border border-emerald-200">
-                        VERIFIED
-                      </span>
+                    <h4 className="text-xs font-black uppercase tracking-wider text-neutral-900">
+                      {review.name}
                     </h4>
-                    <p className="text-[10px] text-neutral-400 uppercase tracking-widest mt-0.5">
-                      {review.city} • {review.productName}
+                    <p className="text-[10px] text-neutral-400 uppercase tracking-wider mt-0.5">
+                      {review.city} • {review.productName || 'Streetwear'}
                     </p>
                   </div>
-                  <span className="text-[10px] text-neutral-400 font-medium">{review.date}</span>
+                  <span className="text-[10px] text-neutral-400 font-mono">{review.date || 'Recently'}</span>
                 </div>
               </div>
             ))}
