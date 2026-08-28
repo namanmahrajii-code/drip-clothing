@@ -50,54 +50,40 @@ const Home = () => {
 
   return (
     <div className="bg-white min-h-screen text-black animate-page-fade">
-      {/* 1. HERO SECTION */}
-      <section className="relative min-h-[80vh] sm:min-h-[85vh] bg-black flex items-center justify-center overflow-hidden">
-        {/* Background Image with Dark Vignette Overlay */}
-        <div className="absolute inset-0 z-0">
-          <img
-            src="https://images.unsplash.com/photo-1509967419530-da38b4704bc6?q=80&w=2000&auto=format&fit=crop"
-            alt="Drip Clothing Haldwani Streetwear"
-            className="w-full h-full object-cover object-center opacity-35 scale-105 transition-transform duration-1000 ease-out"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/80" />
-        </div>
-
-        {/* Hero Content */}
-        <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 text-center text-white py-20 flex flex-col items-center">
-          <div className="inline-flex items-center gap-2 bg-neutral-900/90 border border-neutral-700 px-4 py-1.5 text-[10px] sm:text-xs uppercase font-bold tracking-[0.3em] text-neutral-200 mb-6 backdrop-blur-md">
-            <span className="w-2 h-2 rounded-full bg-brandYellow animate-pulse" />
-            <span>HALDWANI • STREETWEAR CLOTHING STORE</span>
+      {/* 1. HERO SECTION - RESPONSIVE PHOTOSHOOT BANNER */}
+      <section className="relative w-full overflow-hidden bg-neutral-100 border-b border-neutral-200">
+        <Link to="/shop" className="block w-full group relative overflow-hidden" aria-label="Shop Drip Clothing Collection">
+          {/* Desktop / Laptop Banner (16:9 Landscape) */}
+          <div className="hidden md:block w-full">
+            <img
+              src="/images/banners/hero-desktop.jpg"
+              alt="Drip Clothing Haldwani Streetwear Store"
+              className="w-full h-auto object-cover object-center transition-transform duration-700 group-hover:scale-[1.01]"
+              loading="eager"
+            />
           </div>
 
-          <h1 className="text-4xl sm:text-6xl md:text-8xl font-display font-black uppercase tracking-[0.15em] sm:tracking-[0.2em] leading-tight mb-4 text-white">
-            DRIP CLOTHING
-          </h1>
-
-          <p className="text-sm sm:text-lg text-neutral-300 max-w-2xl mx-auto mb-8 font-medium tracking-wide leading-relaxed">
-            Drip Clothing Haldwani is a streetwear-focused clothing store bringing trending graphic tees, jerseys, waffle long sleeves, sweatshirts, shirts and everyday streetwear to Haldwani.
-          </p>
-
-          <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
-            <Link
-              to="/shop"
-              className="w-full sm:w-auto bg-white text-black hover:bg-brandYellow hover:text-black px-8 py-4 text-xs font-black uppercase tracking-[0.25em] transition-all duration-300 flex items-center justify-center gap-3 shadow-2xl group"
-            >
-              <span>SHOP COLLECTION</span>
-              <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-            </Link>
-
-            <Link
-              to="/contact"
-              className="w-full sm:w-auto bg-transparent text-white hover:bg-neutral-900 border border-neutral-500 px-8 py-4 text-xs font-black uppercase tracking-[0.25em] transition-all duration-300 flex items-center justify-center gap-2"
-            >
-              <MapPin size={15} />
-              <span>VISIT OUR STORE</span>
-            </Link>
+          {/* Mobile Phone Banner (3:4 Portrait) */}
+          <div className="block md:hidden w-full">
+            <img
+              src="/images/banners/hero-mobile.jpg"
+              alt="Drip Clothing Haldwani Streetwear Fits"
+              className="w-full h-auto object-cover object-center transition-transform duration-700 group-hover:scale-[1.01]"
+              loading="eager"
+            />
           </div>
-        </div>
+
+          {/* Subtle Hover Overlay & Floating Shop Now Pill */}
+          <div className="absolute bottom-6 right-6 sm:bottom-10 sm:right-10 z-10">
+            <span className="inline-flex items-center gap-2 bg-black/90 hover:bg-black text-white px-5 py-2.5 sm:px-7 sm:py-3.5 text-[11px] sm:text-xs font-black uppercase tracking-[0.25em] transition-all shadow-2xl group-hover:bg-brandYellow group-hover:text-black">
+              <span>EXPLORE DROPS</span>
+              <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
+            </span>
+          </div>
+        </Link>
 
         {/* Bottom Hero Marquee */}
-        <div className="absolute bottom-0 left-0 right-0 bg-black/95 py-2.5 border-t border-neutral-800 text-[10px] font-extrabold uppercase tracking-[0.3em] text-neutral-400">
+        <div className="bg-black text-white py-2.5 border-t border-neutral-800 text-[10px] sm:text-[11px] font-extrabold uppercase tracking-[0.3em] text-neutral-300">
           <div className="flex w-full whitespace-nowrap overflow-hidden">
             <div className="inline-flex animate-marquee gap-8 items-center marquee-fade">
               <span>CHARAYAL CHAURAHA, HALDWANI</span>
@@ -108,7 +94,7 @@ const Home = () => {
               <span>•</span>
               <span>RETRO FOOTBALL JERSEYS</span>
               <span>•</span>
-              <span>★ 4.6 GOOGLE RATING (19 REVIEWS)</span>
+              <span className="text-amber-400">★ 4.6 GOOGLE RATING (19 REVIEWS)</span>
               <span>•</span>
             </div>
             <div className="inline-flex animate-marquee gap-8 items-center marquee-fade" aria-hidden="true">
@@ -120,7 +106,7 @@ const Home = () => {
               <span>•</span>
               <span>RETRO FOOTBALL JERSEYS</span>
               <span>•</span>
-              <span>★ 4.6 GOOGLE RATING (19 REVIEWS)</span>
+              <span className="text-amber-400">★ 4.6 GOOGLE RATING (19 REVIEWS)</span>
               <span>•</span>
             </div>
           </div>
