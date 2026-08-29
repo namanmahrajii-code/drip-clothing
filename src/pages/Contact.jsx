@@ -20,17 +20,17 @@ const Contact = () => {
   const googleMapsUrl = "https://www.google.com/maps/search/?api=1&query=RTO+Gas+Godown+Link+Road+Haldwani+Uttarakhand";
 
   return (
-    <div className="bg-white min-h-screen text-black py-12 sm:py-16 animate-page-fade">
+    <div className="bg-[#F7F4EF] min-h-screen text-[#1E1E1E] py-12 sm:py-16 animate-page-fade">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         {/* Header */}
-        <div className="border-b-2 border-black pb-6 text-center max-w-2xl mx-auto">
-          <span className="text-[10px] font-black uppercase tracking-[0.3em] text-crimson block mb-1">
+        <div className="border-b border-[#E5DDD3] pb-6 text-center max-w-2xl mx-auto">
+          <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#7D1E22] block mb-1">
             Store & Location
           </span>
-          <h1 className="text-3xl sm:text-5xl font-display font-black uppercase tracking-tight text-black">
+          <h1 className="text-3xl sm:text-5xl font-serif font-black uppercase tracking-tight text-[#1E1E1E]">
             VISIT OUR STORE
           </h1>
-          <p className="text-xs sm:text-sm text-neutral-600 mt-2 font-medium">
+          <p className="text-xs sm:text-sm text-[#6B6B6B] mt-2 font-normal">
             Find us in Haldwani. Discover stylish collections, premium brands, and everyday fashion curated to help you look and feel your best.
           </p>
         </div>
@@ -39,31 +39,31 @@ const Contact = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
           {/* Left: Contact Info & Store Details */}
           <div className="lg:col-span-6 space-y-6">
-            <div className="bg-neutral-50 p-6 sm:p-8 border border-neutral-300 space-y-6 shadow-xs">
+            <div className="bg-white p-6 sm:p-8 border border-[#E5DDD3] rounded-3xl space-y-6 shadow-xs">
               <div>
-                <div className="inline-flex items-center gap-2 bg-black text-white px-2.5 py-1 text-[9px] font-black uppercase tracking-widest mb-3">
+                <div className="inline-flex items-center gap-2 bg-[#7D1E22]/10 text-[#7D1E22] border border-[#7D1E22]/20 px-3 py-1 rounded-full text-[9px] font-bold uppercase tracking-widest mb-3">
                   <span>FASHION & CLOTHING STORE</span>
                 </div>
-                <h2 className="text-xl sm:text-2xl font-display font-black uppercase tracking-wider text-black">
+                <h2 className="text-xl sm:text-2xl font-serif font-black uppercase tracking-tight text-[#1E1E1E]">
                   LIBAS
                 </h2>
-                <div className="flex items-center gap-2 text-xs font-bold text-neutral-800 mt-1">
+                <div className="flex items-center gap-2 text-xs font-bold text-[#1E1E1E] mt-1">
                   <div className="flex text-amber-500">
                     {[...Array(5)].map((_, i) => (
                       <Star key={i} size={14} fill="currentColor" />
                     ))}
                   </div>
-                  <span>4.8 / 5 Customer Rating (Verified Store Reviews)</span>
+                  <span className="text-[#6B6B6B]">4.8 / 5 Customer Rating (Verified Store Reviews)</span>
                 </div>
               </div>
 
               {/* Verified Address & Hours */}
-              <div className="space-y-4 text-xs border-t border-neutral-200 pt-4">
+              <div className="space-y-4 text-xs border-t border-[#E5DDD3] pt-4">
                 <div className="flex items-start gap-3.5">
-                  <MapPin size={18} className="text-crimson shrink-0 mt-0.5" />
+                  <MapPin size={18} className="text-[#7D1E22] shrink-0 mt-0.5" />
                   <div>
-                    <strong className="block text-black font-bold uppercase tracking-wider">Address</strong>
-                    <p className="text-neutral-700 mt-1 leading-relaxed font-medium">
+                    <strong className="block text-[#1E1E1E] font-bold uppercase tracking-wider">Address</strong>
+                    <p className="text-[#6B6B6B] mt-1 leading-relaxed font-normal">
                       LIBAS<br />
                       RTO Gas Godown Link Road<br />
                       Haldwani, Nainital<br />
@@ -74,20 +74,20 @@ const Contact = () => {
                 </div>
 
                 <div className="flex items-start gap-3.5">
-                  <Clock size={18} className="text-amber-500 shrink-0 mt-0.5" />
+                  <Clock size={18} className="text-[#7D1E22] shrink-0 mt-0.5" />
                   <div>
-                    <strong className="block text-black font-bold uppercase tracking-wider">Opening Hours</strong>
-                    <p className="text-neutral-800 font-bold mt-1 text-sm text-amber-600">
+                    <strong className="block text-[#1E1E1E] font-bold uppercase tracking-wider">Opening Hours</strong>
+                    <p className="text-[#7D1E22] font-bold mt-1 text-sm">
                       9:00 AM – 7:00 PM (Daily)
                     </p>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-3.5">
-                  <Sparkles size={18} className="text-brandYellow shrink-0 mt-0.5" />
+                  <Sparkles size={18} className="text-[#7D1E22] shrink-0 mt-0.5" />
                   <div>
-                    <strong className="block text-black font-bold uppercase tracking-wider">Store Highlights</strong>
-                    <p className="text-neutral-600 mt-1">
+                    <strong className="block text-[#1E1E1E] font-bold uppercase tracking-wider">Store Highlights</strong>
+                    <p className="text-[#6B6B6B] mt-1">
                       Premium Brands • Latest Collections • Quality Assured • Style for Everyone
                     </p>
                   </div>
@@ -95,12 +95,12 @@ const Contact = () => {
               </div>
 
               {/* Action Buttons */}
-              <div className="pt-4 border-t border-neutral-200 flex flex-wrap gap-3">
+              <div className="pt-4 border-t border-[#E5DDD3] flex flex-wrap gap-3">
                 <a
                   href={googleMapsUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-black hover:bg-neutral-800 text-white px-5 py-3 text-xs font-black uppercase tracking-widest flex items-center gap-2 transition-colors shadow-xs"
+                  className="bg-[#7D1E22] hover:bg-[#942429] text-white px-6 py-3 rounded-full text-xs font-bold uppercase tracking-widest flex items-center gap-2 transition-all shadow-sm hover:scale-105"
                 >
                   <MapPin size={14} />
                   <span>GET DIRECTIONS</span>
@@ -110,42 +110,42 @@ const Contact = () => {
             </div>
 
             {/* Map Embed centered on Haldwani location */}
-            <div className="h-72 bg-neutral-100 border border-neutral-300 overflow-hidden relative shadow-xs">
+            <div className="h-72 bg-white border border-[#E5DDD3] rounded-3xl overflow-hidden relative shadow-xs p-1">
               <iframe
                 title="LIBAS Haldwani Location"
                 src="https://maps.google.com/maps?q=RTO+Gas+Godown+Link+Road,+Haldwani,+Uttarakhand&t=&z=16&ie=UTF8&iwloc=&output=embed"
-                className="w-full h-full border-0 grayscale hover:grayscale-0 transition-all duration-500"
+                className="w-full h-full rounded-2xl border-0"
                 loading="lazy"
               />
             </div>
           </div>
 
           {/* Right: Message Form / Contact Us */}
-          <div className="lg:col-span-6 bg-neutral-50 p-6 sm:p-8 border border-neutral-300 flex flex-col justify-between shadow-xs">
+          <div className="lg:col-span-6 bg-white p-6 sm:p-8 border border-[#E5DDD3] rounded-3xl flex flex-col justify-between shadow-xs">
             <div>
-              <div className="border-b border-neutral-200 pb-3 mb-6">
-                <h3 className="text-sm font-black uppercase tracking-widest text-black">
+              <div className="border-b border-[#E5DDD3] pb-3 mb-6">
+                <h3 className="text-sm font-serif font-black uppercase tracking-widest text-[#1E1E1E]">
                   CONTACT US
                 </h3>
-                <p className="text-xs text-neutral-500 mt-1">
+                <p className="text-xs text-[#6B6B6B] mt-1">
                   Have a question about collections, sizes, or visiting our Haldwani store? Drop us a message.
                 </p>
               </div>
 
               {submitted ? (
                 <div className="text-center py-12 space-y-4">
-                  <div className="w-12 h-12 bg-black text-white rounded-full flex items-center justify-center mx-auto text-lg">
+                  <div className="w-12 h-12 bg-[#7D1E22] text-white rounded-full flex items-center justify-center mx-auto text-lg">
                     ✓
                   </div>
-                  <h4 className="text-sm font-black uppercase tracking-wider text-black">
+                  <h4 className="text-sm font-serif font-black uppercase tracking-wider text-[#1E1E1E]">
                     Message Sent Successfully
                   </h4>
-                  <p className="text-xs text-neutral-600 max-w-sm mx-auto">
+                  <p className="text-xs text-[#6B6B6B] max-w-sm mx-auto">
                     Thank you, {form.name}. You can also visit us directly at RTO Gas Godown Link Road, Haldwani (Open 9:00 AM – 7:00 PM).
                   </p>
                   <button
                     onClick={() => { setSubmitted(false); setForm({ name: '', phone: '', message: '' }); }}
-                    className="bg-black text-white px-6 py-2.5 text-xs font-bold uppercase tracking-widest"
+                    className="bg-[#7D1E22] hover:bg-[#942429] text-white px-7 py-3 rounded-full text-xs font-bold uppercase tracking-widest transition-all"
                   >
                     SEND ANOTHER MESSAGE
                   </button>
@@ -153,7 +153,7 @@ const Contact = () => {
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-4 text-xs">
                   <div>
-                    <label className="block font-bold uppercase tracking-wider text-neutral-700 mb-1">
+                    <label className="block font-bold uppercase tracking-wider text-[#1E1E1E] mb-1">
                       Full Name *
                     </label>
                     <input
@@ -162,12 +162,12 @@ const Contact = () => {
                       value={form.name}
                       onChange={(e) => setForm({ ...form, name: e.target.value })}
                       placeholder="Your Name"
-                      className="w-full bg-white border border-neutral-300 p-2.5 text-xs focus:outline-none focus:border-black"
+                      className="w-full bg-[#FAF8F5] border border-[#E5DDD3] rounded-xl p-3 text-xs text-[#1E1E1E] placeholder-[#6B6B6B] focus:outline-none focus:border-[#7D1E22]"
                     />
                   </div>
 
                   <div>
-                    <label className="block font-bold uppercase tracking-wider text-neutral-700 mb-1">
+                    <label className="block font-bold uppercase tracking-wider text-[#1E1E1E] mb-1">
                       Phone Number (Optional)
                     </label>
                     <input
@@ -175,12 +175,12 @@ const Contact = () => {
                       value={form.phone}
                       onChange={(e) => setForm({ ...form, phone: e.target.value })}
                       placeholder="Phone Number"
-                      className="w-full bg-white border border-neutral-300 p-2.5 text-xs focus:outline-none focus:border-black"
+                      className="w-full bg-[#FAF8F5] border border-[#E5DDD3] rounded-xl p-3 text-xs text-[#1E1E1E] placeholder-[#6B6B6B] focus:outline-none focus:border-[#7D1E22]"
                     />
                   </div>
 
                   <div>
-                    <label className="block font-bold uppercase tracking-wider text-neutral-700 mb-1">
+                    <label className="block font-bold uppercase tracking-wider text-[#1E1E1E] mb-1">
                       Message *
                     </label>
                     <textarea
@@ -189,13 +189,13 @@ const Contact = () => {
                       value={form.message}
                       onChange={(e) => setForm({ ...form, message: e.target.value })}
                       placeholder="Inquiry about collections, fits, or store visits..."
-                      className="w-full bg-white border border-neutral-300 p-2.5 text-xs focus:outline-none focus:border-black"
+                      className="w-full bg-[#FAF8F5] border border-[#E5DDD3] rounded-xl p-3 text-xs text-[#1E1E1E] placeholder-[#6B6B6B] focus:outline-none focus:border-[#7D1E22]"
                     />
                   </div>
 
                   <button
                     type="submit"
-                    className="w-full bg-black hover:bg-neutral-800 text-white py-3.5 text-xs font-black uppercase tracking-widest transition-colors flex items-center justify-center gap-2 shadow-xs"
+                    className="w-full bg-[#7D1E22] hover:bg-[#942429] text-white py-3.5 rounded-full text-xs font-bold uppercase tracking-widest transition-all flex items-center justify-center gap-2 shadow-md hover:scale-101"
                   >
                     <Send size={14} />
                     <span>SEND MESSAGE</span>
@@ -205,9 +205,9 @@ const Contact = () => {
             </div>
 
             {/* Quick store info strip */}
-            <div className="mt-8 pt-4 border-t border-neutral-200 flex items-center justify-between text-xs text-neutral-600">
-              <span className="font-semibold">LIBAS Haldwani • Open Daily</span>
-              <span className="font-bold text-black">9:00 AM – 7:00 PM</span>
+            <div className="mt-8 pt-4 border-t border-[#E5DDD3] flex items-center justify-between text-xs text-[#6B6B6B]">
+              <span className="font-medium">LIBAS Haldwani • Open Daily</span>
+              <span className="font-bold text-[#7D1E22]">9:00 AM – 7:00 PM</span>
             </div>
           </div>
         </div>

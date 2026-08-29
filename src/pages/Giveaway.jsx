@@ -49,60 +49,60 @@ const Giveaway = () => {
   };
 
   return (
-    <div className="bg-white min-h-screen text-black py-12 sm:py-16 animate-page-fade">
+    <div className="bg-[#F7F4EF] min-h-screen text-[#1E1E1E] py-12 sm:py-16 animate-page-fade">
       <div className="max-w-4xl mx-auto px-4 sm:px-6">
         {/* Banner */}
         <div className="text-center space-y-4 mb-12">
-          <div className="inline-flex items-center gap-2 bg-neutral-900 text-white px-4 py-1.5 text-xs uppercase font-bold tracking-[0.25em]">
-            <Sparkles size={14} className="text-brandYellow" />
-            <span>LIBAS SPECIAL COLLECTION GIVEAWAY</span>
+          <div className="inline-flex items-center gap-2 bg-[#7D1E22]/10 text-[#7D1E22] border border-[#7D1E22]/20 px-4 py-1.5 rounded-full text-xs uppercase font-bold tracking-[0.25em]">
+            <Sparkles size={14} className="text-[#7D1E22]" />
+            <span>LIBAS SPECIAL COLLECTION REWARDS</span>
           </div>
 
-          <h1 className="text-3xl sm:text-5xl font-display font-black uppercase tracking-wider text-black">
-            UNLOCK EXCLUSIVE LIBAS REWARDS
+          <h1 className="text-3xl sm:text-5xl font-serif font-black uppercase tracking-tight text-[#1E1E1E]">
+            UNLOCK EXCLUSIVE LIBAS PERKS
           </h1>
 
-          <p className="text-xs sm:text-sm text-neutral-500 max-w-xl mx-auto leading-relaxed font-medium">
+          <p className="text-xs sm:text-sm text-[#6B6B6B] max-w-xl mx-auto leading-relaxed font-normal">
             Register your details to unlock immediate store vouchers, collection gifts, and guaranteed VIP allocations for our latest fashion arrivals in Haldwani.
           </p>
         </div>
 
         {/* Card */}
-        <div className="bg-neutral-50 border border-neutral-200 p-6 sm:p-10 shadow-xl">
+        <div className="bg-white border border-[#E5DDD3] rounded-3xl p-6 sm:p-10 shadow-xs">
           {isSubmitted ? (
             <div className="text-center space-y-6 py-8">
-              <div className="w-16 h-16 bg-black text-white rounded-full flex items-center justify-center mx-auto shadow-md">
-                <Trophy size={32} className="text-brandYellow" />
+              <div className="w-16 h-16 bg-[#7D1E22] text-white rounded-full flex items-center justify-center mx-auto shadow-md">
+                <Trophy size={32} />
               </div>
 
               <div>
-                <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-emerald-600 block mb-1">
+                <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#7D1E22] block mb-1">
                   Registration Complete
                 </span>
-                <h2 className="text-2xl sm:text-3xl font-display font-black uppercase tracking-wider text-black">
+                <h2 className="text-2xl sm:text-3xl font-serif font-black uppercase tracking-tight text-[#1E1E1E]">
                   YOU UNLOCKED:
                 </h2>
-                <div className="bg-white border-2 border-black p-4 mt-3 max-w-md mx-auto shadow-sm">
-                  <p className="text-sm font-black text-black uppercase tracking-wider">{wonPrize}</p>
+                <div className="bg-[#FAF8F5] border border-[#7D1E22] rounded-2xl p-4 mt-3 max-w-md mx-auto shadow-2xs">
+                  <p className="text-sm font-bold text-[#7D1E22] uppercase tracking-wider">{wonPrize}</p>
                 </div>
               </div>
 
-              <p className="text-xs text-neutral-500 max-w-md mx-auto">
+              <p className="text-xs text-[#6B6B6B] max-w-md mx-auto">
                 We've linked this reward to your phone number ({phone}). Check your WhatsApp for drop links and redemption codes.
               </p>
 
               <button
                 onClick={() => setIsSubmitted(false)}
-                className="bg-black text-white px-8 py-3.5 text-xs font-black uppercase tracking-widest hover:bg-neutral-800 transition-colors"
+                className="bg-[#7D1E22] hover:bg-[#942429] text-white px-8 py-3.5 rounded-full text-xs font-bold uppercase tracking-widest transition-all shadow-sm"
               >
-                ENTER ANOTHER DROP
+                ENTER AGAIN
               </button>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
                 <div>
-                  <label className="block font-bold uppercase tracking-wider text-black mb-1">
+                  <label className="block font-bold uppercase tracking-wider text-[#1E1E1E] mb-1">
                     Your Full Name *
                   </label>
                   <input
@@ -111,12 +111,12 @@ const Giveaway = () => {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder="e.g. Aryan Malhotra"
-                    className="w-full bg-white border border-neutral-300 p-3 text-xs uppercase font-medium focus:outline-none focus:border-black"
+                    className="w-full bg-[#FAF8F5] border border-[#E5DDD3] rounded-xl p-3 text-xs uppercase font-medium text-[#1E1E1E] placeholder-[#6B6B6B] focus:outline-none focus:border-[#7D1E22]"
                   />
                 </div>
 
                 <div>
-                  <label className="block font-bold uppercase tracking-wider text-black mb-1">
+                  <label className="block font-bold uppercase tracking-wider text-[#1E1E1E] mb-1">
                     WhatsApp Phone Number *
                   </label>
                   <input
@@ -125,12 +125,12 @@ const Giveaway = () => {
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     placeholder="10-digit number (e.g. 9876543210)"
-                    className="w-full bg-white border border-neutral-300 p-3 text-xs font-medium focus:outline-none focus:border-black"
+                    className="w-full bg-[#FAF8F5] border border-[#E5DDD3] rounded-xl p-3 text-xs font-medium text-[#1E1E1E] placeholder-[#6B6B6B] focus:outline-none focus:border-[#7D1E22]"
                   />
                 </div>
 
                 <div>
-                  <label className="block font-bold uppercase tracking-wider text-black mb-1">
+                  <label className="block font-bold uppercase tracking-wider text-[#1E1E1E] mb-1">
                     Instagram Handle (Optional)
                   </label>
                   <input
@@ -138,38 +138,39 @@ const Giveaway = () => {
                     value={instagram}
                     onChange={(e) => setInstagram(e.target.value)}
                     placeholder="@yourusername"
-                    className="w-full bg-white border border-neutral-300 p-3 text-xs focus:outline-none focus:border-black"
+                    className="w-full bg-[#FAF8F5] border border-[#E5DDD3] rounded-xl p-3 text-xs text-[#1E1E1E] placeholder-[#6B6B6B] focus:outline-none focus:border-[#7D1E22]"
                   />
                 </div>
 
                 <div>
-                  <label className="block font-bold uppercase tracking-wider text-black mb-1">
-                    Favorite Streetwear Category
+                  <label className="block font-bold uppercase tracking-wider text-[#1E1E1E] mb-1">
+                    Favorite Fashion Category
                   </label>
                   <select
                     value={favoriteCategory}
                     onChange={(e) => setFavoriteCategory(e.target.value)}
-                    className="w-full bg-white border border-neutral-300 p-3 text-xs font-bold uppercase tracking-wider focus:outline-none focus:border-black"
+                    className="w-full bg-[#FAF8F5] border border-[#E5DDD3] rounded-xl p-3 text-xs font-bold uppercase tracking-wider text-[#1E1E1E] focus:outline-none focus:border-[#7D1E22]"
                   >
-                    <option value="denims">Raw Selvedge Denims</option>
-                    <option value="tshirts">280 GSM Heavyweight Tees</option>
-                    <option value="hoodies">450 GSM Fleece Hoodies</option>
-                    <option value="waffles">Thermal Waffles</option>
-                    <option value="shackets">Tactical Shackets & Vests</option>
+                    <option value="waffles">Waffle / Raglan Knits</option>
+                    <option value="graphic-tees">Graphic T-Shirts</option>
+                    <option value="sweatshirts">Sweatshirts & Pullovers</option>
+                    <option value="shirts">Resort & Casual Shirts</option>
+                    <option value="jerseys">Retro Match Jerseys</option>
+                    <option value="pants">Track Pants & Bottoms</option>
                   </select>
                 </div>
               </div>
 
               <button
                 type="submit"
-                className="w-full bg-black hover:bg-neutral-800 text-white py-4 text-xs font-black uppercase tracking-[0.25em] transition-colors flex items-center justify-center gap-2 shadow-md"
+                className="w-full bg-[#7D1E22] hover:bg-[#942429] text-white py-4 rounded-full text-xs font-bold uppercase tracking-[0.25em] transition-all flex items-center justify-center gap-2 shadow-md hover:scale-101"
               >
                 <Gift size={16} />
-                <span>SPIN & CLAIM LIBAS REWARD</span>
+                <span>CLAIM LIBAS VIP REWARD</span>
               </button>
 
-              <div className="flex items-center justify-center gap-2 text-[10px] text-neutral-400 uppercase tracking-wider font-semibold">
-                <ShieldCheck size={14} className="text-emerald-600" />
+              <div className="flex items-center justify-center gap-2 text-[10px] text-[#6B6B6B] uppercase tracking-wider font-semibold">
+                <ShieldCheck size={14} className="text-[#7D1E22]" />
                 <span>No Spam Guarantee • Strictly LIBAS Collection Updates</span>
               </div>
             </form>
