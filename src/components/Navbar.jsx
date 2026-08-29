@@ -154,16 +154,16 @@ const Navbar = () => {
             {/* Bag / Cart Drawer Button */}
             <button
               onClick={() => setIsCartOpen(true)}
-              className="relative flex items-center gap-2 bg-black text-white px-3.5 py-2 rounded-none hover:bg-neutral-800 transition-colors shadow-sm"
+              className="relative flex items-center gap-2 glass-btn-dark text-white px-4 py-2 rounded-full shadow-md hover:scale-105 transition-all"
               aria-label="View shopping bag"
             >
               <ShoppingBag size={17} />
-              <span className="text-[11px] font-bold tracking-widest uppercase hidden sm:inline">
-                BAG
-              </span>
-              <span className="bg-brandYellow text-black font-extrabold text-[10px] w-4 h-4 rounded-full flex items-center justify-center">
-                {cartItemCount}
-              </span>
+              <span className="text-xs font-black tracking-widest uppercase">BAG</span>
+              {cartItemCount > 0 && (
+                <span className="bg-brandYellow text-black text-[10px] font-black px-1.5 py-0.5 rounded-full">
+                  {cartItemCount}
+                </span>
+              )}
             </button>
           </div>
         </div>

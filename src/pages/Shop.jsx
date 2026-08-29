@@ -194,7 +194,7 @@ const Shop = () => {
         </div>
 
         {/* Filter Controls & Search Panel */}
-        <div className="space-y-4 mb-10 bg-neutral-50 p-4 sm:p-5 border border-neutral-300 shadow-xs">
+        <div className="space-y-4 mb-10 bg-neutral-50/80 backdrop-blur-md p-4 sm:p-6 border border-neutral-200/80 rounded-2xl shadow-xs">
           {/* Top Row: Gender Tabs, Search Input, and Sort */}
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
             {/* Gender Filters */}
@@ -206,10 +206,10 @@ const Shop = () => {
                 <button
                   key={g}
                   onClick={() => updateGenderFilter(g)}
-                  className={`text-xs font-bold uppercase tracking-wider px-3.5 py-1.5 transition-all shrink-0 ${
+                  className={`text-xs font-bold uppercase tracking-wider px-4 py-2 rounded-full transition-all shrink-0 ${
                     selectedGender === g
-                      ? 'bg-black text-white'
-                      : 'bg-white text-neutral-700 hover:bg-neutral-200 border border-neutral-300'
+                      ? 'glass-btn-dark text-white shadow-md'
+                      : 'glass-btn-light text-neutral-700 hover:text-black'
                   }`}
                 >
                   {g}
@@ -219,18 +219,18 @@ const Shop = () => {
 
             {/* Real-time Search Input */}
             <div className="relative flex-1 max-w-md">
-              <Search size={16} className="absolute left-3 top-2.5 text-neutral-400" />
+              <Search size={16} className="absolute left-3.5 top-3 text-neutral-400" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search products, waffle, raglan, color, cross..."
-                className="w-full bg-white border border-neutral-300 pl-9 pr-8 py-2 text-xs font-medium uppercase tracking-wider text-black placeholder-neutral-400 focus:outline-none focus:border-black"
+                className="w-full bg-white/90 border border-neutral-200/90 rounded-full pl-10 pr-9 py-2.5 text-xs font-medium uppercase tracking-wider text-black placeholder-neutral-400 focus:outline-none focus:border-black focus:ring-1 focus:ring-black/10 shadow-2xs"
               />
               {searchQuery && (
                 <button
                   onClick={() => setSearchQuery('')}
-                  className="absolute right-2.5 top-2.5 text-neutral-400 hover:text-black"
+                  className="absolute right-3 top-3 text-neutral-400 hover:text-black"
                 >
                   <X size={14} />
                 </button>
@@ -245,7 +245,7 @@ const Shop = () => {
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="bg-white border border-neutral-300 px-3 py-2 text-xs font-bold uppercase tracking-wider text-black focus:outline-none focus:border-black"
+                className="bg-white/90 border border-neutral-200/90 rounded-full px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-black focus:outline-none focus:border-black shadow-2xs"
               >
                 <option value="featured">Featured Drops</option>
                 <option value="price-low">Price: Low to High</option>
@@ -257,7 +257,7 @@ const Shop = () => {
           </div>
 
           {/* Category Bar with Section Jump Buttons */}
-          <div className="pt-3 border-t border-neutral-200 flex items-center gap-2 flex-wrap">
+          <div className="pt-3 border-t border-neutral-200/70 flex items-center gap-2 flex-wrap">
             <span className="text-[10px] font-black uppercase tracking-widest text-neutral-500 mr-1 flex items-center gap-1">
               <Filter size={11} />
               <span>SECTIONS:</span>
@@ -272,10 +272,10 @@ const Shop = () => {
                     setTimeout(() => scrollToSection(`sec-${cat.id}`), 100);
                   }
                 }}
-                className={`text-[11px] font-extrabold uppercase tracking-wider px-3 py-1.5 transition-all flex items-center gap-1.5 ${
+                className={`text-[11px] font-extrabold uppercase tracking-wider px-3.5 py-1.5 rounded-full transition-all flex items-center gap-1.5 ${
                   selectedCategory === cat.id
-                    ? 'bg-black text-white shadow-xs'
-                    : 'bg-white text-neutral-700 hover:bg-neutral-200 border border-neutral-300'
+                    ? 'glass-btn-dark text-white shadow-md'
+                    : 'glass-btn-light text-neutral-700 hover:text-black'
                 }`}
               >
                 <span className="opacity-60 text-[9px] font-mono">{cat.num}</span>
@@ -283,8 +283,8 @@ const Shop = () => {
                 {cat.isHot && (
                   <span className="w-1.5 h-1.5 rounded-full bg-crimson animate-pulse" />
                 )}
-                <span className={`text-[9px] px-1 py-0.2 rounded-xs font-mono ${
-                  selectedCategory === cat.id ? 'bg-neutral-800 text-brandYellow' : 'bg-neutral-100 text-neutral-500'
+                <span className={`text-[9px] px-1.5 py-0.2 rounded-full font-mono ${
+                  selectedCategory === cat.id ? 'bg-neutral-800 text-brandYellow' : 'bg-neutral-200/70 text-neutral-600'
                 }`}>
                   {cat.count}
                 </span>
@@ -294,10 +294,10 @@ const Shop = () => {
             {/* In-Stock Filter toggle */}
             <button
               onClick={() => setShowInStockOnly(!showInStockOnly)}
-              className={`text-[11px] font-bold uppercase tracking-wider px-3 py-1.5 border ml-auto transition-colors flex items-center gap-1.5 ${
+              className={`text-[11px] font-bold uppercase tracking-wider px-3.5 py-1.5 rounded-full border ml-auto transition-all flex items-center gap-1.5 ${
                 showInStockOnly
-                  ? 'bg-emerald-600 text-white border-emerald-600'
-                  : 'bg-white text-neutral-700 border-neutral-300 hover:border-black'
+                  ? 'bg-emerald-600 text-white border-emerald-600 shadow-xs'
+                  : 'glass-btn-light text-neutral-700'
               }`}
             >
               <Check size={12} className={showInStockOnly ? 'opacity-100' : 'opacity-40'} />

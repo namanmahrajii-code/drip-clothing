@@ -10,7 +10,11 @@ import {
   Sparkles,
   ExternalLink,
   ShoppingBag,
-  Compass
+  Compass,
+  Flame,
+  Layers,
+  Gift,
+  ArrowUpRight
 } from 'lucide-react';
 import { useShop } from '../context/ShopContext';
 import ProductCard from '../components/ProductCard';
@@ -172,59 +176,35 @@ const Home = () => {
         </div>
       </section>
 
-      {/* 2. KEY FEATURES PILLARS */}
-      <section className="py-8 bg-neutral-50 border-b border-neutral-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
-            <div className="p-4 sm:p-5 bg-white border border-neutral-200 shadow-2xs flex flex-col justify-center">
-              <span className="text-[10px] font-black uppercase tracking-[0.25em] text-crimson block mb-1">01 / BRAND</span>
-              <h3 className="text-sm sm:text-base font-display font-black uppercase tracking-wider text-black">Premium Brands</h3>
-              <p className="text-[11px] sm:text-xs text-neutral-500 mt-1">Carefully selected high-quality labels & contemporary designs</p>
-            </div>
 
-            <div className="p-4 sm:p-5 bg-white border border-neutral-200 shadow-2xs flex flex-col justify-center">
-              <span className="text-[10px] font-black uppercase tracking-[0.25em] text-crimson block mb-1">02 / TREND</span>
-              <h3 className="text-sm sm:text-base font-display font-black uppercase tracking-wider text-black">Latest Collections</h3>
-              <p className="text-[11px] sm:text-xs text-neutral-500 mt-1">Fresh seasonal drops, trending fits and modern essentials</p>
-            </div>
-
-            <div className="p-4 sm:p-5 bg-white border border-neutral-200 shadow-2xs flex flex-col justify-center">
-              <span className="text-[10px] font-black uppercase tracking-[0.25em] text-crimson block mb-1">03 / FABRIC</span>
-              <h3 className="text-sm sm:text-base font-display font-black uppercase tracking-wider text-black">Quality Assured</h3>
-              <p className="text-[11px] sm:text-xs text-neutral-500 mt-1">Premium fabrics, superior comfort and reliable craftsmanship</p>
-            </div>
-
-            <div className="p-4 sm:p-5 bg-white border border-neutral-200 shadow-2xs flex flex-col justify-center">
-              <span className="text-[10px] font-black uppercase tracking-[0.25em] text-crimson block mb-1">04 / OCCASION</span>
-              <h3 className="text-sm sm:text-base font-display font-black uppercase tracking-wider text-black">Style for Everyone</h3>
-              <p className="text-[11px] sm:text-xs text-neutral-500 mt-1">Everyday fashion to statement styles for diverse occasions</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 3. TOP PICKS / FEATURED COLLECTION */}
-      <section className="py-16 sm:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 pb-4 border-b border-neutral-200 gap-4">
+      {/* ========================================================================= */}
+      {/* SECTION 1: TRENDING NOW */}
+      {/* ========================================================================= */}
+      <section id="trending-now" className="py-14 sm:py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 pb-4 border-b border-neutral-200 gap-4">
           <div>
-            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-crimson block mb-1">
-              Curated Selection
-            </span>
+            <div className="inline-flex items-center gap-2 bg-crimson/10 text-crimson border border-crimson/20 px-3 py-0.5 rounded-full text-[10px] font-black uppercase tracking-[0.25em] mb-2">
+              <Flame size={12} className="text-crimson" />
+              <span>01 • HOT DROPS</span>
+            </div>
             <h2 className="text-2xl sm:text-4xl font-display font-black uppercase tracking-wider text-black">
-              TOP PICKS OF THE WEEK
+              TRENDING NOW
             </h2>
+            <p className="text-xs sm:text-sm text-neutral-500 mt-1 font-medium">
+              Discover what’s turning heads this week — trending cuts, premium brands & daily essentials.
+            </p>
           </div>
 
-          {/* Gender Filter Tabs */}
-          <div className="flex items-center gap-2">
+          {/* Gender Filter Tabs with Glass Effect */}
+          <div className="flex items-center gap-2 flex-wrap">
             {['All', 'Men', 'Unisex'].map((gender) => (
               <button
                 key={gender}
                 onClick={() => setTopPickGender(gender)}
-                className={`text-xs font-bold uppercase tracking-widest px-4 py-2 transition-all ${
+                className={`text-xs font-bold uppercase tracking-wider px-4 py-2 rounded-full transition-all ${
                   topPickGender === gender
-                    ? 'bg-black text-white shadow-xs'
-                    : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200'
+                    ? 'glass-btn-dark text-white shadow-md'
+                    : 'glass-btn-light text-neutral-700 hover:text-black'
                 }`}
               >
                 {gender}
@@ -232,7 +212,7 @@ const Home = () => {
             ))}
             <Link
               to="/shop"
-              className="text-xs font-bold uppercase tracking-widest text-neutral-800 hover:text-crimson px-3 py-2 flex items-center gap-1 ml-2"
+              className="glass-btn-light text-xs font-bold uppercase tracking-wider text-neutral-800 hover:text-crimson px-4 py-2 rounded-full flex items-center gap-1.5 ml-1"
             >
               <span>VIEW ALL</span>
               <ArrowRight size={14} />
@@ -246,292 +226,397 @@ const Home = () => {
             <ProductCard key={product.id} product={product} />
           ))}
         </div>
-      </section>
 
-      {/* 4. HORIZONTAL SCROLLABLE SHELF: WAFFLE / RAGLAN KNITS */}
-      {waffles.length > 0 && (
-        <section className="py-12 bg-neutral-900 text-white border-y border-neutral-800">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex items-end justify-between mb-6">
-              <div>
-                <div className="inline-flex items-center gap-2 bg-crimson text-white px-2 py-0.5 text-[9px] font-black uppercase tracking-widest mb-1.5">
-                  <span>NEW ARRIVALS</span>
-                </div>
-                <h3 className="text-xl sm:text-2xl font-display font-black uppercase tracking-wider text-white">
-                  WAFFLE / RAGLAN LONG SLEEVES
-                </h3>
-              </div>
-
-              <div className="flex items-center gap-2">
-                <Link
-                  to="/shop?category=waffles"
-                  className="text-xs font-bold uppercase tracking-widest text-neutral-300 hover:text-white mr-2 hidden sm:inline-block"
-                >
-                  View All ({waffles.length})
-                </Link>
-                <button
-                  onClick={() => scrollContainer(wafflesScroll, 'left')}
-                  className="w-9 h-9 bg-neutral-800 border border-neutral-700 hover:bg-white hover:text-black flex items-center justify-center transition-colors shadow-xs"
-                  aria-label="Scroll left"
-                >
-                  <ChevronLeft size={18} />
-                </button>
-                <button
-                  onClick={() => scrollContainer(wafflesScroll, 'right')}
-                  className="w-9 h-9 bg-neutral-800 border border-neutral-700 hover:bg-white hover:text-black flex items-center justify-center transition-colors shadow-xs"
-                  aria-label="Scroll right"
-                >
-                  <ChevronRight size={18} />
-                </button>
-              </div>
-            </div>
-
-            <div
-              ref={wafflesScroll}
-              className="flex gap-3 sm:gap-6 overflow-x-auto hide-scrollbar pb-3 snap-x"
-            >
-              {waffles.map((product) => (
-                <div key={product.id} className="w-[165px] sm:w-[230px] md:w-[270px] shrink-0 snap-start">
-                  <ProductCard product={product} />
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* 5. HORIZONTAL SCROLLABLE SHELF: GRAPHIC TEES */}
-      {graphicTees.length > 0 && (
-        <section className="py-10 sm:py-12 bg-neutral-50 border-b border-neutral-200">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex items-end justify-between mb-4 sm:mb-6">
-              <div>
-                <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-neutral-500">
-                  280 GSM Combed Cotton
-                </span>
-                <h3 className="text-lg sm:text-2xl font-display font-black uppercase tracking-wider text-black">
-                  GRAPHIC T-SHIRTS
-                </h3>
-              </div>
-
-              <div className="flex items-center gap-2">
-                <Link
-                  to="/shop?category=graphic-tees"
-                  className="text-xs font-bold uppercase tracking-widest text-neutral-700 hover:text-black mr-2 hidden sm:inline-block"
-                >
-                  View All ({graphicTees.length})
-                </Link>
-                <button
-                  onClick={() => scrollContainer(graphicTeesScroll, 'left')}
-                  className="w-8 h-8 sm:w-9 sm:h-9 bg-white border border-neutral-300 hover:bg-black hover:text-white flex items-center justify-center transition-colors shadow-2xs"
-                  aria-label="Scroll left"
-                >
-                  <ChevronLeft size={16} />
-                </button>
-                <button
-                  onClick={() => scrollContainer(graphicTeesScroll, 'right')}
-                  className="w-8 h-8 sm:w-9 sm:h-9 bg-white border border-neutral-300 hover:bg-black hover:text-white flex items-center justify-center transition-colors shadow-2xs"
-                  aria-label="Scroll right"
-                >
-                  <ChevronRight size={16} />
-                </button>
-              </div>
-            </div>
-
-            <div
-              ref={graphicTeesScroll}
-              className="flex gap-3 sm:gap-6 overflow-x-auto hide-scrollbar pb-3 snap-x"
-            >
-              {graphicTees.map((product) => (
-                <div key={product.id} className="w-[165px] sm:w-[230px] md:w-[270px] shrink-0 snap-start">
-                  <ProductCard product={product} />
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* 6. BRAND STATEMENT / ABOUT LIBAS */}
-      <section className="py-14 sm:py-20 bg-neutral-900 text-white relative overflow-hidden">
-        <div className="max-w-4xl mx-auto px-6 text-center relative z-10 space-y-4">
-          <span className="text-[10px] uppercase tracking-[0.4em] text-neutral-400 font-bold block">
-            ABOUT LIBAS
-          </span>
-          <h2 className="text-2xl sm:text-4xl font-display font-black uppercase tracking-wider leading-tight text-white">
-            LIBAS HALDWANI
-          </h2>
-          <p className="text-neutral-300 text-xs sm:text-base leading-relaxed max-w-2xl mx-auto font-normal">
-            "LIBAS is your fashion destination in Haldwani, offering a thoughtfully curated collection of stylish clothing for different styles and occasions. From everyday essentials to the latest fashion trends, we bring together quality, comfort and style under one roof."
-          </p>
-          <div className="flex flex-wrap justify-center gap-3 pt-4">
-            <Link
-              to="/about"
-              className="inline-flex items-center gap-2 bg-white text-black hover:bg-brandYellow px-6 py-3 text-xs font-black uppercase tracking-[0.2em] transition-colors shadow-md"
-            >
-              <span>ABOUT LIBAS</span>
-              <ArrowRight size={14} />
-            </Link>
-            <Link
-              to="/contact"
-              className="inline-flex items-center gap-2 bg-neutral-800 hover:bg-neutral-700 border border-neutral-700 text-white px-6 py-3 text-xs font-bold uppercase tracking-[0.2em] transition-colors"
-            >
-              <MapPin size={14} className="text-crimson" />
-              <span>VISIT STORE</span>
-            </Link>
-          </div>
+        {/* Bottom Explore Link */}
+        <div className="text-center mt-10">
+          <Link
+            to="/shop"
+            className="inline-flex items-center gap-2.5 glass-btn-dark text-white px-8 py-3.5 rounded-full text-xs font-black uppercase tracking-[0.25em] shadow-lg hover:scale-105 transition-all"
+          >
+            <span>EXPLORE ALL TRENDING ITEMS</span>
+            <ArrowRight size={15} />
+          </Link>
         </div>
       </section>
 
-      {/* 7. VISIT OUR STORE SECTION */}
-      <section className="py-14 sm:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-neutral-900 text-white border border-neutral-800 grid grid-cols-1 lg:grid-cols-12 overflow-hidden shadow-2xl">
-          {/* Store Info Column */}
-          <div className="lg:col-span-6 p-6 sm:p-12 flex flex-col justify-between space-y-6">
+      {/* ========================================================================= */}
+      {/* SECTION 2: COLLECTIONS */}
+      {/* ========================================================================= */}
+      <section id="collections" className="py-14 sm:py-20 bg-neutral-900 text-white border-y border-neutral-800">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Header */}
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 pb-4 border-b border-neutral-800 gap-4">
             <div>
-              <div className="inline-flex items-center gap-2 bg-crimson text-white text-[9px] font-black uppercase tracking-widest px-2.5 py-1 mb-3">
-                <span>VISIT OUR STORE</span>
+              <div className="inline-flex items-center gap-2 bg-white/10 text-amber-300 border border-white/15 px-3 py-0.5 rounded-full text-[10px] font-black uppercase tracking-[0.25em] mb-2 backdrop-blur-md">
+                <Layers size={12} className="text-amber-300" />
+                <span>02 • CATEGORY ARCHIVE</span>
               </div>
-
-              <h2 className="text-2xl sm:text-4xl font-display font-black uppercase tracking-wider text-white mb-2">
-                LIBAS HALDWANI
+              <h2 className="text-2xl sm:text-4xl font-display font-black uppercase tracking-wider text-white">
+                COLLECTIONS
               </h2>
-
-              <p className="text-xs sm:text-sm text-neutral-400 leading-relaxed mb-6">
-                Step inside LIBAS in Haldwani. Explore our full collection of stylish clothing, premium brands, and latest occasion wear in person.
+              <p className="text-xs sm:text-sm text-neutral-400 mt-1">
+                Explore our 7 curated fashion categories tailored for quality, fit and all occasions.
               </p>
-
-              <div className="space-y-4 text-xs text-neutral-300 border-t border-neutral-800 pt-6">
-                <div className="flex items-start gap-3">
-                  <MapPin size={18} className="text-crimson shrink-0 mt-0.5" />
-                  <div>
-                    <strong className="block text-white font-bold uppercase">Store Address</strong>
-                    <p className="text-neutral-300 mt-0.5 leading-relaxed font-medium">
-                      LIBAS<br />
-                      RTO Gas Godown Link Road<br />
-                      Haldwani, Nainital<br />
-                      Uttarakhand – 263139<br />
-                      India
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3">
-                  <Compass size={18} className="text-brandYellow shrink-0 mt-0.5" />
-                  <div>
-                    <strong className="block text-white font-bold uppercase">Opening Hours</strong>
-                    <p className="text-amber-400 font-bold mt-0.5">
-                      9:00 AM – 7:00 PM (Open Daily)
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-3 pt-1">
-                  <Star size={18} className="text-amber-400 fill-amber-400 shrink-0" />
-                  <div>
-                    <strong className="block text-white font-bold uppercase">Customer Rating</strong>
-                    <p className="text-amber-400 font-bold">4.8 / 5.0 (Verified Store Reviews)</p>
-                  </div>
-                </div>
-              </div>
             </div>
 
-            <div className="flex flex-wrap gap-3 pt-2">
-              <a
-                href={googleMapsUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-white text-black hover:bg-brandYellow hover:text-black px-5 py-2.5 sm:px-6 sm:py-3 text-xs font-black uppercase tracking-widest transition-colors flex items-center gap-2 shadow"
-              >
-                <span>GET DIRECTIONS</span>
-                <ExternalLink size={14} />
-              </a>
+            <Link
+              to="/shop"
+              className="glass-btn-light text-black px-5 py-2.5 rounded-full text-xs font-black uppercase tracking-widest self-start md:self-auto hover:scale-105 transition-all flex items-center gap-2"
+            >
+              <span>BROWSE ALL</span>
+              <ArrowRight size={14} />
+            </Link>
+          </div>
 
+          {/* Visual Category Cards Grid */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4 mb-14">
+            {[
+              { id: 'shirts', name: 'Shirts', sec: '01', img: '/images/products/one-purple-shirt.png', desc: 'Camp collars & casuals' },
+              { id: 'jerseys', name: 'Jerseys', sec: '02', img: '/images/products/bvb-home-jersey.png', desc: 'Retro match & sports' },
+              { id: 'graphic-tees', name: 'Graphic Tees', sec: '03', img: '/images/products/midnight-graphic-tee.png', desc: '280 GSM Heavyweight' },
+              { id: 'waffles', name: 'Waffle Knits', sec: '04', img: '/images/products/master-angel-raglan.png', desc: '350 GSM Raglan long sleeves' },
+              { id: 'sweatshirts', name: 'Sweatshirts', sec: '05', img: '/images/products/heavy-sweatshirt-sand.png', desc: '420 GSM French terry' },
+              { id: 'pants', name: 'Pants', sec: '06', img: '/images/products/piping-wideleg-trackpant-black.png', desc: 'Wide-leg relaxed track' },
+            ].map((cat) => (
               <Link
-                to="/shop"
-                className="bg-neutral-800 hover:bg-neutral-700 text-white px-5 py-2.5 sm:px-6 sm:py-3 text-xs font-bold uppercase tracking-widest transition-colors border border-neutral-700 flex items-center gap-2"
+                key={cat.id}
+                to={`/shop?category=${cat.id}`}
+                className="group relative bg-neutral-950/80 border border-neutral-800 rounded-2xl overflow-hidden p-3 sm:p-4 flex flex-col justify-between hover:border-neutral-500 transition-all hover:-translate-y-1 shadow-lg"
               >
-                <ShoppingBag size={15} />
-                <span>EXPLORE COLLECTION</span>
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-mono font-black text-amber-400/90">{cat.sec}</span>
+                  <ArrowUpRight size={13} className="text-neutral-500 group-hover:text-white transition-colors" />
+                </div>
+
+                <div className="my-3 aspect-square flex items-center justify-center p-2">
+                  <img
+                    src={cat.img}
+                    alt={cat.name}
+                    className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500"
+                    loading="lazy"
+                  />
+                </div>
+
+                <div>
+                  <h4 className="text-xs sm:text-sm font-black uppercase text-white tracking-wider group-hover:text-amber-300 transition-colors">
+                    {cat.name}
+                  </h4>
+                  <p className="text-[10px] text-neutral-400 line-clamp-1 mt-0.5">{cat.desc}</p>
+                </div>
+              </Link>
+            ))}
+          </div>
+
+          {/* Featured Horizontal Shelf A: Waffle / Raglan Knits */}
+          {waffles.length > 0 && (
+            <div className="border-t border-neutral-800 pt-8 pb-4">
+              <div className="flex items-end justify-between mb-6">
+                <div>
+                  <span className="text-[10px] font-mono text-amber-400 uppercase tracking-widest">
+                    SECTION 04 • 350 GSM
+                  </span>
+                  <h3 className="text-lg sm:text-2xl font-display font-black uppercase tracking-wider text-white">
+                    WAFFLE / RAGLAN LONG SLEEVES
+                  </h3>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => scrollContainer(wafflesScroll, 'left')}
+                    className="w-9 h-9 rounded-full glass-btn-dark text-white flex items-center justify-center transition-transform hover:scale-105"
+                    aria-label="Scroll left"
+                  >
+                    <ChevronLeft size={18} />
+                  </button>
+                  <button
+                    onClick={() => scrollContainer(wafflesScroll, 'right')}
+                    className="w-9 h-9 rounded-full glass-btn-dark text-white flex items-center justify-center transition-transform hover:scale-105"
+                    aria-label="Scroll right"
+                  >
+                    <ChevronRight size={18} />
+                  </button>
+                </div>
+              </div>
+
+              <div
+                ref={wafflesScroll}
+                className="flex gap-4 sm:gap-6 overflow-x-auto hide-scrollbar pb-3 snap-x"
+              >
+                {waffles.map((product) => (
+                  <div key={product.id} className="w-[170px] sm:w-[230px] md:w-[270px] shrink-0 snap-start">
+                    <ProductCard product={product} />
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Featured Horizontal Shelf B: Graphic Tees */}
+          {graphicTees.length > 0 && (
+            <div className="border-t border-neutral-800 pt-8">
+              <div className="flex items-end justify-between mb-6">
+                <div>
+                  <span className="text-[10px] font-mono text-amber-400 uppercase tracking-widest">
+                    SECTION 03 • 280 GSM
+                  </span>
+                  <h3 className="text-lg sm:text-2xl font-display font-black uppercase tracking-wider text-white">
+                    GRAPHIC T-SHIRTS
+                  </h3>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => scrollContainer(graphicTeesScroll, 'left')}
+                    className="w-9 h-9 rounded-full glass-btn-dark text-white flex items-center justify-center transition-transform hover:scale-105"
+                    aria-label="Scroll left"
+                  >
+                    <ChevronLeft size={18} />
+                  </button>
+                  <button
+                    onClick={() => scrollContainer(graphicTeesScroll, 'right')}
+                    className="w-9 h-9 rounded-full glass-btn-dark text-white flex items-center justify-center transition-transform hover:scale-105"
+                    aria-label="Scroll right"
+                  >
+                    <ChevronRight size={18} />
+                  </button>
+                </div>
+              </div>
+
+              <div
+                ref={graphicTeesScroll}
+                className="flex gap-4 sm:gap-6 overflow-x-auto hide-scrollbar pb-3 snap-x"
+              >
+                {graphicTees.map((product) => (
+                  <div key={product.id} className="w-[170px] sm:w-[230px] md:w-[270px] shrink-0 snap-start">
+                    <ProductCard product={product} />
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* ========================================================================= */}
+      {/* SECTION 3: EXPLORE MORE */}
+      {/* ========================================================================= */}
+      <section id="explore-more" className="py-14 sm:py-24 bg-[#fafafa]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+          {/* Header */}
+          <div className="text-center max-w-2xl mx-auto">
+            <div className="inline-flex items-center gap-2 bg-neutral-900 text-white px-3.5 py-1 rounded-full text-[10px] font-black uppercase tracking-[0.25em] mb-2 shadow-xs">
+              <Compass size={12} className="text-amber-300" />
+              <span>03 • DISCOVER LIBAS</span>
+            </div>
+            <h2 className="text-2xl sm:text-4xl font-display font-black uppercase tracking-wider text-neutral-900">
+              EXPLORE MORE
+            </h2>
+            <p className="text-xs sm:text-sm text-neutral-500 mt-1">
+              Store visits, brand story, VIP perks & verified customer love in Haldwani.
+            </p>
+          </div>
+
+          {/* 3 Interactive Highlight Tiles */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Tile 1: Store Destination */}
+            <div className="bg-white border border-neutral-200/90 rounded-3xl p-6 sm:p-8 shadow-sm flex flex-col justify-between space-y-4 hover:shadow-xl transition-all group">
+              <div className="space-y-3">
+                <div className="w-10 h-10 rounded-2xl bg-amber-50 text-amber-700 flex items-center justify-center border border-amber-200">
+                  <MapPin size={20} className="text-crimson" />
+                </div>
+                <h3 className="text-lg sm:text-xl font-display font-black uppercase text-black">
+                  VISIT OUR STORE
+                </h3>
+                <p className="text-xs text-neutral-600 leading-relaxed font-medium">
+                  Experience our premium collection in person. Open daily from 9:00 AM to 7:00 PM at RTO Gas Godown Link Road, Haldwani.
+                </p>
+              </div>
+              <Link
+                to="/contact"
+                className="glass-btn-light text-black py-2.5 px-4 rounded-full text-xs font-black uppercase tracking-wider flex items-center justify-between group-hover:bg-neutral-900 group-hover:text-white transition-colors"
+              >
+                <span>Store Timings & Map</span>
+                <ArrowRight size={14} />
+              </Link>
+            </div>
+
+            {/* Tile 2: VIP Perks & Giveaway */}
+            <div className="bg-neutral-900 text-white border border-neutral-800 rounded-3xl p-6 sm:p-8 shadow-xl flex flex-col justify-between space-y-4 hover:border-amber-400/40 transition-all group">
+              <div className="space-y-3">
+                <div className="w-10 h-10 rounded-2xl bg-white/10 text-amber-300 flex items-center justify-center border border-white/20">
+                  <Gift size={20} className="text-amber-300" />
+                </div>
+                <h3 className="text-lg sm:text-xl font-display font-black uppercase text-white">
+                  VIP REWARDS & PERKS
+                </h3>
+                <p className="text-xs text-neutral-300 leading-relaxed font-normal">
+                  Unlock immediate ₹500 vouchers, 20% drop codes, and guaranteed VIP allocations for new arrivals.
+                </p>
+              </div>
+              <Link
+                to="/giveaway"
+                className="glass-btn-light text-black py-2.5 px-4 rounded-full text-xs font-black uppercase tracking-wider flex items-center justify-between hover:scale-102 transition-all shadow-md"
+              >
+                <span>Claim VIP Rewards</span>
+                <ArrowRight size={14} />
+              </Link>
+            </div>
+
+            {/* Tile 3: About LIBAS Story */}
+            <div className="bg-white border border-neutral-200/90 rounded-3xl p-6 sm:p-8 shadow-sm flex flex-col justify-between space-y-4 hover:shadow-xl transition-all group">
+              <div className="space-y-3">
+                <div className="w-10 h-10 rounded-2xl bg-indigo-50 text-indigo-700 flex items-center justify-center border border-indigo-200">
+                  <Sparkles size={20} className="text-indigo-600" />
+                </div>
+                <h3 className="text-lg sm:text-xl font-display font-black uppercase text-black">
+                  THE LIBAS STORY
+                </h3>
+                <p className="text-xs text-neutral-600 leading-relaxed font-medium">
+                  Quality fabrics, contemporary fits, and curated collections brought together under one roof in Haldwani.
+                </p>
+              </div>
+              <Link
+                to="/about"
+                className="glass-btn-light text-black py-2.5 px-4 rounded-full text-xs font-black uppercase tracking-wider flex items-center justify-between group-hover:bg-neutral-900 group-hover:text-white transition-colors"
+              >
+                <span>Read Brand Story</span>
+                <ArrowRight size={14} />
               </Link>
             </div>
           </div>
 
-          {/* Interactive Map Embed */}
-          <div className="lg:col-span-6 min-h-[300px] sm:min-h-[350px] relative bg-neutral-800">
-            <iframe
-              title="LIBAS Haldwani Store Location Map"
-              src="https://maps.google.com/maps?q=RTO+Gas+Godown+Link+Road,+Haldwani,+Uttarakhand&t=&z=16&ie=UTF8&iwloc=&output=embed"
-              className="w-full h-full min-h-[300px] border-0 grayscale hover:grayscale-0 transition-all duration-500"
-              loading="lazy"
-            />
-          </div>
-        </div>
-      </section>
+          {/* Store Location & Map Banner */}
+          <div className="bg-neutral-900 text-white border border-neutral-800/80 rounded-3xl grid grid-cols-1 lg:grid-cols-12 overflow-hidden shadow-2xl">
+            {/* Store Info Column */}
+            <div className="lg:col-span-6 p-6 sm:p-10 flex flex-col justify-between space-y-6">
+              <div>
+                <div className="inline-flex items-center gap-2 bg-crimson text-white text-[9px] font-black uppercase tracking-widest px-3 py-1 rounded-full mb-3">
+                  <span>HALDWANI STORE</span>
+                </div>
 
-      {/* 8. HORIZONTAL MINIMAL & COZY CUSTOMER REVIEWS */}
-      <section className="py-12 sm:py-20 bg-[#fbfbfb] border-t border-neutral-200/80 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Header */}
-          <div className="flex items-end justify-between mb-8 pb-4 border-b border-neutral-200/70">
-            <div>
-              <div className="flex items-center gap-2 text-amber-500 mb-1.5">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} size={13} fill="currentColor" />
-                ))}
-                <span className="text-[11px] font-bold text-neutral-600 ml-1">
-                  4.8 / 5.0 (Verified Shopper Reviews)
+                <h3 className="text-2xl sm:text-3xl font-display font-black uppercase tracking-wider text-white mb-2">
+                  VISIT LIBAS IN HALDWANI
+                </h3>
+
+                <p className="text-xs sm:text-sm text-neutral-400 leading-relaxed mb-6">
+                  Step inside our fashion destination at RTO Gas Godown Link Road. Explore premium brand collections and tailored fits in person.
+                </p>
+
+                <div className="space-y-3.5 text-xs text-neutral-300 border-t border-neutral-800 pt-5">
+                  <div className="flex items-start gap-3">
+                    <MapPin size={18} className="text-crimson shrink-0 mt-0.5" />
+                    <div>
+                      <strong className="block text-white font-bold uppercase">Store Address</strong>
+                      <p className="text-neutral-300 mt-0.5 leading-relaxed font-medium">
+                        LIBAS, RTO Gas Godown Link Road, Haldwani, Nainital, Uttarakhand – 263139
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-3">
+                    <Compass size={18} className="text-brandYellow shrink-0 mt-0.5" />
+                    <div>
+                      <strong className="block text-white font-bold uppercase">Opening Hours</strong>
+                      <p className="text-amber-400 font-bold mt-0.5">
+                        9:00 AM – 7:00 PM (Daily)
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex flex-wrap gap-3 pt-2">
+                <a
+                  href={googleMapsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="glass-btn-light text-black px-6 py-3 rounded-full text-xs font-black uppercase tracking-widest flex items-center gap-2 shadow-lg hover:scale-105 transition-all"
+                >
+                  <span>GET DIRECTIONS</span>
+                  <ExternalLink size={14} />
+                </a>
+
+                <Link
+                  to="/shop"
+                  className="glass-btn-dark text-white px-6 py-3 rounded-full text-xs font-bold uppercase tracking-widest flex items-center gap-2 hover:scale-105 transition-all"
+                >
+                  <ShoppingBag size={15} />
+                  <span>EXPLORE COLLECTION</span>
+                </Link>
+              </div>
+            </div>
+
+            {/* Interactive Map Embed */}
+            <div className="lg:col-span-6 min-h-[280px] sm:min-h-[320px] relative bg-neutral-800 p-3 sm:p-4">
+              <div className="w-full h-full min-h-[280px] rounded-2xl overflow-hidden shadow-inner border border-neutral-700">
+                <iframe
+                  title="LIBAS Haldwani Store Location Map"
+                  src="https://maps.google.com/maps?q=RTO+Gas+Godown+Link+Road,+Haldwani,+Uttarakhand&t=&z=16&ie=UTF8&iwloc=&output=embed"
+                  className="w-full h-full min-h-[280px] border-0 grayscale hover:grayscale-0 transition-all duration-500"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Customer Reviews Section */}
+          <div>
+            <div className="flex items-end justify-between mb-8 pb-4 border-b border-neutral-200">
+              <div>
+                <div className="flex items-center gap-2 text-amber-500 mb-1.5">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} size={13} fill="currentColor" />
+                  ))}
+                  <span className="text-[11px] font-bold text-neutral-600 ml-1">
+                    4.8 / 5.0 (Verified Shopper Reviews)
+                  </span>
+                </div>
+                <h3 className="text-xl sm:text-3xl font-display font-black uppercase tracking-wider text-neutral-900">
+                  WHAT CUSTOMERS SAY ABOUT LIBAS
+                </h3>
+              </div>
+
+              <div className="hidden sm:flex items-center gap-2">
+                <span className="text-[11px] font-medium text-neutral-400 uppercase tracking-wider">
+                  Swipe to read
                 </span>
               </div>
-              <h2 className="text-xl sm:text-3xl font-display font-black uppercase tracking-wider text-neutral-900">
-                WHAT CUSTOMERS SAY ABOUT LIBAS
-              </h2>
             </div>
 
-            <div className="hidden sm:flex items-center gap-2">
-              <span className="text-[11px] font-medium text-neutral-400 uppercase tracking-wider">
-                Swipe to read
-              </span>
-            </div>
-          </div>
-
-          {/* Horizontal Cozy Scroll Track */}
-          <div className="flex gap-4 sm:gap-5 overflow-x-auto hide-scrollbar pb-4 pt-1 snap-x">
-            {wallOfLoveReviews.map((review) => (
-              <div
-                key={review.id}
-                className="w-[280px] sm:w-[340px] shrink-0 bg-white p-5 sm:p-6 rounded-none border border-neutral-200/90 shadow-[0_2px_12px_rgba(0,0,0,0.03)] flex flex-col justify-between space-y-4 snap-start hover:border-neutral-900 transition-all group"
-              >
-                <div>
-                  <div className="flex items-center justify-between mb-3">
-                    <div className="flex items-center gap-1 text-amber-400">
-                      {[...Array(review.rating)].map((_, i) => (
-                        <Star key={i} size={12} fill="currentColor" />
-                      ))}
-                    </div>
-                    <span className="text-[9px] font-bold tracking-wider text-emerald-700 bg-emerald-50 px-2 py-0.5 border border-emerald-200 uppercase">
-                      VERIFIED BUYER
-                    </span>
-                  </div>
-
-                  <p className="text-xs sm:text-[13px] text-neutral-700 leading-relaxed font-normal italic">
-                    "{review.comment}"
-                  </p>
-                </div>
-
-                <div className="pt-3 border-t border-neutral-100 flex items-center justify-between">
+            {/* Horizontal Cozy Scroll Track */}
+            <div className="flex gap-4 sm:gap-5 overflow-x-auto hide-scrollbar pb-4 pt-1 snap-x">
+              {wallOfLoveReviews.map((review) => (
+                <div
+                  key={review.id}
+                  className="w-[280px] sm:w-[340px] shrink-0 bg-white p-5 sm:p-6 rounded-2xl border border-neutral-200/90 shadow-[0_4px_16px_rgba(0,0,0,0.04)] flex flex-col justify-between space-y-4 snap-start hover:border-neutral-900/30 hover:shadow-lg transition-all group"
+                >
                   <div>
-                    <h4 className="text-xs font-black uppercase tracking-wider text-neutral-900">
-                      {review.name}
-                    </h4>
-                    <p className="text-[10px] text-neutral-400 uppercase tracking-wider mt-0.5">
-                      {review.city} • {review.productName || 'LIBAS Collection'}
+                    <div className="flex items-center justify-between mb-3">
+                      <div className="flex items-center gap-1 text-amber-400">
+                        {[...Array(review.rating)].map((_, i) => (
+                          <Star key={i} size={12} fill="currentColor" />
+                        ))}
+                      </div>
+                      <span className="text-[9px] font-bold tracking-wider text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200 uppercase">
+                        VERIFIED BUYER
+                      </span>
+                    </div>
+
+                    <p className="text-xs sm:text-[13px] text-neutral-700 leading-relaxed font-normal italic">
+                      "{review.comment}"
                     </p>
                   </div>
-                  <span className="text-[10px] text-neutral-400 font-mono">{review.date || 'Recently'}</span>
+
+                  <div className="border-t border-neutral-100 pt-3 flex items-center justify-between text-xs">
+                    <div>
+                      <span className="font-bold text-neutral-900 block">{review.name}</span>
+                      <span className="text-[10px] text-neutral-400">{review.city}</span>
+                    </div>
+                    <span className="text-[10px] text-neutral-400">{review.date}</span>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </section>
