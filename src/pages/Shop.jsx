@@ -156,13 +156,11 @@ const Shop = () => {
 
   const categoriesNav = [
     { id: 'all', num: 'ALL', name: 'ALL COLLECTIONS', count: sourceProducts.length },
-    { id: 'new-arrivals', num: '07', name: 'NEW ARRIVALS', count: sourceProducts.filter(p => p.isNew).length, isHot: true },
-    { id: 'waffles', num: '04', name: 'WAFFLE / RAGLAN', count: sourceProducts.filter(p => p.category === 'waffles').length, isHot: true },
-    { id: 'graphic-tees', num: '03', name: 'GRAPHIC T-SHIRTS', count: sourceProducts.filter(p => p.category === 'graphic-tees').length },
-    { id: 'sweatshirts', num: '05', name: 'SWEATSHIRTS', count: sourceProducts.filter(p => p.category === 'sweatshirts').length },
-    { id: 'shirts', num: '01', name: 'SHIRTS', count: sourceProducts.filter(p => p.category === 'shirts').length },
-    { id: 'jerseys', num: '02', name: 'JERSEYS', count: sourceProducts.filter(p => p.category === 'jerseys').length },
-    { id: 'pants', num: '06', name: 'PANTS', count: sourceProducts.filter(p => p.category === 'pants').length },
+    { id: 'new-arrivals', num: '05', name: 'NEW ARRIVALS', count: sourceProducts.filter(p => p.isNew).length, isHot: true },
+    { id: 'kurtas', num: '01', name: 'CHIKANKARI & SILK', count: sourceProducts.filter(p => p.category === 'kurtas').length, isHot: true },
+    { id: 'festive-kurtas', num: '02', name: 'FESTIVE & WEDDING', count: sourceProducts.filter(p => p.category === 'festive-kurtas').length },
+    { id: 'indo-western', num: '03', name: 'INDO-WESTERN', count: sourceProducts.filter(p => p.category === 'indo-western').length },
+    { id: 'sherwanis', num: '04', name: 'WEDDING SHERWANIS', count: sourceProducts.filter(p => p.category === 'sherwanis').length },
   ];
 
   return (
@@ -175,7 +173,7 @@ const Shop = () => {
             <div>
               <div className="inline-flex items-center gap-2 bg-[#7D1E22]/10 text-[#7D1E22] border border-[#7D1E22]/20 px-3 py-0.5 text-[9px] font-bold uppercase tracking-[0.25em] mb-2 rounded-full">
                 <Sparkles size={11} className="text-[#7D1E22]" />
-                <span>LIBAS • MODERN FASHION & CLOTHING COLLECTION</span>
+                <span>LIBAS • MODERN ETHNIC & FESTIVE FASHION</span>
               </div>
               <h1 className="text-3xl sm:text-5xl font-serif font-black uppercase tracking-tight text-[#1E1E1E]">
                 {isWishlistView ? 'YOUR SAVED WISHLIST' : 'COLLECTIONS & CATALOG'}
@@ -184,10 +182,10 @@ const Shop = () => {
 
             <div className="text-xs text-[#6B6B6B] max-w-md font-normal space-y-1">
               <p>
-                Discover our curated fashion collections structured across <strong>7 numbered categories</strong>: Shirts, Jerseys, Graphic T-Shirts, Waffle / Raglan Long Sleeves, Sweatshirts, Pants & New Arrivals.
+                Discover our curated ethnic and wedding collections structured across Chikankari & Pure Silk Kurtas, Festive Haldi Sets, Indo-Western Achkans and Royal Wedding Sherwanis.
               </p>
               <p className="text-[11px] text-[#7D1E22] font-semibold uppercase tracking-wider">
-                Showing {filteredProducts.length} individual items • Clean Studio Cutouts
+                Showing {filteredProducts.length} curated designs • Pure Silk & Georgette
               </p>
             </div>
           </div>

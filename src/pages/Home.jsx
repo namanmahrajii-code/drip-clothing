@@ -31,17 +31,14 @@ const Home = () => {
   }).slice(0, 8);
 
   // Group products for category shelves
-  const waffles = products.filter((p) => p.category === 'waffles');
-  const graphicTees = products.filter((p) => p.category === 'graphic-tees');
-  const jerseys = products.filter((p) => p.category === 'jerseys');
-  const shirts = products.filter((p) => p.category === 'shirts');
-  const sweatshirts = products.filter((p) => p.category === 'sweatshirts');
+  const chikankariKurtas = products.filter((p) => p.category === 'kurtas');
+  const festiveKurtas = products.filter((p) => p.category === 'festive-kurtas');
+  const weddingCollection = products.filter((p) => p.category === 'sherwanis' || p.category === 'indo-western');
 
   const createScrollRef = () => useRef(null);
-  const wafflesScroll = createScrollRef();
-  const graphicTeesScroll = createScrollRef();
-  const jerseysScroll = createScrollRef();
-  const sweatshirtsScroll = createScrollRef();
+  const chikankariScroll = createScrollRef();
+  const festiveScroll = createScrollRef();
+  const weddingScroll = createScrollRef();
 
   const scrollContainer = (ref, direction) => {
     if (ref.current) {
@@ -268,67 +265,65 @@ const Home = () => {
           </div>
 
           {/* Visual Category Cards Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4 mb-14">
+          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-4 gap-3 sm:gap-4 mb-14">
             {[
-              { id: 'shirts', name: 'Shirts', sec: '01', img: '/images/products/one-purple-shirt.png', desc: 'Camp collars & casuals' },
-              { id: 'jerseys', name: 'Jerseys', sec: '02', img: '/images/products/bvb-home-jersey.png', desc: 'Retro match & sports' },
-              { id: 'graphic-tees', name: 'Graphic Tees', sec: '03', img: '/images/products/midnight-graphic-tee.png', desc: '280 GSM Heavyweight' },
-              { id: 'waffles', name: 'Waffle Knits', sec: '04', img: '/images/products/master-angel-raglan.png', desc: '350 GSM Raglan tops' },
-              { id: 'sweatshirts', name: 'Sweatshirts', sec: '05', img: '/images/products/heavy-sweatshirt-sand.png', desc: '420 GSM French terry' },
-              { id: 'pants', name: 'Pants', sec: '06', img: '/images/products/piping-wideleg-trackpant-black.png', desc: 'Wide-leg relaxed track' },
+              { id: 'kurtas', name: 'Chikankari & Silk', sec: '01', img: '/images/products/cream_chikankari_kurta.jpg', desc: 'Handcrafted Lucknowi Kurta Sets' },
+              { id: 'festive-kurtas', name: 'Festive & Haldi', sec: '02', img: '/images/products/haldi_yellow_silk_kurta.jpg', desc: 'Jacquard, Mirror & Sequin Kurtas' },
+              { id: 'indo-western', name: 'Indo-Western', sec: '03', img: '/images/products/blush_pink_indo_western.jpg', desc: 'Structured Floral Achkans' },
+              { id: 'sherwanis', name: 'Wedding Sherwanis', sec: '04', img: '/images/products/luxury_cream_gold_sherwani.jpg', desc: 'Grand Zari Groom Sherwanis' },
             ].map((cat) => (
               <Link
                 key={cat.id}
                 to={`/shop?category=${cat.id}`}
-                className="group relative bg-white border border-[#E5DDD3] rounded-2xl overflow-hidden p-3 sm:p-4 flex flex-col justify-between hover:border-[#7D1E22]/50 transition-all hover:-translate-y-1 shadow-sm hover:shadow-xl"
+                className="group relative bg-white border border-[#E5DDD3] rounded-3xl overflow-hidden p-4 flex flex-col justify-between hover:border-[#7D1E22]/50 transition-all hover:-translate-y-1 shadow-sm hover:shadow-xl"
               >
                 <div className="flex items-center justify-between">
                   <span className="text-[10px] font-mono font-bold text-[#7D1E22]">{cat.sec}</span>
-                  <ArrowUpRight size={13} className="text-[#6B6B6B] group-hover:text-[#7D1E22] transition-colors" />
+                  <ArrowUpRight size={14} className="text-[#6B6B6B] group-hover:text-[#7D1E22] transition-colors" />
                 </div>
 
-                <div className="my-3 aspect-square flex items-center justify-center p-2 bg-[#FAF8F5] rounded-xl border border-[#E5DDD3]/40">
+                <div className="my-3 aspect-[3/4] flex items-center justify-center p-2 bg-[#FAF8F5] rounded-2xl border border-[#E5DDD3]/40 overflow-hidden">
                   <img
                     src={cat.img}
                     alt={cat.name}
-                    className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500"
+                    className="w-full h-full object-cover rounded-xl group-hover:scale-105 transition-transform duration-500"
                     loading="lazy"
                   />
                 </div>
 
                 <div>
-                  <h4 className="text-xs sm:text-sm font-bold uppercase text-[#1E1E1E] tracking-wider group-hover:text-[#7D1E22] transition-colors">
+                  <h4 className="text-xs sm:text-sm font-serif font-black uppercase text-[#1E1E1E] tracking-wider group-hover:text-[#7D1E22] transition-colors">
                     {cat.name}
                   </h4>
-                  <p className="text-[10px] text-[#6B6B6B] line-clamp-1 mt-0.5">{cat.desc}</p>
+                  <p className="text-[11px] text-[#6B6B6B] line-clamp-1 mt-0.5">{cat.desc}</p>
                 </div>
               </Link>
             ))}
           </div>
 
-          {/* Featured Horizontal Shelf A: Waffle / Raglan Knits */}
-          {waffles.length > 0 && (
+          {/* Featured Horizontal Shelf A: Chikankari & Silk Kurtas */}
+          {chikankariKurtas.length > 0 && (
             <div className="border-t border-[#E5DDD3] pt-8 pb-4">
               <div className="flex items-end justify-between mb-6">
                 <div>
                   <span className="text-[10px] font-mono text-[#7D1E22] font-bold uppercase tracking-widest">
-                    SECTION 04 • 350 GSM
+                    SECTION 01 • HANDCRAFTED
                   </span>
                   <h3 className="text-lg sm:text-2xl font-serif font-black uppercase tracking-tight text-[#1E1E1E]">
-                    WAFFLE / RAGLAN LONG SLEEVES
+                    CHIKANKARI & PURE SILK KURTAS
                   </h3>
                 </div>
 
                 <div className="flex items-center gap-2">
                   <button
-                    onClick={() => scrollContainer(wafflesScroll, 'left')}
+                    onClick={() => scrollContainer(chikankariScroll, 'left')}
                     className="w-9 h-9 rounded-full bg-white text-[#1E1E1E] border border-[#E5DDD3] hover:bg-[#7D1E22] hover:text-white flex items-center justify-center transition-all shadow-xs"
                     aria-label="Scroll left"
                   >
                     <ChevronLeft size={18} />
                   </button>
                   <button
-                    onClick={() => scrollContainer(wafflesScroll, 'right')}
+                    onClick={() => scrollContainer(chikankariScroll, 'right')}
                     className="w-9 h-9 rounded-full bg-white text-[#1E1E1E] border border-[#E5DDD3] hover:bg-[#7D1E22] hover:text-white flex items-center justify-center transition-all shadow-xs"
                     aria-label="Scroll right"
                   >
@@ -338,11 +333,11 @@ const Home = () => {
               </div>
 
               <div
-                ref={wafflesScroll}
+                ref={chikankariScroll}
                 className="flex gap-4 sm:gap-6 overflow-x-auto hide-scrollbar pb-3 snap-x"
               >
-                {waffles.map((product) => (
-                  <div key={product.id} className="w-[170px] sm:w-[230px] md:w-[270px] shrink-0 snap-start">
+                {chikankariKurtas.map((product) => (
+                  <div key={product.id} className="w-[180px] sm:w-[240px] md:w-[280px] shrink-0 snap-start">
                     <ProductCard product={product} />
                   </div>
                 ))}
@@ -350,29 +345,29 @@ const Home = () => {
             </div>
           )}
 
-          {/* Featured Horizontal Shelf B: Graphic Tees */}
-          {graphicTees.length > 0 && (
+          {/* Featured Horizontal Shelf B: Wedding Sherwanis & Indo-Western */}
+          {weddingCollection.length > 0 && (
             <div className="border-t border-[#E5DDD3] pt-8">
               <div className="flex items-end justify-between mb-6">
                 <div>
                   <span className="text-[10px] font-mono text-[#7D1E22] font-bold uppercase tracking-widest">
-                    SECTION 03 • 280 GSM
+                    SECTION 04 • ROYAL HERITAGE
                   </span>
                   <h3 className="text-lg sm:text-2xl font-serif font-black uppercase tracking-tight text-[#1E1E1E]">
-                    GRAPHIC T-SHIRTS
+                    ROYAL WEDDING SHERWANIS & ACHKANS
                   </h3>
                 </div>
 
                 <div className="flex items-center gap-2">
                   <button
-                    onClick={() => scrollContainer(graphicTeesScroll, 'left')}
+                    onClick={() => scrollContainer(weddingScroll, 'left')}
                     className="w-9 h-9 rounded-full bg-white text-[#1E1E1E] border border-[#E5DDD3] hover:bg-[#7D1E22] hover:text-white flex items-center justify-center transition-all shadow-xs"
                     aria-label="Scroll left"
                   >
                     <ChevronLeft size={18} />
                   </button>
                   <button
-                    onClick={() => scrollContainer(graphicTeesScroll, 'right')}
+                    onClick={() => scrollContainer(weddingScroll, 'right')}
                     className="w-9 h-9 rounded-full bg-white text-[#1E1E1E] border border-[#E5DDD3] hover:bg-[#7D1E22] hover:text-white flex items-center justify-center transition-all shadow-xs"
                     aria-label="Scroll right"
                   >
@@ -382,11 +377,11 @@ const Home = () => {
               </div>
 
               <div
-                ref={graphicTeesScroll}
+                ref={weddingScroll}
                 className="flex gap-4 sm:gap-6 overflow-x-auto hide-scrollbar pb-3 snap-x"
               >
-                {graphicTees.map((product) => (
-                  <div key={product.id} className="w-[170px] sm:w-[230px] md:w-[270px] shrink-0 snap-start">
+                {weddingCollection.map((product) => (
+                  <div key={product.id} className="w-[180px] sm:w-[240px] md:w-[280px] shrink-0 snap-start">
                     <ProductCard product={product} />
                   </div>
                 ))}
