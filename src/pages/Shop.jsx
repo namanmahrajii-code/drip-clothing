@@ -155,7 +155,7 @@ const Shop = () => {
   };
 
   const categoriesNav = [
-    { id: 'all', num: 'ALL', name: 'ALL ARCHIVE', count: sourceProducts.length },
+    { id: 'all', num: 'ALL', name: 'ALL COLLECTIONS', count: sourceProducts.length },
     { id: 'new-arrivals', num: '07', name: 'NEW ARRIVALS', count: sourceProducts.filter(p => p.isNew).length, isHot: true },
     { id: 'waffles', num: '04', name: 'WAFFLE / RAGLAN', count: sourceProducts.filter(p => p.category === 'waffles').length, isHot: true },
     { id: 'graphic-tees', num: '03', name: 'GRAPHIC T-SHIRTS', count: sourceProducts.filter(p => p.category === 'graphic-tees').length },
@@ -175,7 +175,7 @@ const Shop = () => {
             <div>
               <div className="inline-flex items-center gap-2 bg-black text-white px-2.5 py-1 text-[9px] font-black uppercase tracking-[0.25em] mb-2">
                 <Sparkles size={11} className="text-brandYellow" />
-                <span>OFFICIAL STREETWEAR ARCHIVE // 2026 DROPS</span>
+                <span>LIBAS • MODERN FASHION & CLOTHING COLLECTION</span>
               </div>
               <h1 className="text-3xl sm:text-5xl font-display font-black uppercase tracking-tight text-black">
                 {isWishlistView ? 'YOUR SAVED WISHLIST' : 'PRODUCT COLLECTION & CATALOG'}
@@ -184,7 +184,7 @@ const Shop = () => {
 
             <div className="text-xs text-neutral-600 max-w-md font-medium space-y-1">
               <p>
-                Browse our curated drops structured across <strong>7 official numbered categories</strong>: Shirts, Jerseys, Graphic T-Shirts, Waffle / Raglan Long Sleeves, Sweatshirts, Pants & New Arrivals.
+                Discover our curated fashion collections structured across <strong>7 official numbered categories</strong>: Shirts, Jerseys, Graphic T-Shirts, Waffle / Raglan Long Sleeves, Sweatshirts, Pants & New Arrivals.
               </p>
               <p className="text-[11px] text-neutral-400 font-bold uppercase tracking-wider">
                 Showing {filteredProducts.length} individual product cards • Clean Studio Cutouts

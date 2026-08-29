@@ -118,7 +118,7 @@ const OrderSuccess = () => {
           {/* Action CTAs */}
           <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-neutral-200">
             <a
-              href={`https://wa.me/917900455958?text=Hi%20Drip%20Clothing%20Haldwani,%20my%20order%20ID%20is%20${order.id}.%20Please%20send%20tracking%20updates.`}
+              href={`https://wa.me/917900455958?text=Hi%20LIBAS%20Haldwani,%20my%20order%20ID%20is%20${order.id}.%20Please%20send%20tracking%20updates.`}
               target="_blank"
               rel="noopener noreferrer"
               className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white py-3.5 text-xs font-black uppercase tracking-widest flex items-center justify-center gap-2 transition-colors shadow-sm"

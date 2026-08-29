@@ -208,22 +208,22 @@ export const ShopProvider = ({ children }) => {
   // Apply Coupon
   const applyCoupon = (code) => {
     const clean = code.trim().toUpperCase();
-    if (clean === 'DRIP10' || clean === 'MONK10') {
+    if (clean === 'LIBAS10') {
       const discount = 0.10; // 10% off
-      setCoupon({ code: clean, discount, description: '10% Off Drip Clothing Drop' });
+      setCoupon({ code: clean, discount, description: '10% Off LIBAS Fashion Collection' });
       showToast(`Coupon ${clean} applied! 10% Discount unlocked`);
       return { success: true, message: '10% Discount Applied' };
-    } else if (clean === 'DRIP20') {
+    } else if (clean === 'LIBAS20') {
       const discount = 0.20; // 20% off
-      setCoupon({ code: 'DRIP20', discount, description: '20% Off Streetwear Collection' });
-      showToast('Coupon DRIP20 applied! 20% Discount unlocked');
+      setCoupon({ code: 'LIBAS20', discount, description: '20% Off LIBAS Store Collection' });
+      showToast('Coupon LIBAS20 applied! 20% Discount unlocked');
       return { success: true, message: '20% Discount Applied' };
     } else if (clean === 'FREESHIP') {
       setCoupon({ code: 'FREESHIP', discount: 0, freeShipping: true, description: 'Free Express Shipping' });
       showToast('Coupon FREESHIP applied!');
       return { success: true, message: 'Free Shipping Applied' };
     } else {
-      showToast('Invalid coupon code. Try DRIP10 or DRIP20');
+      showToast('Invalid coupon code. Try LIBAS10 or LIBAS20');
       return { success: false, message: 'Invalid coupon code' };
     }
   };

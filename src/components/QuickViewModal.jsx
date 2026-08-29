@@ -203,7 +203,7 @@ const QuickViewModal = () => {
                 type="button"
                 onClick={() => {
                   const sizeText = selectedSize ? ` (Size: ${selectedSize})` : '';
-                  const msg = `*DRIP CLOTHING HALDWANI*\nHi, I want to query/order *${quickViewProduct.title}*${sizeText} (₹${quickViewProduct.price}). Is this available?`;
+                  const msg = `*LIBAS HALDWANI*\nHi, I want to query/order *${quickViewProduct.title}*${sizeText} (₹${quickViewProduct.price}). Is this available?`;
                   window.open(`https://wa.me/917900455958?text=${encodeURIComponent(msg)}`, '_blank');
                 }}
                 className="w-full bg-[#25D366] hover:bg-[#20ba5a] text-white py-2.5 text-xs font-black uppercase tracking-wider flex items-center justify-center gap-2 transition-colors shadow-2xs"

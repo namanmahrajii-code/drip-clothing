@@ -126,7 +126,7 @@ const AdminContent = () => {
                 type="text"
                 value={content.hero.title}
                 onChange={(e) => handleHeroChange('title', e.target.value)}
-                placeholder="DRIP CLOTHING"
+                placeholder="LIBAS"
                 className="w-full bg-slate-50 border border-slate-200 p-2.5 rounded-lg font-bold text-sm focus:outline-none focus:bg-white focus:border-indigo-500"
               />
             </div>
@@ -228,7 +228,7 @@ const AdminContent = () => {
                 type="text"
                 value={content.announcement.highlightCode}
                 onChange={(e) => handleAnnouncementChange('highlightCode', e.target.value.toUpperCase())}
-                placeholder="DRIP10"
+                placeholder="LIBAS10"
                 className="w-full max-w-xs bg-slate-50 border border-slate-200 p-2.5 rounded-lg font-mono font-bold focus:outline-none focus:bg-white focus:border-indigo-500"
               />
             </div>

@@ -70,12 +70,12 @@ const AdminSidebar = ({ isMobileOpen, setIsMobileOpen }) => {
           <div className="flex items-center gap-2.5">
             <img
               src="/images/logo.png"
-              alt="Drip Logo"
+              alt="LIBAS Logo"
               className="w-9 h-9 object-contain rounded-lg bg-slate-950 p-0.5 border border-slate-700 shadow-md"
             />
             <div className="flex flex-col">
               <span className="font-bold text-sm text-white tracking-wider leading-none">
-                DRIP ADMIN
+                LIBAS ADMIN
               </span>
               <span className="text-[9px] font-mono uppercase text-slate-400 tracking-widest mt-0.5">
                 Haldwani Console
@@ -259,7 +259,7 @@ const AdminSidebar = ({ isMobileOpen, setIsMobileOpen }) => {
                   {adminUser?.name || 'Store Manager'}
                 </span>
                 <span className="text-[10px] text-slate-500 truncate">
-                  {adminUser?.email || 'admin@dripclothing.in'}
+                  {adminUser?.email || 'admin@libas.in'}
                 </span>
               </div>
             </div>

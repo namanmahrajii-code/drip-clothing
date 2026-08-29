@@ -1,12 +1,12 @@
 export const initialCategories = [
-  { id: 'all', name: 'All Drops', sectionNumber: 'ALL', description: 'Complete streetwear archive' },
-  { id: 'shirts', name: 'Shirts', sectionNumber: '01', description: 'Camp collars, baseball pinstripes & sport shirts' },
-  { id: 'jerseys', name: 'Jerseys', sectionNumber: '02', description: 'Retro bloc-core match jerseys & club classics' },
-  { id: 'graphic-tees', name: 'Graphic T-Shirts', sectionNumber: '03', description: '280 GSM heavyweight gothic, anime & pop-art graphic tees' },
+  { id: 'all', name: 'All Collections', sectionNumber: 'ALL', description: 'Curated modern fashion & clothing collection' },
+  { id: 'shirts', name: 'Shirts', sectionNumber: '01', description: 'Camp collars, classic pinstripes & contemporary casual shirts' },
+  { id: 'jerseys', name: 'Jerseys', sectionNumber: '02', description: 'Retro match jerseys & vintage club sports fashion' },
+  { id: 'graphic-tees', name: 'Graphic T-Shirts', sectionNumber: '03', description: '280 GSM heavyweight combed cotton graphic & statement tees' },
   { id: 'waffles', name: 'Waffle / Raglan Long Sleeves', sectionNumber: '04', description: '350 GSM textured honeycomb waffle knits & two-tone raglan tops' },
-  { id: 'sweatshirts', name: 'Sweatshirts', sectionNumber: '05', description: '420 GSM loopback French terry crewnecks & raglan sweatshirts' },
-  { id: 'pants', name: 'Pants', sectionNumber: '06', description: 'Architectural relaxed & contour piping wide-leg track pants' },
-  { id: 'new-arrivals', name: 'New Arrivals', sectionNumber: '07', description: 'Fresh Waffle / Raglan drops & limited edition release' },
+  { id: 'sweatshirts', name: 'Sweatshirts', sectionNumber: '05', description: '420 GSM loopback French terry crewnecks & luxury sweatshirts' },
+  { id: 'pants', name: 'Pants', sectionNumber: '06', description: 'Relaxed fit & contour piping wide-leg trousers and track bottoms' },
+  { id: 'new-arrivals', name: 'New Arrivals', sectionNumber: '07', description: 'Fresh seasonal drops & latest collection releases' },
 ];
 
 export const initialProducts = [

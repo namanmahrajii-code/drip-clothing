@@ -2,38 +2,39 @@ import { initialProducts, initialCategories } from '../../data/products';
 import { wallOfLoveReviews } from '../../data/reviews';
 
 const STORAGE_KEYS = {
-  PRODUCTS: 'drip_admin_products_v1',
-  CATEGORIES: 'drip_admin_categories_v1',
-  ORDERS: 'drip_admin_orders_v2_zero',
-  CUSTOMERS: 'drip_admin_customers_v2_zero',
-  COUPONS: 'drip_admin_coupons_v2_zero',
-  REVIEWS: 'drip_admin_reviews_v1',
-  CONTENT: 'drip_admin_content_v1',
-  SETTINGS: 'drip_admin_settings_v1',
+  PRODUCTS: 'libas_admin_products_v1',
+  CATEGORIES: 'libas_admin_categories_v1',
+  ORDERS: 'libas_admin_orders_v2_zero',
+  CUSTOMERS: 'libas_admin_customers_v2_zero',
+  COUPONS: 'libas_admin_coupons_v2_zero',
+  REVIEWS: 'libas_admin_reviews_v1',
+  CONTENT: 'libas_admin_content_v1',
+  SETTINGS: 'libas_admin_settings_v1',
 };
 
-// Initial store settings with authoritative Drip Clothing Haldwani info
+// Initial store settings with authoritative LIBAS info
 const initialStoreSettings = {
-  brandName: 'Drip Clothing Haldwani',
-  businessType: 'Clothing Store / Streetwear Clothing Brand',
-  tagline: 'Streetwear • Graphic Tees • Jerseys • Waffle Collection',
+  brandName: 'LIBAS',
+  businessType: 'Fashion & Clothing Store',
+  tagline: 'Modern Fashion • Premium Brands • Latest Collections',
   address: {
-    street: 'Charayal Chauraha, Near Birla School, Opposite Nainital Bank',
-    locality: 'Prempur Loshyani',
+    street: 'RTO Gas Godown Link Road',
+    locality: 'Haldwani',
     city: 'Haldwani',
     state: 'Uttarakhand',
     pincode: '263139',
     country: 'India',
-    plusCode: '5FWQ+F9, Haldwani, Uttarakhand',
+    plusCode: 'RTO Gas Godown Link Road, Haldwani',
   },
+  hours: '9:00 AM – 7:00 PM',
   rating: {
-    score: 4.6,
-    reviewsCount: 19,
-    source: 'Google Reviews',
+    score: 4.8,
+    reviewsCount: 24,
+    source: 'Verified Reviews',
   },
   socials: {
-    instagram: '@drip__clothing__',
-    instagramUrl: 'https://www.instagram.com/drip__clothing__/',
+    instagram: '@libas_haldwani',
+    instagramUrl: 'https://www.instagram.com/',
   },
   policies: {
     shippingMinFree: 1599,
@@ -45,26 +46,26 @@ const initialStoreSettings = {
 // Initial homepage CMS content
 const initialContent = {
   hero: {
-    badge: 'HALDWANI • STREETWEAR CLOTHING STORE',
-    title: 'DRIP CLOTHING',
-    subtitle: 'Drip Clothing Haldwani is a streetwear-focused clothing store bringing trending graphic tees, jerseys, waffle long sleeves, sweatshirts, shirts and everyday streetwear to Haldwani.',
-    ctaPrimaryText: 'SHOP COLLECTION',
+    badge: 'HALDWANI • FASHION & CLOTHING STORE',
+    title: 'LIBAS',
+    subtitle: 'LIBAS is your fashion destination in Haldwani, offering a thoughtfully curated collection of stylish clothing for different styles and occasions. From everyday essentials to the latest fashion trends, we bring together quality, comfort and style under one roof.',
+    ctaPrimaryText: 'EXPLORE COLLECTION',
     ctaPrimaryLink: '/shop',
     ctaSecondaryText: 'VISIT OUR STORE',
     ctaSecondaryLink: '/contact',
-    bgImage: 'https://images.unsplash.com/photo-1509967419530-da38b4704bc6?q=80&w=2000&auto=format&fit=crop',
+    bgImage: '/images/banners/hero-desktop.jpg',
   },
   announcement: {
     enabled: true,
-    text: '💧 DRIP CLOTHING HALDWANI • STREETWEAR STORE • CHARAYAL CHAURAHA, OPP. NAINITAL BANK • ★ 4.6 GOOGLE RATING (19 REVIEWS)',
-    highlightCode: 'DRIP10',
+    text: '✨ LIBAS HALDWANI • MODERN FASHION & CLOTHING STORE • RTO GAS GODOWN LINK ROAD • OPEN 9:00 AM – 7:00 PM • PREMIUM BRANDS',
+    highlightCode: 'LIBAS10',
   },
   banners: [
     {
       id: 'b-1',
-      title: '04 — WAFFLE & RAGLAN DROP',
-      subtitle: 'Heavy 350 GSM thermal waffle long sleeves with distressed typography',
-      link: '/shop?category=waffles',
+      title: 'LATEST FASHION ARRIVALS',
+      subtitle: 'Discover stylish collections and premium brands curated to help you look and feel your best',
+      link: '/shop',
       active: true,
     }
   ]
@@ -74,7 +75,7 @@ const initialContent = {
 const initialCoupons = [
   {
     id: 'c-1',
-    code: 'DRIP10',
+    code: 'LIBAS10',
     type: 'percentage', // percentage | fixed
     value: 10,
     minOrder: 999,
@@ -87,7 +88,7 @@ const initialCoupons = [
   },
   {
     id: 'c-2',
-    code: 'DRIP20',
+    code: 'LIBAS20',
     type: 'percentage',
     value: 20,
     minOrder: 2499,
@@ -138,6 +139,9 @@ class AdminDataService {
 
   initData() {
     try {
+      localStorage.removeItem('libas_admin_orders_v1');
+      localStorage.removeItem('libas_admin_customers_v1');
+      localStorage.removeItem('libas_admin_coupons_v1');
       localStorage.removeItem('drip_admin_orders_v1');
       localStorage.removeItem('drip_admin_customers_v1');
       localStorage.removeItem('drip_admin_coupons_v1');

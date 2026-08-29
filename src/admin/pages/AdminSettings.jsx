@@ -12,7 +12,7 @@ const AdminSettings = () => {
   // Profile Form
   const [profileForm, setProfileForm] = useState({
     name: adminUser?.name || 'Store Manager',
-    email: adminUser?.email || 'admin@dripclothing.in',
+    email: adminUser?.email || 'admin@libas.in',
     role: 'Super Admin',
   });
 
@@ -284,7 +284,7 @@ const AdminSettings = () => {
               </div>
 
               <p className="text-slate-600 leading-relaxed">
-                Store policies are active for <strong>Drip Clothing Haldwani</strong> covering 7-Day Returns & Exchanges, Privacy Protections, and Uttarakhand jurisdiction terms.
+                Store policies are active for <strong>LIBAS Haldwani</strong> covering 7-Day Returns & Exchanges, Privacy Protections, and Uttarakhand jurisdiction terms.
               </p>
             </div>
           )}

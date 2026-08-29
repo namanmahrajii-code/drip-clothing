@@ -10,8 +10,8 @@ const AdminLogin = () => {
 
   const from = location.state?.from?.pathname || '/admin/dashboard';
 
-  const [email, setEmail] = useState('admin@dripclothing.in');
-  const [password, setPassword] = useState('drip2026');
+  const [email, setEmail] = useState('admin@libas.in');
+  const [password, setPassword] = useState('libas2026');
   const [rememberMe, setRememberMe] = useState(true);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -51,8 +51,8 @@ const AdminLogin = () => {
   };
 
   const fillDemoCredentials = () => {
-    setEmail('admin@dripclothing.in');
-    setPassword('drip2026');
+    setEmail('admin@libas.in');
+    setPassword('libas2026');
     setError('');
   };
 
@@ -67,11 +67,11 @@ const AdminLogin = () => {
         <div className="flex flex-col items-center text-center">
           <img
             src="/images/logo.png"
-            alt="Drip Clothing Logo"
-            className="w-20 h-20 object-contain drop-shadow-xl mb-2"
+            alt="LIBAS Logo"
+            className="w-20 h-20 object-contain drop-shadow-xl mb-2 rounded-lg"
           />
           <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-            DRIP CLOTHING ADMIN
+            LIBAS ADMIN
           </h2>
           <p className="mt-1 text-xs text-slate-400 font-medium">
             Haldwani Store Management & E-Commerce Console
@@ -99,7 +99,7 @@ const AdminLogin = () => {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="admin@dripclothing.in"
+                  placeholder="admin@libas.in"
                   className="w-full bg-slate-950 border border-slate-700 pl-10 pr-3 py-2.5 rounded-lg text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-colors"
                 />
               </div>
@@ -113,9 +113,9 @@ const AdminLogin = () => {
                 <button
                   type="button"
                   onClick={() => setShowForgotModal(true)}
-                  className="text-[11px] text-emerald-400 hover:text-emerald-300 hover:underline"
+                  className="text-[11px] text-emerald-400 hover:underline"
                 >
-                  Forgot password?
+                  Forgot Password?
                 </button>
               </div>
               <div className="relative">
@@ -131,22 +131,27 @@ const AdminLogin = () => {
               </div>
             </div>
 
-            <div className="flex items-center justify-between pt-1">
-              <label className="flex items-center gap-2 cursor-pointer">
+            <div className="flex items-center justify-between py-1">
+              <label className="flex items-center gap-2 cursor-pointer text-xs text-slate-400">
                 <input
                   type="checkbox"
                   checked={rememberMe}
                   onChange={(e) => setRememberMe(e.target.checked)}
-                  className="w-4 h-4 rounded-sm bg-slate-950 border-slate-700 text-emerald-600 focus:ring-0"
+                  className="rounded bg-slate-950 border-slate-700 text-emerald-500 focus:ring-emerald-500"
                 />
-                <span className="text-xs text-slate-300 font-medium">Keep me logged in</span>
+                <span>Remember this terminal</span>
               </label>
+
+              <span className="flex items-center gap-1 text-[11px] text-emerald-400/90 font-medium">
+                <ShieldCheck size={14} />
+                <span>Encrypted</span>
+              </span>
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full mt-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold py-3 rounded-lg text-xs uppercase tracking-wider transition-all duration-200 flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 disabled:opacity-50"
+              className="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 py-3 rounded-lg text-xs font-extrabold uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-lg hover:shadow-emerald-500/20 active:scale-[0.99] disabled:opacity-50"
             >
               {loading ? (
                 <div className="w-4 h-4 border-2 border-slate-950 border-t-transparent rounded-full animate-spin" />
@@ -163,8 +168,8 @@ const AdminLogin = () => {
           <div className="mt-6 pt-5 border-t border-slate-800/80 text-center">
             <div className="bg-slate-950/60 p-3 rounded-lg border border-slate-800 flex items-center justify-between text-[11px]">
               <div className="text-left">
-                <span className="text-slate-400 block font-mono">Demo: admin@dripclothing.in</span>
-                <span className="text-slate-400 block font-mono">Pass: drip2026</span>
+                <span className="text-slate-400 block font-mono">Demo: admin@libas.in</span>
+                <span className="text-slate-400 block font-mono">Pass: libas2026</span>
               </div>
               <button
                 type="button"
@@ -213,7 +218,7 @@ const AdminLogin = () => {
                   required
                   value={forgotEmail}
                   onChange={(e) => setForgotEmail(e.target.value)}
-                  placeholder="admin@dripclothing.in"
+                  placeholder="admin@libas.in"
                   className="w-full bg-slate-950 border border-slate-700 p-2.5 rounded-lg text-xs text-white focus:outline-none focus:border-emerald-500"
                 />
                 <button

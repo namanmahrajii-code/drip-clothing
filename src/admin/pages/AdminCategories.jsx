@@ -112,7 +112,7 @@ const AdminCategories = () => {
       {/* Category List */}
       <div className="bg-white rounded-xl border border-slate-200 shadow-xs overflow-hidden">
         <div className="p-4 bg-slate-50 border-b border-slate-200 flex items-center justify-between text-xs text-slate-600 font-semibold">
-          <span>Official Drip Clothing Sections (01–07)</span>
+          <span>Official LIBAS Collection Sections (01–07)</span>
           <span>Arrange Order & Live Visibility</span>
         </div>
 

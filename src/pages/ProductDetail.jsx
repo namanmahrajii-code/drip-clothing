@@ -96,7 +96,7 @@ const ProductDetail = () => {
 
   const handleWhatsAppOrder = () => {
     const sizeText = selectedSize ? `Size: ${selectedSize}` : 'Size: All Sizes Query';
-    const message = `*DRIP CLOTHING HALDWANI - PRODUCT INQUIRY & ORDER*\n\nHi Drip Clothing, I am interested in purchasing:\n\n• *Product:* ${product.title}\n• *${sizeText}*\n• *Quantity:* ${quantity}\n• *Price:* ₹${product.price}\n• *Link:* ${window.location.href}\n\nPlease share stock availability and delivery options!`;
+    const message = `*LIBAS HALDWANI - PRODUCT INQUIRY & ORDER*\n\nHi LIBAS, I am interested in purchasing:\n\n• *Product:* ${product.title}\n• *${sizeText}*\n• *Quantity:* ${quantity}\n• *Price:* ₹${product.price}\n• *Link:* ${window.location.href}\n\nPlease share stock availability and delivery options!`;
 
     window.open(`https://wa.me/917900455958?text=${encodeURIComponent(message)}`, '_blank');
   };

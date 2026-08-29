@@ -27,12 +27,12 @@ const AdminLayout = () => {
         {/* Admin Footer */}
         <footer className="h-12 border-t border-slate-200 bg-white px-6 flex items-center justify-between text-xs text-slate-500">
           <div className="flex items-center gap-2">
-            <span className="font-semibold text-slate-700">Drip Clothing Haldwani</span>
+            <span className="font-semibold text-slate-700">LIBAS Haldwani</span>
             <span>•</span>
             <span>Admin Management System</span>
           </div>
           <div className="text-[11px] font-mono text-slate-400">
-            Charayal Chauraha, Haldwani, UK (5FWQ+F9)
+            RTO Gas Godown Link Road, Haldwani (9 AM – 7 PM)
           </div>
         </footer>
       </div>

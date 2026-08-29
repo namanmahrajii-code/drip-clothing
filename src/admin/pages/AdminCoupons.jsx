@@ -199,7 +199,7 @@ const AdminCoupons = () => {
               required
               value={formData.code}
               onChange={(e) => setFormData({ ...formData, code: e.target.value.toUpperCase() })}
-              placeholder="e.g. DRIP25"
+              placeholder="e.g. LIBAS25"
               className="w-full bg-slate-50 border border-slate-200 p-2.5 rounded-lg font-mono font-bold uppercase focus:outline-none focus:bg-white focus:border-indigo-500"
             />
           </div>

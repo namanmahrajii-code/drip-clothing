@@ -116,13 +116,13 @@ const AdminProducts = () => {
     setEditingProduct(null);
     setFormData({
       title: '',
-      sku: `DRIP-${Math.floor(1000 + Math.random() * 9000)}`,
+      sku: `LIBAS-${Math.floor(1000 + Math.random() * 9000)}`,
       category: 'graphic-tees',
       price: 999,
       originalPrice: 1499,
       status: 'Active',
       color: 'Black',
-      description: 'Streetwear staple tailored for heavyweight drape and premium everyday comfort.',
+      description: 'Modern fashion staple tailored for elegant drape and premium everyday comfort.',
       fabricGsm: '280 GSM',
       fit: 'Oversized Boxy Drop Shoulder',
       image: '/images/products/midnight-graphic-tee.png',
@@ -518,7 +518,7 @@ const AdminProducts = () => {
                   required
                   value={formData.sku}
                   onChange={(e) => setFormData({ ...formData, sku: e.target.value })}
-                  placeholder="DRIP-7821"
+                  placeholder="LIBAS-7821"
                   className="w-full bg-slate-50 border border-slate-200 p-2.5 rounded-lg font-mono focus:outline-none focus:bg-white focus:border-indigo-500"
                 />
               </div>
@@ -730,7 +730,7 @@ const AdminProducts = () => {
       <ConfirmModal
         isOpen={!!deleteTargetId}
         title="Delete Product from Catalog?"
-        message="This will permanently remove the product card and its inventory records from the Drip Clothing catalog."
+        message="This will permanently remove the product card and its inventory records from the LIBAS catalog."
         confirmText="Delete Product"
         onConfirm={handleConfirmDelete}
         onCancel={() => setDeleteTargetId(null)}

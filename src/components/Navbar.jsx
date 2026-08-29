@@ -35,32 +35,18 @@ const Navbar = () => {
       <div className="bg-black text-white py-1.5 px-4 text-[10px] sm:text-[11px] font-medium tracking-[0.2em] uppercase border-b border-neutral-800 overflow-hidden relative">
         <div className="flex w-full whitespace-nowrap overflow-hidden">
           <div className="inline-flex animate-marquee gap-10 items-center marquee-fade">
-            <span>💧 DRIP CLOTHING HALDWANI • STREETWEAR STORE</span>
-            <a
-              href="https://www.instagram.com/drip__clothing__/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-brandYellow hover:underline font-bold"
-            >
-              INSTAGRAM: @drip__clothing__
-            </a>
-            <span>• CHARAYAL CHAURAHA, NEAR BIRLA SCHOOL, HALDWANI •</span>
-            <span className="text-amber-400 font-bold">★ 4.6 GOOGLE RATING (19 REVIEWS)</span>
-            <span>• GRAPHIC TEES • JERSEYS • WAFFLE RAGLANS • SWEATSHIRTS •</span>
+            <span>✨ LIBAS HALDWANI • MODERN FASHION & CLOTHING STORE</span>
+            <span className="text-brandYellow font-bold">📍 RTO GAS GODOWN LINK ROAD, HALDWANI</span>
+            <span className="text-amber-400 font-bold">⏰ OPEN DAILY: 9:00 AM – 7:00 PM</span>
+            <span>• PREMIUM BRANDS • LATEST COLLECTIONS • QUALITY ASSURED •</span>
+            <span>• STYLE THAT SPEAKS FOR YOU •</span>
           </div>
           <div className="inline-flex animate-marquee gap-10 items-center marquee-fade" aria-hidden="true">
-            <span>💧 DRIP CLOTHING HALDWANI • STREETWEAR STORE</span>
-            <a
-              href="https://www.instagram.com/drip__clothing__/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-brandYellow hover:underline font-bold"
-            >
-              INSTAGRAM: @drip__clothing__
-            </a>
-            <span>• CHARAYAL CHAURAHA, NEAR BIRLA SCHOOL, HALDWANI •</span>
-            <span className="text-amber-400 font-bold">★ 4.6 GOOGLE RATING (19 REVIEWS)</span>
-            <span>• GRAPHIC TEES • JERSEYS • WAFFLE RAGLANS • SWEATSHIRTS •</span>
+            <span>✨ LIBAS HALDWANI • MODERN FASHION & CLOTHING STORE</span>
+            <span className="text-brandYellow font-bold">📍 RTO GAS GODOWN LINK ROAD, HALDWANI</span>
+            <span className="text-amber-400 font-bold">⏰ OPEN DAILY: 9:00 AM – 7:00 PM</span>
+            <span>• PREMIUM BRANDS • LATEST COLLECTIONS • QUALITY ASSURED •</span>
+            <span>• STYLE THAT SPEAKS FOR YOU •</span>
           </div>
         </div>
       </div>
@@ -88,15 +74,15 @@ const Navbar = () => {
             <Link to="/" className="flex items-center gap-2 group min-w-0">
               <img
                 src="/images/logo.png"
-                alt="Drip Clothing Logo"
-                className="h-8 sm:h-10 w-auto object-contain transition-transform group-hover:scale-105 shrink-0"
+                alt="LIBAS Logo"
+                className="h-8 sm:h-10 w-auto object-contain transition-transform group-hover:scale-105 shrink-0 rounded-sm"
               />
               <div className="flex flex-col min-w-0">
-                <span className="font-display font-black text-sm sm:text-lg tracking-[0.14em] sm:tracking-[0.18em] text-black group-hover:text-neutral-700 transition-colors uppercase leading-none truncate">
-                  DRIP CLOTHING
+                <span className="font-display font-black text-base sm:text-xl tracking-[0.16em] sm:tracking-[0.2em] text-black group-hover:text-neutral-700 transition-colors uppercase leading-none truncate">
+                  LIBAS
                 </span>
-                <span className="text-[7px] sm:text-[8px] font-sans uppercase tracking-[0.3em] sm:tracking-[0.45em] text-neutral-500 font-bold mt-0.5 truncate">
-                  HALDWANI • STREETWEAR
+                <span className="text-[7px] sm:text-[8px] font-sans uppercase tracking-[0.3em] sm:tracking-[0.4em] text-neutral-500 font-bold mt-0.5 truncate">
+                  HALDWANI • FASHION STORE
                 </span>
               </div>
             </Link>
@@ -125,22 +111,19 @@ const Navbar = () => {
             })}
           </div>
 
-          {/* Action Icons: Instagram (Desktop), Search, Wishlist, Bag */}
+          {/* Action Icons: Location & Timing (Desktop), Search, Wishlist, Bag */}
           <div className="flex items-center gap-1 sm:gap-3 shrink-0">
-            {/* Instagram Link (Desktop only; available in mobile drawer) */}
-            <a
-              href="https://www.instagram.com/drip__clothing__/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hidden md:flex p-1.5 text-neutral-700 hover:text-pink-600 transition-colors items-center gap-1 text-xs font-bold"
-              aria-label="Instagram @drip__clothing__"
-              title="Instagram @drip__clothing__"
+            {/* Store Hours / Location preview */}
+            <Link
+              to="/contact"
+              className="hidden md:flex p-1.5 text-neutral-700 hover:text-black transition-colors items-center gap-1.5 text-xs font-bold"
+              title="RTO Gas Godown Link Road, Haldwani (9:00 AM – 7:00 PM)"
             >
-              <Instagram size={18} />
-              <span className="hidden xl:inline text-[11px] font-mono lowercase">
-                @drip__clothing__
+              <MapPin size={16} className="text-crimson" />
+              <span className="hidden xl:inline text-[11px] font-sans tracking-wider uppercase text-neutral-600">
+                Haldwani • 9 AM–7 PM
               </span>
-            </a>
+            </Link>
 
             {/* Search Trigger */}
             <button
@@ -199,25 +182,17 @@ const Navbar = () => {
                 </Link>
               ))}
 
-              <a
-                href="https://www.instagram.com/drip__clothing__/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-xs font-bold tracking-[0.15em] text-neutral-700 hover:text-pink-600 py-2 flex items-center gap-2"
+              <Link
+                to="/contact"
+                className="text-xs font-bold tracking-[0.15em] text-neutral-700 hover:text-black py-2 flex items-center gap-2 border-b border-neutral-100"
               >
-                <Instagram size={16} />
-                <span>INSTAGRAM: @drip__clothing__</span>
-              </a>
+                <MapPin size={16} className="text-crimson" />
+                <span>RTO GAS GODOWN LINK ROAD, HALDWANI</span>
+              </Link>
 
-              <a
-                href="https://maps.google.com/?q=5FWQ%2BF9,+Haldwani,+Uttarakhand"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-xs font-bold tracking-[0.15em] text-neutral-700 hover:text-black py-2 flex items-center gap-2"
-              >
-                <MapPin size={16} />
-                <span>STORE: HALDWANI (5FWQ+F9)</span>
-              </a>
+              <div className="text-[11px] font-bold tracking-[0.15em] text-neutral-500 py-1 flex items-center gap-2">
+                <span>⏰ OPEN DAILY: 9:00 AM – 7:00 PM</span>
+              </div>
             </div>
           </div>
         )}

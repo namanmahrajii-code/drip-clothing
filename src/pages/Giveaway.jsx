@@ -14,10 +14,10 @@ const Giveaway = () => {
   const [wonPrize, setWonPrize] = useState('');
 
   const prizes = [
-    '₹500 Store Voucher (Code: MONK500)',
-    '15% Off Any Raw Japanese Denim (Code: DENIM15)',
-    'Free Limited Edition Monk Keychain & Sticker Pack',
-    'Early VIP Access to Drop 06',
+    '₹500 Store Voucher (Code: LIBAS500)',
+    '15% Off Any Fashion Collection Item (Code: LIBAS15)',
+    'Free Premium LIBAS Style Kit & Accessories',
+    'Early VIP Access to Next Collection Launch',
   ];
 
   const handleSubmit = (e) => {
@@ -55,15 +55,15 @@ const Giveaway = () => {
         <div className="text-center space-y-4 mb-12">
           <div className="inline-flex items-center gap-2 bg-neutral-900 text-white px-4 py-1.5 text-xs uppercase font-bold tracking-[0.25em]">
             <Sparkles size={14} className="text-brandYellow" />
-            <span>SEASON 05 STREET DROP GIVEAWAY</span>
+            <span>LIBAS SPECIAL COLLECTION GIVEAWAY</span>
           </div>
 
           <h1 className="text-3xl sm:text-5xl font-display font-black uppercase tracking-wider text-black">
-            UNLOCK EXCLUSIVE MONK PERKS
+            UNLOCK EXCLUSIVE LIBAS REWARDS
           </h1>
 
           <p className="text-xs sm:text-sm text-neutral-500 max-w-xl mx-auto leading-relaxed font-medium">
-            Register your street identity to unlock immediate store vouchers, free merchandise drops, and guaranteed VIP allocations for our next limited micro-batch.
+            Register your details to unlock immediate store vouchers, collection gifts, and guaranteed VIP allocations for our latest fashion arrivals in Haldwani.
           </p>
         </div>
 
@@ -165,12 +165,12 @@ const Giveaway = () => {
                 className="w-full bg-black hover:bg-neutral-800 text-white py-4 text-xs font-black uppercase tracking-[0.25em] transition-colors flex items-center justify-center gap-2 shadow-md"
               >
                 <Gift size={16} />
-                <span>SPIN & CLAIM MONK REWARD</span>
+                <span>SPIN & CLAIM LIBAS REWARD</span>
               </button>
 
               <div className="flex items-center justify-center gap-2 text-[10px] text-neutral-400 uppercase tracking-wider font-semibold">
                 <ShieldCheck size={14} className="text-emerald-600" />
-                <span>No Spam Guarantee • Strictly Streetwear Drop Alerts</span>
+                <span>No Spam Guarantee • Strictly LIBAS Collection Updates</span>
               </div>
             </form>
           )}

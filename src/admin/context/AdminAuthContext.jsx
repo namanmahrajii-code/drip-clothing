@@ -3,7 +3,7 @@ import { Navigate, useLocation } from 'react-router-dom';
 
 const AdminAuthContext = createContext(null);
 
-const AUTH_STORAGE_KEY = 'drip_admin_auth_session';
+const AUTH_STORAGE_KEY = 'libas_admin_auth_session';
 
 export const AdminAuthProvider = ({ children }) => {
   const [adminUser, setAdminUser] = useState(() => {
@@ -27,18 +27,18 @@ export const AdminAuthProvider = ({ children }) => {
     const cleanPassword = password.trim();
 
     if (
-      (cleanEmail === 'admin@dripclothing.in' && cleanPassword === 'drip2026') ||
-      (cleanEmail === 'demo@dripclothing.in' && cleanPassword === 'demo123') ||
-      (cleanEmail === 'owner@dripclothing.in' && cleanPassword === 'haldwani2026')
+      (cleanEmail === 'admin@libas.in' && cleanPassword === 'libas2026') ||
+      (cleanEmail === 'demo@libas.in' && cleanPassword === 'demo123') ||
+      (cleanEmail === 'owner@libas.in' && cleanPassword === 'haldwani2026')
     ) {
       const sessionUser = {
         id: 'usr_admin_01',
         name: 'Store Manager',
         email: cleanEmail,
         role: 'Super Admin',
-        store: 'Drip Clothing Haldwani',
+        store: 'LIBAS Haldwani',
         avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=250&auto=format&fit=crop',
-        token: `drip_jwt_${Date.now()}`,
+        token: `libas_jwt_${Date.now()}`,
         loginAt: new Date().toISOString(),
       };
 
@@ -55,7 +55,7 @@ export const AdminAuthProvider = ({ children }) => {
     setIsLoading(false);
     return {
       success: false,
-      error: 'Invalid credentials. Use admin@dripclothing.in / drip2026',
+      error: 'Invalid credentials. Use admin@libas.in / libas2026',
     };
   };
 

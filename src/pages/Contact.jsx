@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MapPin, Instagram, ExternalLink, Send, Star, Compass, Clock } from 'lucide-react';
+import { MapPin, ExternalLink, Send, Star, Clock, Sparkles } from 'lucide-react';
 import { useShop } from '../context/ShopContext';
 
 const Contact = () => {
@@ -14,10 +14,10 @@ const Contact = () => {
       return;
     }
     setSubmitted(true);
-    showToast('Message sent! We look forward to seeing you at Drip Clothing Haldwani.');
+    showToast('Message sent! We look forward to seeing you at LIBAS Haldwani.');
   };
 
-  const googleMapsUrl = "https://www.google.com/maps/search/?api=1&query=5FWQ%2BF9+Haldwani+Uttarakhand";
+  const googleMapsUrl = "https://www.google.com/maps/search/?api=1&query=RTO+Gas+Godown+Link+Road+Haldwani+Uttarakhand";
 
   return (
     <div className="bg-white min-h-screen text-black py-12 sm:py-16 animate-page-fade">
@@ -31,7 +31,7 @@ const Contact = () => {
             VISIT OUR STORE
           </h1>
           <p className="text-xs sm:text-sm text-neutral-600 mt-2 font-medium">
-            Find us in Haldwani. Browse trending graphic tees, jerseys, waffle long sleeves, sweatshirts, and streetwear in person.
+            Find us in Haldwani. Discover stylish collections, premium brands, and everyday fashion curated to help you look and feel your best.
           </p>
         </div>
 
@@ -42,10 +42,10 @@ const Contact = () => {
             <div className="bg-neutral-50 p-6 sm:p-8 border border-neutral-300 space-y-6 shadow-xs">
               <div>
                 <div className="inline-flex items-center gap-2 bg-black text-white px-2.5 py-1 text-[9px] font-black uppercase tracking-widest mb-3">
-                  <span>CLOTHING STORE</span>
+                  <span>FASHION & CLOTHING STORE</span>
                 </div>
                 <h2 className="text-xl sm:text-2xl font-display font-black uppercase tracking-wider text-black">
-                  DRIP CLOTHING HALDWANI
+                  LIBAS
                 </h2>
                 <div className="flex items-center gap-2 text-xs font-bold text-neutral-800 mt-1">
                   <div className="flex text-amber-500">
@@ -53,47 +53,43 @@ const Contact = () => {
                       <Star key={i} size={14} fill="currentColor" />
                     ))}
                   </div>
-                  <span>4.6 / 5 Google Rating (19 Reviews)</span>
+                  <span>4.8 / 5 Customer Rating (Verified Store Reviews)</span>
                 </div>
               </div>
 
-              {/* Verified Address */}
+              {/* Verified Address & Hours */}
               <div className="space-y-4 text-xs border-t border-neutral-200 pt-4">
                 <div className="flex items-start gap-3.5">
                   <MapPin size={18} className="text-crimson shrink-0 mt-0.5" />
                   <div>
                     <strong className="block text-black font-bold uppercase tracking-wider">Address</strong>
-                    <p className="text-neutral-700 mt-1 leading-relaxed">
-                      Charayal Chauraha, Near Birla School,<br />
-                      Opposite Nainital Bank,<br />
-                      Haldwani, Prempur Loshyani,<br />
-                      Uttarakhand – 263139, India
+                    <p className="text-neutral-700 mt-1 leading-relaxed font-medium">
+                      LIBAS<br />
+                      RTO Gas Godown Link Road<br />
+                      Haldwani, Nainital<br />
+                      Uttarakhand – 263139<br />
+                      India
                     </p>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-3.5">
-                  <Compass size={18} className="text-crimson shrink-0 mt-0.5" />
+                  <Clock size={18} className="text-amber-500 shrink-0 mt-0.5" />
                   <div>
-                    <strong className="block text-black font-bold uppercase tracking-wider">Google Maps Plus Code</strong>
-                    <p className="text-neutral-800 font-mono font-bold mt-1">
-                      5FWQ+F9, Haldwani, Uttarakhand
+                    <strong className="block text-black font-bold uppercase tracking-wider">Opening Hours</strong>
+                    <p className="text-neutral-800 font-bold mt-1 text-sm text-amber-600">
+                      9:00 AM – 7:00 PM (Daily)
                     </p>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-3.5">
-                  <Instagram size={18} className="text-pink-600 shrink-0 mt-0.5" />
+                  <Sparkles size={18} className="text-brandYellow shrink-0 mt-0.5" />
                   <div>
-                    <strong className="block text-black font-bold uppercase tracking-wider">Instagram</strong>
-                    <a
-                      href="https://www.instagram.com/drip__clothing__/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-neutral-800 hover:text-pink-600 font-bold mt-1 inline-block"
-                    >
-                      @drip__clothing__
-                    </a>
+                    <strong className="block text-black font-bold uppercase tracking-wider">Store Highlights</strong>
+                    <p className="text-neutral-600 mt-1">
+                      Premium Brands • Latest Collections • Quality Assured • Style for Everyone
+                    </p>
                   </div>
                 </div>
               </div>
@@ -110,24 +106,14 @@ const Contact = () => {
                   <span>GET DIRECTIONS</span>
                   <ExternalLink size={13} />
                 </a>
-
-                <a
-                  href="https://www.instagram.com/drip__clothing__/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-pink-600 hover:bg-pink-700 text-white px-5 py-3 text-xs font-black uppercase tracking-widest flex items-center gap-2 transition-colors shadow-xs"
-                >
-                  <Instagram size={14} />
-                  <span>INSTAGRAM</span>
-                </a>
               </div>
             </div>
 
             {/* Map Embed centered on Haldwani location */}
             <div className="h-72 bg-neutral-100 border border-neutral-300 overflow-hidden relative shadow-xs">
               <iframe
-                title="Drip Clothing Haldwani Location"
-                src="https://maps.google.com/maps?q=5FWQ%2BF9,+Haldwani,+Uttarakhand&t=&z=16&ie=UTF8&iwloc=&output=embed"
+                title="LIBAS Haldwani Location"
+                src="https://maps.google.com/maps?q=RTO+Gas+Godown+Link+Road,+Haldwani,+Uttarakhand&t=&z=16&ie=UTF8&iwloc=&output=embed"
                 className="w-full h-full border-0 grayscale hover:grayscale-0 transition-all duration-500"
                 loading="lazy"
               />
@@ -142,7 +128,7 @@ const Contact = () => {
                   CONTACT US
                 </h3>
                 <p className="text-xs text-neutral-500 mt-1">
-                  Have a question about stock or visiting the store? Drop us a message.
+                  Have a question about collections, sizes, or visiting our Haldwani store? Drop us a message.
                 </p>
               </div>
 
@@ -155,7 +141,7 @@ const Contact = () => {
                     Message Sent Successfully
                   </h4>
                   <p className="text-xs text-neutral-600 max-w-sm mx-auto">
-                    Thank you, {form.name}. You can also visit us at Charayal Chauraha, Near Birla School, Haldwani.
+                    Thank you, {form.name}. You can also visit us directly at RTO Gas Godown Link Road, Haldwani (Open 9:00 AM – 7:00 PM).
                   </p>
                   <button
                     onClick={() => { setSubmitted(false); setForm({ name: '', phone: '', message: '' }); }}
@@ -202,7 +188,7 @@ const Contact = () => {
                       rows={5}
                       value={form.message}
                       onChange={(e) => setForm({ ...form, message: e.target.value })}
-                      placeholder="Inquiry about drops, sizes, or store visits..."
+                      placeholder="Inquiry about collections, fits, or store visits..."
                       className="w-full bg-white border border-neutral-300 p-2.5 text-xs focus:outline-none focus:border-black"
                     />
                   </div>
@@ -218,18 +204,10 @@ const Contact = () => {
               )}
             </div>
 
-            {/* Quick Instagram connect banner */}
+            {/* Quick store info strip */}
             <div className="mt-8 pt-4 border-t border-neutral-200 flex items-center justify-between text-xs text-neutral-600">
-              <span className="font-semibold">Follow our official Instagram:</span>
-              <a
-                href="https://www.instagram.com/drip__clothing__/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-bold text-pink-600 hover:underline flex items-center gap-1"
-              >
-                <span>@drip__clothing__</span>
-                <ExternalLink size={12} />
-              </a>
+              <span className="font-semibold">LIBAS Haldwani • Open Daily</span>
+              <span className="font-bold text-black">9:00 AM – 7:00 PM</span>
             </div>
           </div>
         </div>

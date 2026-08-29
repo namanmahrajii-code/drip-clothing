@@ -67,8 +67,8 @@ const Checkout = () => {
   const grandTotal = Math.max(0, cartSubtotal - discountAmount) + totalShipping;
 
   const upiId = '7900455958-2@axl';
-  const payeeName = 'Pankaj Bisht';
-  const upiPayUrl = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(payeeName)}&am=${grandTotal}&cu=INR&tn=${encodeURIComponent('Drip Clothing Order')}`;
+  const payeeName = 'LIBAS Fashion';
+  const upiPayUrl = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(payeeName)}&am=${grandTotal}&cu=INR&tn=${encodeURIComponent('LIBAS Order')}`;
   const upiQrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=240x240&margin=8&data=${encodeURIComponent(upiPayUrl)}`;
 
   const handleCopyUpi = () => {
@@ -108,7 +108,7 @@ const Checkout = () => {
         )
         .join('\n');
 
-      const waMessage = `*NEW ORDER QUERY - DRIP CLOTHING HALDWANI*\n\n*Customer Details:*\n• Name: ${formData.fullName}\n• Phone: ${formData.phone}\n• Email: ${formData.email || 'N/A'}\n• Address: ${formData.address}, ${formData.landmark ? formData.landmark + ', ' : ''}${formData.city}, ${formData.state} - ${formData.pincode}\n\n*Ordered Items:*\n${itemsList}\n\n*Total Amount:* ₹${grandTotal.toLocaleString('en-IN')}\n*Payment Option:* Order via WhatsApp Direct\n\nPlease confirm order acceptance & delivery timeline!`;
+      const waMessage = `*NEW ORDER QUERY - LIBAS HALDWANI*\n\n*Customer Details:*\n• Name: ${formData.fullName}\n• Phone: ${formData.phone}\n• Email: ${formData.email || 'N/A'}\n• Address: ${formData.address}, ${formData.landmark ? formData.landmark + ', ' : ''}${formData.city}, ${formData.state} - ${formData.pincode}\n\n*Ordered Items:*\n${itemsList}\n\n*Total Amount:* ₹${grandTotal.toLocaleString('en-IN')}\n*Payment Option:* Order via WhatsApp Direct\n\nPlease confirm order acceptance & delivery timeline!`;
 
       window.open(`https://wa.me/917900455958?text=${encodeURIComponent(waMessage)}`, '_blank');
     }
@@ -412,7 +412,7 @@ const Checkout = () => {
                           </span>
                           <img
                             src={upiQrCodeUrl}
-                            alt="Drip Clothing UPI QR Code"
+                            alt="LIBAS UPI QR Code"
                             className="w-36 h-36 object-contain border border-neutral-200 p-1 bg-white"
                           />
                           <span className="text-[10px] font-mono text-neutral-500 mt-2">

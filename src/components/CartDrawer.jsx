@@ -255,7 +255,7 @@ const CartDrawer = () => {
                           `${i + 1}. ${item.title} (Size: ${item.selectedSize}, Qty: ${item.quantity}) - ₹${item.price * item.quantity}`
                       )
                       .join('\n');
-                    const msg = `*DRIP CLOTHING HALDWANI - WHATSAPP CART ORDER*\n\nHi Drip Clothing, I want to order the following items from my cart:\n\n${itemsText}\n\n*Estimated Total:* ₹${cartFinalTotal.toLocaleString('en-IN')}\n\nPlease share payment and delivery confirmation!`;
+                    const msg = `*LIBAS HALDWANI - WHATSAPP CART ORDER*\n\nHi LIBAS, I want to order the following items from my cart:\n\n${itemsText}\n\n*Estimated Total:* ₹${cartFinalTotal.toLocaleString('en-IN')}\n\nPlease share payment and delivery confirmation!`;
                     window.open(`https://wa.me/917900455958?text=${encodeURIComponent(msg)}`, '_blank');
                   }}
                   className="w-full bg-[#25D366] hover:bg-[#20ba5a] text-white py-2.5 text-xs font-black uppercase tracking-wider flex items-center justify-center gap-2 transition-colors shadow-2xs"

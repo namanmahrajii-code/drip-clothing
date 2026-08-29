@@ -22,7 +22,7 @@ const Policy = () => {
             POLICIES & TERMS
           </h1>
           <p className="text-xs text-neutral-500 mt-1 uppercase font-bold tracking-wider">
-            Drip Clothing Haldwani
+            LIBAS Haldwani
           </p>
         </div>
 
@@ -51,13 +51,13 @@ const Policy = () => {
                 Shipping & Store Dispatch
               </h2>
               <p>
-                <strong>Dispatch Window:</strong> All orders are packed with care at our store in Haldwani and dispatched within 24 to 48 hours of order confirmation.
+                <strong>Dispatch Window:</strong> All orders are carefully inspected and packed at our store in Haldwani and dispatched within 24 to 48 hours of order confirmation.
               </p>
               <p>
-                <strong>Delivery Timelines:</strong> Packages are delivered through verified logistics courier partners.
+                <strong>Delivery Timelines:</strong> Packages are delivered promptly across India through trusted logistics courier partners.
               </p>
               <p>
-                <strong>Shipping Rates:</strong> Orders with cart value ₹1,599 and above receive FREE express delivery across India. Orders below ₹1,599 are charged a flat ₹99 delivery fee. No extra COD handling charges.
+                <strong>Shipping Rates:</strong> Orders with cart value ₹1,599 and above receive FREE express delivery. Orders below ₹1,599 are charged a flat ₹99 delivery fee.
               </p>
             </div>
           )}
@@ -68,10 +68,10 @@ const Policy = () => {
                 Returns & Exchanges
               </h2>
               <p>
-                <strong>Eligibility:</strong> Items must be in unworn, unwashed condition with original tags intact.
+                <strong>Eligibility:</strong> Items must be in unworn, unwashed condition with original tags and packaging intact.
               </p>
               <p>
-                <strong>Size Exchange:</strong> Need a different size? Visit our store at Charayal Chauraha, Haldwani or reach out via Instagram for assistance.
+                <strong>Size Exchange:</strong> Need a different size or fit? Visit our store at RTO Gas Godown Link Road, Haldwani or contact our customer support for assistance.
               </p>
             </div>
           )}
@@ -82,7 +82,7 @@ const Policy = () => {
                 Privacy Policy
               </h2>
               <p>
-                <strong>Customer Confidentiality:</strong> Drip Clothing Haldwani respects your privacy. We only utilize your contact information for order fulfillment, customer support, and authorized drop notifications.
+                <strong>Customer Confidentiality:</strong> LIBAS respects your privacy. We only utilize your contact information for order fulfillment, customer support, and authorized collection updates.
               </p>
               <p>
                 <strong>No Third-Party Sharing:</strong> We do NOT sell or share customer contact details with third-party advertisers.
@@ -96,10 +96,10 @@ const Policy = () => {
                 Terms of Service
               </h2>
               <p>
-                <strong>Store Location:</strong> Charayal Chauraha, Near Birla School, Opposite Nainital Bank, Haldwani, Uttarakhand – 263139.
+                <strong>Store Location:</strong> LIBAS, RTO Gas Godown Link Road, Haldwani, Nainital, Uttarakhand – 263139, India.
               </p>
               <p>
-                <strong>Instagram:</strong> Official updates and drops are posted on <a href="https://www.instagram.com/drip__clothing__/" target="_blank" rel="noopener noreferrer" className="font-bold underline text-black">@drip__clothing__</a>.
+                <strong>Opening Hours:</strong> 9:00 AM – 7:00 PM (Daily).
               </p>
               <p>
                 <strong>Jurisdiction:</strong> Any disputes shall be subject to the exclusive jurisdiction of the courts in Haldwani / Nainital, Uttarakhand, India.
