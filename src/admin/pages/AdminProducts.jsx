@@ -54,6 +54,7 @@ const AdminProducts = () => {
     galleryImages: ['/images/products/midnight-graphic-tee.png'],
     isNew: true,
     isBestSeller: false,
+    tags: [],
     sizes: [
       { size: 'S', stock: 10 },
       { size: 'M', stock: 15 },
@@ -62,6 +63,12 @@ const AdminProducts = () => {
       { size: 'XXL', stock: 5 },
     ],
   });
+
+  // Tag input state
+  const [tagInput, setTagInput] = useState('');
+  // New category inline form
+  const [showNewCatForm, setShowNewCatForm] = useState(false);
+  const [newCat, setNewCat] = useState({ name: '', id: '', gender: 'Men' });
 
   // Delete Confirm Modal
   const [deleteTargetId, setDeleteTargetId] = useState(null);
@@ -117,18 +124,19 @@ const AdminProducts = () => {
     setFormData({
       title: '',
       sku: `LIBAS-${Math.floor(1000 + Math.random() * 9000)}`,
-      category: 'graphic-tees',
+      category: 'kurtas',
       price: 999,
       originalPrice: 1499,
       status: 'Active',
-      color: 'Black',
-      description: 'Modern fashion staple tailored for elegant drape and premium everyday comfort.',
-      fabricGsm: '280 GSM',
-      fit: 'Oversized Boxy Drop Shoulder',
-      image: '/images/products/midnight-graphic-tee.png',
-      galleryImages: ['/images/products/midnight-graphic-tee.png'],
+      color: 'Ivory White',
+      description: 'Premium ethnic wear crafted for festive occasions.',
+      fabricGsm: 'Pure Silk',
+      fit: 'Regular Fit',
+      image: '',
+      galleryImages: [],
       isNew: true,
       isBestSeller: false,
+      tags: [],
       sizes: [
         { size: 'S', stock: 8 },
         { size: 'M', stock: 15 },
@@ -137,6 +145,7 @@ const AdminProducts = () => {
         { size: 'XXL', stock: 4 },
       ],
     });
+    setTagInput('');
     setIsDrawerOpen(true);
   };
 
@@ -146,18 +155,19 @@ const AdminProducts = () => {
     setFormData({
       title: product.title || '',
       sku: product.sku || product.id,
-      category: product.category || 'graphic-tees',
+      category: product.category || 'kurtas',
       price: product.price || 999,
       originalPrice: product.originalPrice || product.price + 500,
       status: product.status || 'Active',
-      color: product.color || 'Black',
+      color: product.color || 'Ivory White',
       description: product.description || '',
-      fabricGsm: product.fabricGsm || '280 GSM',
-      fit: product.fit || 'Oversized Boxy Fit',
-      image: product.image || '',
+      fabricGsm: product.fabricGsm || 'Pure Silk',
+      fit: product.fit || 'Regular Fit',
+      image: product.image || product.images?.[0] || '',
       galleryImages: product.images || [product.image],
       isNew: product.isNew || false,
       isBestSeller: product.isBestSeller || false,
+      tags: product.tags || [],
       sizes: product.sizes || [
         { size: 'S', stock: 5 },
         { size: 'M', stock: 10 },
@@ -166,6 +176,7 @@ const AdminProducts = () => {
         { size: 'XXL', stock: 2 },
       ],
     });
+    setTagInput('');
     setIsDrawerOpen(true);
   };
 
@@ -174,11 +185,20 @@ const AdminProducts = () => {
     e.preventDefault();
     const catObj = categories.find((c) => c.id === formData.category);
     const categoryName = catObj ? catObj.name : formData.category;
+    const gender = catObj?.gender || formData.gender || 'Men';
+    const image = formData.image || formData.galleryImages?.[0] || '/images/products/midnight-graphic-tee.png';
+    const galleryImages = (formData.galleryImages && formData.galleryImages.length > 0) ? formData.galleryImages : [image];
 
     const payload = {
       ...formData,
       categoryName,
-      discount: `${Math.round(((formData.originalPrice - formData.price) / formData.originalPrice) * 100)}% OFF`,
+      gender,
+      image,
+      images: galleryImages,
+      tags: formData.tags || [],
+      discount: formData.originalPrice > formData.price
+        ? `${Math.round(((formData.originalPrice - formData.price) / formData.originalPrice) * 100)}% OFF`
+        : '',
     };
 
     if (editingProduct) {
@@ -218,6 +238,28 @@ const AdminProducts = () => {
     const nextSizes = [...formData.sizes];
     nextSizes[idx].stock = Math.max(0, parseInt(newStock) || 0);
     setFormData({ ...formData, sizes: nextSizes });
+  };
+
+  // Tag helpers
+  const handleAddTag = (raw) => {
+    const newTags = raw
+      .split(',').map((t) => t.trim().toLowerCase()).filter((t) => t && !formData.tags.includes(t));
+    if (newTags.length) setFormData({ ...formData, tags: [...formData.tags, ...newTags] });
+    setTagInput('');
+  };
+
+  const handleTagKeyDown = (e) => {
+    if (e.key === 'Enter' || e.key === ',') {
+      e.preventDefault();
+      handleAddTag(tagInput);
+    }
+    if (e.key === 'Backspace' && !tagInput && formData.tags.length) {
+      setFormData({ ...formData, tags: formData.tags.slice(0, -1) });
+    }
+  };
+
+  const handleRemoveTag = (tag) => {
+    setFormData({ ...formData, tags: formData.tags.filter((t) => t !== tag) });
   };
 
   return (
@@ -529,7 +571,14 @@ const AdminProducts = () => {
                 </label>
                 <select
                   value={formData.category}
-                  onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+                  onChange={(e) => {
+                    if (e.target.value === '__add_new__') {
+                      setShowNewCatForm(true);
+                    } else {
+                      setFormData({ ...formData, category: e.target.value });
+                      setShowNewCatForm(false);
+                    }
+                  }}
                   className="w-full bg-slate-50 border border-slate-200 p-2.5 rounded-lg focus:outline-none focus:bg-white focus:border-indigo-500 font-medium"
                 >
                   {categories.map((c) => (
@@ -537,7 +586,74 @@ const AdminProducts = () => {
                       {c.name}
                     </option>
                   ))}
+                  <option disabled>──────────────</option>
+                  <option value="__add_new__">＋ Add New Category...</option>
                 </select>
+
+                {/* Inline New Category Form */}
+                {showNewCatForm && (
+                  <div className="mt-2 p-3 bg-indigo-50 border border-indigo-200 rounded-lg space-y-2">
+                    <p className="text-[10px] font-bold text-indigo-700 uppercase tracking-wider">New Category</p>
+                    <div className="grid grid-cols-2 gap-2">
+                      <div>
+                        <label className="block text-[10px] font-semibold text-slate-600 mb-1">Display Name *</label>
+                        <input
+                          type="text"
+                          value={newCat.name}
+                          onChange={(e) => setNewCat({ ...newCat, name: e.target.value, id: e.target.value.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '') })}
+                          placeholder="e.g. Bridal Lehengas"
+                          className="w-full bg-white border border-indigo-200 p-2 rounded text-[11px] focus:outline-none focus:border-indigo-500"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[10px] font-semibold text-slate-600 mb-1">ID / Slug *</label>
+                        <input
+                          type="text"
+                          value={newCat.id}
+                          onChange={(e) => setNewCat({ ...newCat, id: e.target.value })}
+                          placeholder="bridal-lehengas"
+                          className="w-full bg-white border border-indigo-200 p-2 rounded font-mono text-[11px] focus:outline-none focus:border-indigo-500"
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <label className="block text-[10px] font-semibold text-slate-600 mb-1">Gender</label>
+                      <select
+                        value={newCat.gender}
+                        onChange={(e) => setNewCat({ ...newCat, gender: e.target.value })}
+                        className="w-full bg-white border border-indigo-200 p-2 rounded text-[11px] focus:outline-none focus:border-indigo-500"
+                      >
+                        <option>Men</option>
+                        <option>Women</option>
+                        <option>Kids</option>
+                        <option>Unisex</option>
+                      </select>
+                    </div>
+                    <div className="flex gap-2 pt-1">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          if (!newCat.name.trim() || !newCat.id.trim()) return;
+                          adminDataService.addCategory({ id: newCat.id, name: newCat.name, gender: newCat.gender });
+                          reloadData();
+                          setFormData({ ...formData, category: newCat.id });
+                          setNewCat({ name: '', id: '', gender: 'Men' });
+                          setShowNewCatForm(false);
+                        }}
+                        className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white text-[11px] font-bold py-1.5 rounded transition-colors"
+                      >
+                        ✓ Save & Select
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => { setShowNewCatForm(false); setNewCat({ name: '', id: '', gender: 'Men' }); }}
+                        className="px-3 text-slate-500 hover:text-slate-800 text-[11px] font-semibold"
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
 
@@ -672,36 +788,97 @@ const AdminProducts = () => {
             </div>
           </div>
 
-          {/* Product Media Image URLs */}
+                {/* Product Media Image Upload */}
           <div className="space-y-4">
             <h4 className="font-bold text-slate-900 uppercase tracking-wider text-[11px] border-b border-slate-200 pb-2">
               4. Product Media & Images
             </h4>
 
+            {/* Upload Zone */}
             <div>
-              <label className="block font-bold text-slate-700 mb-1">
-                Primary Clean Image Path / URL *
+              <label className="block font-bold text-slate-700 mb-2">
+                Primary Product Photo *
               </label>
-              <div className="flex items-center gap-3">
-                <input
-                  type="text"
-                  required
-                  value={formData.image}
-                  onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-                  placeholder="/images/products/waffle-master-angel-raglan-black-white.png"
-                  className="w-full bg-slate-50 border border-slate-200 p-2.5 rounded-lg font-mono focus:outline-none focus:bg-white focus:border-indigo-500 text-[11px]"
-                />
-                {formData.image && (
-                  <img
-                    src={formData.image}
-                    alt="Preview"
-                    className="w-10 h-10 object-contain bg-slate-100 rounded border border-slate-300 shrink-0"
-                  />
+
+              <label
+                htmlFor="photo-upload-input"
+                className={`flex flex-col items-center justify-center w-full h-36 border-2 border-dashed rounded-xl cursor-pointer transition-all ${
+                  formData.image
+                    ? 'border-emerald-400 bg-emerald-50'
+                    : 'border-slate-300 bg-slate-50 hover:border-indigo-400 hover:bg-indigo-50'
+                }`}
+                onDragOver={(e) => e.preventDefault()}
+                onDrop={(e) => {
+                  e.preventDefault();
+                  const file = e.dataTransfer.files[0];
+                  if (file && file.type.startsWith('image/')) {
+                    const reader = new FileReader();
+                    reader.onload = (ev) => setFormData({ ...formData, image: ev.target.result, galleryImages: [ev.target.result] });
+                    reader.readAsDataURL(file);
+                  }
+                }}
+              >
+                {formData.image ? (
+                  <div className="flex items-center gap-4 px-4">
+                    <img
+                      src={formData.image}
+                      alt="Preview"
+                      className="h-24 w-20 object-contain rounded-lg border border-slate-200 bg-white shadow-sm shrink-0"
+                    />
+                    <div className="text-left">
+                      <p className="text-xs font-bold text-emerald-700">✓ Photo Ready</p>
+                      <p className="text-[10px] text-slate-500 mt-0.5">Click or drag to replace</p>
+                      <button
+                        type="button"
+                        onClick={(e) => { e.preventDefault(); setFormData({ ...formData, image: '', galleryImages: [] }); }}
+                        className="mt-2 text-[10px] font-bold text-rose-500 hover:text-rose-700"
+                      >
+                        × Remove Photo
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="text-center px-4">
+                    <div className="text-3xl mb-2">📸</div>
+                    <p className="text-xs font-bold text-slate-600">Click to upload or drag & drop</p>
+                    <p className="text-[10px] text-slate-400 mt-1">JPG, PNG, WEBP — Max 5MB</p>
+                  </div>
                 )}
-              </div>
+              </label>
+              <input
+                id="photo-upload-input"
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={(e) => {
+                  const file = e.target.files[0];
+                  if (!file) return;
+                  if (file.size > 5 * 1024 * 1024) {
+                    alert('File too large. Max allowed size is 5MB.');
+                    return;
+                  }
+                  const reader = new FileReader();
+                  reader.onload = (ev) => setFormData({ ...formData, image: ev.target.result, galleryImages: [ev.target.result] });
+                  reader.readAsDataURL(file);
+                }}
+              />
             </div>
 
-            <div className="flex items-center gap-6 pt-2">
+            {/* OR — Manual URL fallback */}
+            <div>
+              <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">
+                Or paste image URL / path
+              </label>
+              <input
+                type="text"
+                value={formData.image && formData.image.startsWith('data:') ? '' : formData.image}
+                onChange={(e) => setFormData({ ...formData, image: e.target.value, galleryImages: [e.target.value] })}
+                placeholder="https://... or /images/products/my-kurta.png"
+                className="w-full bg-slate-50 border border-slate-200 p-2.5 rounded-lg font-mono text-[11px] focus:outline-none focus:bg-white focus:border-indigo-500"
+              />
+            </div>
+
+            <div className="flex items-center gap-6 pt-1">
               <label className="flex items-center gap-2 cursor-pointer">
                 <input
                   type="checkbox"
@@ -722,6 +899,70 @@ const AdminProducts = () => {
                 <span className="font-bold text-slate-700">Mark as Featured / Top Pick</span>
               </label>
             </div>
+          </div>
+          {/* ── 5. Search Tags ── */}
+          <div className="space-y-3">
+            <h4 className="font-bold text-slate-900 uppercase tracking-wider text-[11px] border-b border-slate-200 pb-2">
+              5. 🔍 Search Tags
+              <span className="ml-2 text-[10px] font-medium text-slate-400 normal-case tracking-normal">
+                Customers will find this product when searching these keywords
+              </span>
+            </h4>
+
+            {/* Tag Input */}
+            <div className="flex flex-wrap gap-1.5 min-h-[40px] bg-slate-50 border border-slate-200 rounded-lg p-2 focus-within:border-indigo-500 focus-within:bg-white transition-colors">
+              {formData.tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="flex items-center gap-1 bg-indigo-100 text-indigo-700 text-[11px] font-bold px-2 py-0.5 rounded-full"
+                >
+                  {tag}
+                  <button
+                    type="button"
+                    onClick={() => handleRemoveTag(tag)}
+                    className="hover:text-rose-600 transition-colors leading-none"
+                  >
+                    ×
+                  </button>
+                </span>
+              ))}
+              <input
+                type="text"
+                value={tagInput}
+                onChange={(e) => setTagInput(e.target.value)}
+                onKeyDown={handleTagKeyDown}
+                onBlur={() => tagInput.trim() && handleAddTag(tagInput)}
+                placeholder={formData.tags.length === 0 ? "Type a tag & press Enter or comma — e.g. chikankari, silk, haldi" : 'Add more...'}
+                className="flex-1 min-w-[180px] bg-transparent focus:outline-none text-[11px] text-slate-700 placeholder-slate-400"
+              />
+            </div>
+
+            {/* Suggested Tags */}
+            <div>
+              <p className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider mb-1.5">Quick Add Suggestions:</p>
+              <div className="flex flex-wrap gap-1.5">
+                {[
+                  'chikankari','silk','georgette','velvet','brocade','embroidery','zari','mirror-work',
+                  'wedding','bridal','festive','haldi','reception','sangeet',
+                  'sherwani','kurta','achkan','indo-western','anarkali','lehenga','sharara',
+                  'kids','boys','girls','men','women',
+                  'white','ivory','yellow','gold','red','navy','pink','black','green','rust',
+                ].filter((s) => !formData.tags.includes(s)).slice(0, 20).map((s) => (
+                  <button
+                    key={s}
+                    type="button"
+                    onClick={() => setFormData({ ...formData, tags: [...formData.tags, s] })}
+                    className="bg-white border border-slate-200 hover:border-indigo-400 hover:bg-indigo-50 hover:text-indigo-700 text-slate-600 text-[10px] font-semibold px-2 py-0.5 rounded-full transition-colors"
+                  >
+                    + {s}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <p className="text-[10px] text-slate-400">
+              💡 Tip: Add synonyms too — e.g. if you add <strong>chikankari</strong>, also add <strong>lucknowi</strong> for broader search coverage.
+            </p>
           </div>
         </form>
       </Drawer>

@@ -158,64 +158,74 @@ const ProductDetail = () => {
           {/* Left Column: Image Gallery */}
           <div className="lg:col-span-7 space-y-4">
             {/* Main Image View */}
-            <div className="relative aspect-[3/4] bg-white border border-[#E5DDD3] rounded-3xl overflow-hidden shadow-xs flex items-center justify-center p-6 sm:p-10">
-              <img
-                src={product.images[selectedImage] || product.images[0]}
-                alt={product.title}
-                className="w-full h-full object-contain object-center"
-              />
+            {(() => {
+              const productImages = (product.images && product.images.length > 0)
+                ? product.images
+                : [product.image || '/images/products/midnight-graphic-tee.png'];
 
-              {/* Badges */}
-              <div className="absolute top-4 left-4 flex flex-col gap-1.5 z-10">
-                {product.discount && (
-                  <span className="bg-[#7D1E22] text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full shadow-sm">
-                    {product.discount}
-                  </span>
-                )}
-                {product.isNew && (
-                  <span className="bg-[#1E1E1E] text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full shadow-sm">
-                    LIMITED DROP
-                  </span>
-                )}
-              </div>
+              return (
+                <>
+                  <div className="relative aspect-[3/4] bg-white border border-[#E5DDD3] rounded-3xl overflow-hidden shadow-xs flex items-center justify-center p-6 sm:p-10">
+                    <img
+                      src={productImages[selectedImage] || productImages[0]}
+                      alt={product.title}
+                      className="w-full h-full object-contain object-center"
+                    />
 
-              {/* Share & Wishlist Float */}
-              <div className="absolute top-4 right-4 flex flex-col gap-2 z-10">
-                <button
-                  onClick={() => toggleWishlist(product)}
-                  className={`w-10 h-10 rounded-full flex items-center justify-center transition-all shadow-md ${
-                    isSaved ? 'bg-[#7D1E22] text-white' : 'bg-white/90 text-[#1E1E1E] hover:bg-white hover:text-[#7D1E22] border border-[#E5DDD3]'
-                  }`}
-                  aria-label="Wishlist"
-                >
-                  <Heart size={18} fill={isSaved ? 'currentColor' : 'none'} />
-                </button>
-                <button
-                  onClick={handleShare}
-                  className="w-10 h-10 rounded-full bg-white/90 hover:bg-white text-[#1E1E1E] flex items-center justify-center transition-all shadow-md border border-[#E5DDD3]"
-                  aria-label="Share"
-                >
-                  <Share2 size={17} />
-                </button>
-              </div>
-            </div>
+                    {/* Badges */}
+                    <div className="absolute top-4 left-4 flex flex-col gap-1.5 z-10">
+                      {product.discount && (
+                        <span className="bg-[#7D1E22] text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full shadow-sm">
+                          {product.discount}
+                        </span>
+                      )}
+                      {product.isNew && (
+                        <span className="bg-[#1E1E1E] text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full shadow-sm">
+                          LIMITED DROP
+                        </span>
+                      )}
+                    </div>
 
-            {/* Thumbnail Selectors */}
-            {product.images.length > 1 && (
-              <div className="grid grid-cols-4 gap-3">
-                {product.images.map((img, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setSelectedImage(idx)}
-                    className={`aspect-[3/4] bg-white rounded-2xl p-2 overflow-hidden border-2 transition-all flex items-center justify-center ${
-                      selectedImage === idx ? 'border-[#7D1E22] shadow-sm' : 'border-[#E5DDD3] opacity-60 hover:opacity-100'
-                    }`}
-                  >
-                    <img src={img} alt="" className="w-full h-full object-contain" />
-                  </button>
-                ))}
-              </div>
-            )}
+                    {/* Share & Wishlist Float */}
+                    <div className="absolute top-4 right-4 flex flex-col gap-2 z-10">
+                      <button
+                        onClick={() => toggleWishlist(product)}
+                        className={`w-10 h-10 rounded-full flex items-center justify-center transition-all shadow-md ${
+                          isSaved ? 'bg-[#7D1E22] text-white' : 'bg-white/90 text-[#1E1E1E] hover:bg-white hover:text-[#7D1E22] border border-[#E5DDD3]'
+                        }`}
+                        aria-label="Wishlist"
+                      >
+                        <Heart size={18} fill={isSaved ? 'currentColor' : 'none'} />
+                      </button>
+                      <button
+                        onClick={handleShare}
+                        className="w-10 h-10 rounded-full bg-white/90 hover:bg-white text-[#1E1E1E] flex items-center justify-center transition-all shadow-md border border-[#E5DDD3]"
+                        aria-label="Share"
+                      >
+                        <Share2 size={17} />
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Thumbnail Selectors */}
+                  {productImages.length > 1 && (
+                    <div className="grid grid-cols-4 gap-3">
+                      {productImages.map((img, idx) => (
+                        <button
+                          key={idx}
+                          onClick={() => setSelectedImage(idx)}
+                          className={`aspect-[3/4] bg-white rounded-2xl p-2 overflow-hidden border-2 transition-all flex items-center justify-center ${
+                            selectedImage === idx ? 'border-[#7D1E22] shadow-sm' : 'border-[#E5DDD3] opacity-60 hover:opacity-100'
+                          }`}
+                        >
+                          <img src={img} alt="" className="w-full h-full object-contain" />
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </>
+              );
+            })()}
 
             {/* Quality Notice */}
             <div className="bg-white border border-[#E5DDD3] rounded-2xl p-4 flex items-center gap-3 text-xs text-[#6B6B6B]">

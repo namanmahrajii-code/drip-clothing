@@ -26,19 +26,21 @@ const Home = () => {
   // Filter top picks
   const topPicks = products.filter((p) => {
     if (topPickGender === 'All') return true;
-    if (topPickGender === 'Men') return p.gender === 'Men' || p.gender === 'Unisex';
     return p.gender === topPickGender;
   }).slice(0, 8);
 
   // Group products for category shelves
+  const womenCollection = products.filter((p) => p.gender === 'Women');
+  const kidsCollection = products.filter((p) => p.gender === 'Kids');
   const chikankariKurtas = products.filter((p) => p.category === 'kurtas');
   const festiveKurtas = products.filter((p) => p.category === 'festive-kurtas');
   const weddingCollection = products.filter((p) => p.category === 'sherwanis' || p.category === 'indo-western');
 
-  const createScrollRef = () => useRef(null);
-  const chikankariScroll = createScrollRef();
-  const festiveScroll = createScrollRef();
-  const weddingScroll = createScrollRef();
+  const womenScroll = useRef(null);
+  const kidsScroll = useRef(null);
+  const chikankariScroll = useRef(null);
+  const festiveScroll = useRef(null);
+  const weddingScroll = useRef(null);
 
   const scrollContainer = (ref, direction) => {
     if (ref.current) {
@@ -95,40 +97,24 @@ const Home = () => {
             {/* Mobile Gradient Overlay */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/45 to-black/10" />
 
-            {/* Mobile Hero Content Overlay */}
-            <div className="absolute inset-0 flex flex-col justify-end p-5 sm:p-6 text-white">
-              <div className="space-y-3">
-                <div className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-md text-amber-300 border border-white/20 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.25em] rounded-full">
-                  <Sparkles size={12} className="text-amber-300" />
-                  <span>LIBAS • HALDWANI</span>
-                </div>
+            {/* Mobile Hero Action Buttons Overlay */}
+            <div className="absolute inset-0 flex flex-col justify-end p-5 sm:p-6">
+              <div className="flex flex-col gap-2.5">
+                <Link
+                  to="/shop"
+                  className="inline-flex items-center justify-center gap-2 bg-[#7D1E22] hover:bg-[#942429] text-white py-3.5 rounded-full text-xs font-bold uppercase tracking-[0.2em] shadow-xl active:scale-[0.99] transition-all border border-[#7D1E22]"
+                >
+                  <span>Explore Collection</span>
+                  <ArrowRight size={14} />
+                </Link>
 
-                <h1 className="text-2xl sm:text-3xl font-serif font-black uppercase tracking-tight text-white leading-tight">
-                  Style That Speaks For You.
-                </h1>
-
-                <p className="text-xs text-neutral-200 font-normal leading-relaxed">
-                  Discover stylish collections, premium brands and everyday fashion curated to help you look and feel your best.
-                </p>
-
-                {/* Mobile CTAs */}
-                <div className="flex flex-col gap-2 pt-1">
-                  <Link
-                    to="/shop"
-                    className="inline-flex items-center justify-center gap-2 bg-[#7D1E22] text-white py-3 rounded-full text-xs font-bold uppercase tracking-[0.2em] shadow-lg active:scale-[0.99] transition-all"
-                  >
-                    <span>Explore Collection</span>
-                    <ArrowRight size={14} />
-                  </Link>
-
-                  <Link
-                    to="/contact"
-                    className="inline-flex items-center justify-center gap-2 bg-white/95 border border-white text-[#7D1E22] py-3 rounded-full text-xs font-bold uppercase tracking-[0.2em] active:scale-[0.99] transition-all"
-                  >
-                    <MapPin size={14} className="text-[#7D1E22]" />
-                    <span>Visit Our Store</span>
-                  </Link>
-                </div>
+                <Link
+                  to="/contact"
+                  className="inline-flex items-center justify-center gap-2 bg-white/95 hover:bg-white border border-white text-[#7D1E22] py-3.5 rounded-full text-xs font-bold uppercase tracking-[0.2em] shadow-xl active:scale-[0.99] transition-all"
+                >
+                  <MapPin size={14} className="text-[#7D1E22]" />
+                  <span>Visit Our Store</span>
+                </Link>
               </div>
             </div>
           </div>
@@ -193,7 +179,7 @@ const Home = () => {
 
           {/* Gender Filter Tabs */}
           <div className="flex items-center gap-2 flex-wrap">
-            {['All', 'Men', 'Unisex'].map((gender) => (
+            {['All', 'Men', 'Women', 'Kids'].map((gender) => (
               <button
                 key={gender}
                 onClick={() => setTopPickGender(gender)}
@@ -229,7 +215,7 @@ const Home = () => {
             to="/shop"
             className="inline-flex items-center gap-2.5 bg-[#7D1E22] hover:bg-[#942429] text-white px-8 py-3.5 rounded-full text-xs font-bold uppercase tracking-[0.2em] shadow-lg hover:scale-105 transition-all"
           >
-            <span>EXPLORE ALL TRENDING ITEMS</span>
+            <span>EXPLORE ALL ETHNIC COLLECTIONS</span>
             <ArrowRight size={15} />
           </Link>
         </div>
@@ -248,10 +234,10 @@ const Home = () => {
                 <span>02 • CATEGORY ARCHIVE</span>
               </div>
               <h2 className="text-2xl sm:text-4xl font-serif font-black uppercase tracking-tight text-[#1E1E1E]">
-                COLLECTIONS
+                ETHNIC COLLECTIONS
               </h2>
               <p className="text-xs sm:text-sm text-[#6B6B6B] mt-1">
-                Explore our 7 curated fashion categories tailored for quality, fit and all occasions.
+                Explore curated ethnic fashion for Men, Women & Kids tailored for festive celebrations and royal weddings.
               </p>
             </div>
 
@@ -267,9 +253,9 @@ const Home = () => {
           {/* Visual Category Cards Grid */}
           <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-4 gap-3 sm:gap-4 mb-14">
             {[
-              { id: 'kurtas', name: 'Chikankari & Silk', sec: '01', img: '/images/products/cream_chikankari_kurta.jpg', desc: 'Handcrafted Lucknowi Kurta Sets' },
-              { id: 'festive-kurtas', name: 'Festive & Haldi', sec: '02', img: '/images/products/haldi_yellow_silk_kurta.jpg', desc: 'Jacquard, Mirror & Sequin Kurtas' },
-              { id: 'indo-western', name: 'Indo-Western', sec: '03', img: '/images/products/blush_pink_indo_western.jpg', desc: 'Structured Floral Achkans' },
+              { id: 'women-ethnic', name: "Women's Ethnic", sec: '01', img: '/images/products/women_anarkali_chikankari.jpg', desc: 'Anarkalis, Lehengas & Shararas' },
+              { id: 'kids-ethnic', name: "Kids' Festive Wear", sec: '02', img: '/images/products/kids_kurta_jacket_set.jpg', desc: 'Kurta Jackets, Dhotis & Sherwanis' },
+              { id: 'kurtas', name: "Men's Chikankari", sec: '03', img: '/images/products/cream_chikankari_kurta.jpg', desc: 'Handcrafted Lucknowi Silk Sets' },
               { id: 'sherwanis', name: 'Wedding Sherwanis', sec: '04', img: '/images/products/luxury_cream_gold_sherwani.jpg', desc: 'Grand Zari Groom Sherwanis' },
             ].map((cat) => (
               <Link
@@ -301,7 +287,95 @@ const Home = () => {
             ))}
           </div>
 
-          {/* Featured Horizontal Shelf A: Chikankari & Silk Kurtas */}
+          {/* Featured Horizontal Shelf A: Women's Ethnic Collection */}
+          {womenCollection.length > 0 && (
+            <div className="border-t border-[#E5DDD3] pt-8 pb-4">
+              <div className="flex items-end justify-between mb-6">
+                <div>
+                  <span className="text-[10px] font-mono text-[#7D1E22] font-bold uppercase tracking-widest">
+                    SECTION 01 • WOMEN'S EDIT
+                  </span>
+                  <h3 className="text-lg sm:text-2xl font-serif font-black uppercase tracking-tight text-[#1E1E1E]">
+                    WOMEN'S ETHNIC & FESTIVE WEAR
+                  </h3>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => scrollContainer(womenScroll, 'left')}
+                    className="w-9 h-9 rounded-full bg-white text-[#1E1E1E] border border-[#E5DDD3] hover:bg-[#7D1E22] hover:text-white flex items-center justify-center transition-all shadow-xs"
+                    aria-label="Scroll left"
+                  >
+                    <ChevronLeft size={18} />
+                  </button>
+                  <button
+                    onClick={() => scrollContainer(womenScroll, 'right')}
+                    className="w-9 h-9 rounded-full bg-white text-[#1E1E1E] border border-[#E5DDD3] hover:bg-[#7D1E22] hover:text-white flex items-center justify-center transition-all shadow-xs"
+                    aria-label="Scroll right"
+                  >
+                    <ChevronRight size={18} />
+                  </button>
+                </div>
+              </div>
+
+              <div
+                ref={womenScroll}
+                className="flex gap-4 sm:gap-6 overflow-x-auto hide-scrollbar pb-3 snap-x"
+              >
+                {womenCollection.map((product) => (
+                  <div key={product.id} className="w-[180px] sm:w-[240px] md:w-[280px] shrink-0 snap-start">
+                    <ProductCard product={product} />
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Featured Horizontal Shelf B: Kids' Festive Collection */}
+          {kidsCollection.length > 0 && (
+            <div className="border-t border-[#E5DDD3] pt-8 pb-4">
+              <div className="flex items-end justify-between mb-6">
+                <div>
+                  <span className="text-[10px] font-mono text-[#7D1E22] font-bold uppercase tracking-widest">
+                    SECTION 02 • KIDS SPECIAL
+                  </span>
+                  <h3 className="text-lg sm:text-2xl font-serif font-black uppercase tracking-tight text-[#1E1E1E]">
+                    KIDS' ETHNIC & FESTIVE COLLECTION
+                  </h3>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => scrollContainer(kidsScroll, 'left')}
+                    className="w-9 h-9 rounded-full bg-white text-[#1E1E1E] border border-[#E5DDD3] hover:bg-[#7D1E22] hover:text-white flex items-center justify-center transition-all shadow-xs"
+                    aria-label="Scroll left"
+                  >
+                    <ChevronLeft size={18} />
+                  </button>
+                  <button
+                    onClick={() => scrollContainer(kidsScroll, 'right')}
+                    className="w-9 h-9 rounded-full bg-white text-[#1E1E1E] border border-[#E5DDD3] hover:bg-[#7D1E22] hover:text-white flex items-center justify-center transition-all shadow-xs"
+                    aria-label="Scroll right"
+                  >
+                    <ChevronRight size={18} />
+                  </button>
+                </div>
+              </div>
+
+              <div
+                ref={kidsScroll}
+                className="flex gap-4 sm:gap-6 overflow-x-auto hide-scrollbar pb-3 snap-x"
+              >
+                {kidsCollection.map((product) => (
+                  <div key={product.id} className="w-[180px] sm:w-[240px] md:w-[280px] shrink-0 snap-start">
+                    <ProductCard product={product} />
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Featured Horizontal Shelf C: Chikankari & Silk Kurtas */}
           {chikankariKurtas.length > 0 && (
             <div className="border-t border-[#E5DDD3] pt-8 pb-4">
               <div className="flex items-end justify-between mb-6">
@@ -345,7 +419,51 @@ const Home = () => {
             </div>
           )}
 
-          {/* Featured Horizontal Shelf B: Wedding Sherwanis & Indo-Western */}
+          {/* Featured Horizontal Shelf B: Festive & Haldi Kurtas */}
+          {festiveKurtas.length > 0 && (
+            <div className="border-t border-[#E5DDD3] pt-8 pb-4">
+              <div className="flex items-end justify-between mb-6">
+                <div>
+                  <span className="text-[10px] font-mono text-[#7D1E22] font-bold uppercase tracking-widest">
+                    SECTION 02 • CELEBRATION
+                  </span>
+                  <h3 className="text-lg sm:text-2xl font-serif font-black uppercase tracking-tight text-[#1E1E1E]">
+                    FESTIVE & HALDI JACQUARD KURTAS
+                  </h3>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => scrollContainer(festiveScroll, 'left')}
+                    className="w-9 h-9 rounded-full bg-white text-[#1E1E1E] border border-[#E5DDD3] hover:bg-[#7D1E22] hover:text-white flex items-center justify-center transition-all shadow-xs"
+                    aria-label="Scroll left"
+                  >
+                    <ChevronLeft size={18} />
+                  </button>
+                  <button
+                    onClick={() => scrollContainer(festiveScroll, 'right')}
+                    className="w-9 h-9 rounded-full bg-white text-[#1E1E1E] border border-[#E5DDD3] hover:bg-[#7D1E22] hover:text-white flex items-center justify-center transition-all shadow-xs"
+                    aria-label="Scroll right"
+                  >
+                    <ChevronRight size={18} />
+                  </button>
+                </div>
+              </div>
+
+              <div
+                ref={festiveScroll}
+                className="flex gap-4 sm:gap-6 overflow-x-auto hide-scrollbar pb-3 snap-x"
+              >
+                {festiveKurtas.map((product) => (
+                  <div key={product.id} className="w-[180px] sm:w-[240px] md:w-[280px] shrink-0 snap-start">
+                    <ProductCard product={product} />
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Featured Horizontal Shelf C: Wedding Sherwanis & Indo-Western */}
           {weddingCollection.length > 0 && (
             <div className="border-t border-[#E5DDD3] pt-8">
               <div className="flex items-end justify-between mb-6">
@@ -406,12 +524,12 @@ const Home = () => {
               EXPLORE MORE
             </h2>
             <p className="text-xs sm:text-sm text-[#6B6B6B] mt-1">
-              Store visits, brand story, VIP perks & verified customer love in Haldwani.
+              Store visits, brand story &amp; verified customer love in Haldwani.
             </p>
           </div>
 
-          {/* 3 Interactive Highlight Tiles */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {/* 2 Interactive Highlight Tiles */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Tile 1: Store Destination */}
             <div className="bg-white border border-[#E5DDD3] rounded-3xl p-6 sm:p-8 shadow-sm flex flex-col justify-between space-y-4 hover:shadow-xl transition-all group">
               <div className="space-y-3">
@@ -429,34 +547,12 @@ const Home = () => {
                 to="/contact"
                 className="bg-[#FAF8F5] hover:bg-[#7D1E22] text-[#7D1E22] hover:text-white border border-[#E5DDD3] py-2.5 px-4 rounded-full text-xs font-bold uppercase tracking-wider flex items-center justify-between transition-colors shadow-2xs"
               >
-                <span>Store Timings & Map</span>
+                <span>Store Timings &amp; Map</span>
                 <ArrowRight size={14} />
               </Link>
             </div>
 
-            {/* Tile 2: VIP Perks & Giveaway */}
-            <div className="bg-white border border-[#E5DDD3] rounded-3xl p-6 sm:p-8 shadow-sm flex flex-col justify-between space-y-4 hover:shadow-xl transition-all group">
-              <div className="space-y-3">
-                <div className="w-10 h-10 rounded-2xl bg-[#7D1E22]/10 text-[#7D1E22] flex items-center justify-center border border-[#7D1E22]/20">
-                  <Gift size={20} className="text-[#7D1E22]" />
-                </div>
-                <h3 className="text-lg sm:text-xl font-bold uppercase text-[#1E1E1E]">
-                  VIP REWARDS & PERKS
-                </h3>
-                <p className="text-xs text-[#6B6B6B] leading-relaxed font-normal">
-                  Unlock immediate ₹500 vouchers, 20% drop codes, and guaranteed VIP allocations for new arrivals.
-                </p>
-              </div>
-              <Link
-                to="/giveaway"
-                className="bg-[#7D1E22] hover:bg-[#942429] text-white py-2.5 px-4 rounded-full text-xs font-bold uppercase tracking-wider flex items-center justify-between transition-all shadow-md"
-              >
-                <span>Claim VIP Rewards</span>
-                <ArrowRight size={14} />
-              </Link>
-            </div>
-
-            {/* Tile 3: About LIBAS Story */}
+            {/* Tile 2: About LIBAS Story */}
             <div className="bg-white border border-[#E5DDD3] rounded-3xl p-6 sm:p-8 shadow-sm flex flex-col justify-between space-y-4 hover:shadow-xl transition-all group">
               <div className="space-y-3">
                 <div className="w-10 h-10 rounded-2xl bg-[#7D1E22]/10 text-[#7D1E22] flex items-center justify-center border border-[#7D1E22]/20">

@@ -172,16 +172,88 @@ const AdminContent = () => {
             </div>
 
             <div>
-              <label className="block font-bold text-slate-700 mb-1">
-                Background Imagery Path / URL
+              <label className="block font-bold text-slate-700 mb-2">
+                Background Imagery
+              </label>
+
+              {/* Upload Zone */}
+              <label
+                htmlFor="hero-bg-upload"
+                className={`flex items-center justify-center w-full h-32 border-2 border-dashed rounded-xl cursor-pointer transition-all mb-2 overflow-hidden relative ${
+                  content.hero.bgImage
+                    ? 'border-emerald-400'
+                    : 'border-slate-300 bg-slate-50 hover:border-indigo-400 hover:bg-indigo-50'
+                }`}
+                onDragOver={(e) => e.preventDefault()}
+                onDrop={(e) => {
+                  e.preventDefault();
+                  const file = e.dataTransfer.files[0];
+                  if (file && file.type.startsWith('image/')) {
+                    const reader = new FileReader();
+                    reader.onload = (ev) => handleHeroChange('bgImage', ev.target.result);
+                    reader.readAsDataURL(file);
+                  }
+                }}
+              >
+                {content.hero.bgImage ? (
+                  <>
+                    <img
+                      src={content.hero.bgImage}
+                      alt="Hero bg preview"
+                      className="absolute inset-0 w-full h-full object-cover opacity-60"
+                    />
+                    <div className="relative z-10 text-center bg-black/40 px-4 py-2 rounded-lg">
+                      <p className="text-white text-xs font-bold">✓ Image Set</p>
+                      <p className="text-white/80 text-[10px]">Click or drag to replace</p>
+                    </div>
+                  </>
+                ) : (
+                  <div className="text-center">
+                    <div className="text-3xl mb-1">🖼️</div>
+                    <p className="text-xs font-bold text-slate-600">Click to upload or drag & drop</p>
+                    <p className="text-[10px] text-slate-400 mt-0.5">JPG, PNG, WEBP — Max 10MB</p>
+                  </div>
+                )}
               </label>
               <input
-                type="text"
-                value={content.hero.bgImage}
-                onChange={(e) => handleHeroChange('bgImage', e.target.value)}
-                className="w-full bg-slate-50 border border-slate-200 p-2.5 rounded-lg font-mono focus:outline-none focus:bg-white focus:border-indigo-500"
+                id="hero-bg-upload"
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={(e) => {
+                  const file = e.target.files[0];
+                  if (!file) return;
+                  if (file.size > 10 * 1024 * 1024) {
+                    alert('File too large. Max 10MB for hero images.');
+                    return;
+                  }
+                  const reader = new FileReader();
+                  reader.onload = (ev) => handleHeroChange('bgImage', ev.target.result);
+                  reader.readAsDataURL(file);
+                }}
               />
+
+              {/* URL fallback + Remove */}
+              <div className="flex gap-2 items-center">
+                <input
+                  type="text"
+                  value={content.hero.bgImage?.startsWith('data:') ? '' : (content.hero.bgImage || '')}
+                  onChange={(e) => handleHeroChange('bgImage', e.target.value)}
+                  placeholder="Or paste image URL / path — /images/banners/hero-desktop.jpg"
+                  className="flex-1 bg-slate-50 border border-slate-200 p-2.5 rounded-lg font-mono text-[11px] focus:outline-none focus:bg-white focus:border-indigo-500"
+                />
+                {content.hero.bgImage && (
+                  <button
+                    type="button"
+                    onClick={() => handleHeroChange('bgImage', '')}
+                    className="text-[11px] font-bold text-rose-500 hover:text-rose-700 whitespace-nowrap"
+                  >
+                    × Remove
+                  </button>
+                )}
+              </div>
             </div>
+
           </form>
         )}
 

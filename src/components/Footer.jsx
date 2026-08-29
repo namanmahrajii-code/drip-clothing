@@ -115,12 +115,12 @@ const Footer = () => {
             Collections
           </h4>
           <ul className="space-y-2 text-xs text-[#6B6B6B]">
-            <li><Link to="/shop?category=waffles" className="hover:text-[#7D1E22] transition-colors">Waffle / Raglan Knits</Link></li>
-            <li><Link to="/shop?category=graphic-tees" className="hover:text-[#7D1E22] transition-colors">Graphic T-Shirts</Link></li>
-            <li><Link to="/shop?category=sweatshirts" className="hover:text-[#7D1E22] transition-colors">Sweatshirts & Pullovers</Link></li>
-            <li><Link to="/shop?category=shirts" className="hover:text-[#7D1E22] transition-colors">Resort & Casual Shirts</Link></li>
-            <li><Link to="/shop?category=jerseys" className="hover:text-[#7D1E22] transition-colors">Retro Match Jerseys</Link></li>
-            <li><Link to="/shop?category=pants" className="hover:text-[#7D1E22] transition-colors">Track Pants & Bottoms</Link></li>
+            <li><Link to="/shop?category=kurtas" className="hover:text-[#7D1E22] transition-colors">Chikankari & Silk Kurtas</Link></li>
+            <li><Link to="/shop?category=festive-kurtas" className="hover:text-[#7D1E22] transition-colors">Festive & Haldi Kurtas</Link></li>
+            <li><Link to="/shop?category=indo-western" className="hover:text-[#7D1E22] transition-colors">Indo-Western & Achkans</Link></li>
+            <li><Link to="/shop?category=sherwanis" className="hover:text-[#7D1E22] transition-colors">Royal Wedding Sherwanis</Link></li>
+            <li><Link to="/shop?category=new-arrivals" className="hover:text-[#7D1E22] transition-colors">New Arrivals</Link></li>
+            <li><Link to="/shop" className="hover:text-[#7D1E22] transition-colors">All Ethnic Collections</Link></li>
           </ul>
         </div>
 

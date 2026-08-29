@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import {
   ShieldCheck,
@@ -17,6 +17,7 @@ import {
   MessageCircle
 } from 'lucide-react';
 import { useShop } from '../context/ShopContext';
+import adminDataService, { initialPaymentSettings } from '../admin/services/adminDataService';
 
 const Checkout = () => {
   const {
@@ -61,15 +62,25 @@ const Checkout = () => {
     );
   }
 
+  // Read dynamic payment configuration from admin settings
+  const paymentSettings = useMemo(() => {
+    try {
+      return adminDataService.getPaymentSettings() || initialPaymentSettings;
+    } catch {
+      return initialPaymentSettings;
+    }
+  }, []);
+
+  const codFee = (formData.paymentMethod === 'cod' && paymentSettings?.cod?.fee) ? Number(paymentSettings.cod.fee) : 0;
   const isFreeShipping = cartSubtotal >= 1599 || coupon?.freeShipping;
   const baseShippingFee = isFreeShipping ? 0 : 99;
-  const totalShipping = baseShippingFee;
+  const totalShipping = baseShippingFee + codFee;
   const grandTotal = Math.max(0, cartSubtotal - discountAmount) + totalShipping;
 
-  const upiId = '7900455958-2@axl';
-  const payeeName = 'LIBAS Fashion';
+  const upiId = paymentSettings?.upi?.upiId || '7900455958-2@axl';
+  const payeeName = paymentSettings?.upi?.payeeName || 'LIBAS Fashion';
   const upiPayUrl = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(payeeName)}&am=${grandTotal}&cu=INR&tn=${encodeURIComponent('LIBAS Order')}`;
-  const upiQrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=240x240&margin=8&data=${encodeURIComponent(upiPayUrl)}`;
+  const upiQrCodeUrl = paymentSettings?.upi?.qrImage || `https://api.qrserver.com/v1/create-qr-code/?size=240x240&margin=8&data=${encodeURIComponent(upiPayUrl)}`;
 
   const handleCopyUpi = () => {
     navigator.clipboard.writeText(upiId);
@@ -101,6 +112,7 @@ const Checkout = () => {
 
     // If payment method is WhatsApp, construct message and open WhatsApp
     if (formData.paymentMethod === 'whatsapp') {
+      const waNumber = paymentSettings?.whatsapp?.phone || '917900455958';
       const itemsList = cart
         .map(
           (item, i) =>
@@ -110,7 +122,7 @@ const Checkout = () => {
 
       const waMessage = `*NEW ORDER QUERY - LIBAS HALDWANI*\n\n*Customer Details:*\n• Name: ${formData.fullName}\n• Phone: ${formData.phone}\n• Email: ${formData.email || 'N/A'}\n• Address: ${formData.address}, ${formData.landmark ? formData.landmark + ', ' : ''}${formData.city}, ${formData.state} - ${formData.pincode}\n\n*Ordered Items:*\n${itemsList}\n\n*Total Amount:* ₹${grandTotal.toLocaleString('en-IN')}\n*Payment Option:* Order via WhatsApp Direct\n\nPlease confirm order acceptance & delivery timeline!`;
 
-      window.open(`https://wa.me/917900455958?text=${encodeURIComponent(waMessage)}`, '_blank');
+      window.open(`https://wa.me/${waNumber}?text=${encodeURIComponent(waMessage)}`, '_blank');
     }
 
     // Simulate order placement

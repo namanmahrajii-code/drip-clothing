@@ -7,35 +7,24 @@ const ShopContext = createContext();
 
 export const ShopProvider = ({ children }) => {
   // Products state (persisted in localStorage with version tag)
-  const CATALOG_VERSION = 'v3_catalog_waffles_complete';
-  const [products, setProducts] = useState(() => {
-    const savedVer = localStorage.getItem('the3monks_version');
-    const saved = localStorage.getItem('the3monks_products');
-    if (savedVer === CATALOG_VERSION && saved) {
-      try {
-        return JSON.parse(saved);
-      } catch (e) {
-        return initialProducts;
-      }
-    }
-    localStorage.setItem('the3monks_version', CATALOG_VERSION);
-    localStorage.setItem('the3monks_products', JSON.stringify(initialProducts));
-    localStorage.setItem('the3monks_categories', JSON.stringify(initialCategories));
-    return initialProducts;
-  });
+  // Products & Categories loaded directly from authoritative store service
+  const [products, setProducts] = useState(() => adminDataService.getProducts());
+  const [categories, setCategories] = useState(() => adminDataService.getCategories());
 
-  const [categories, setCategories] = useState(() => {
-    const savedVer = localStorage.getItem('the3monks_version');
-    const saved = localStorage.getItem('the3monks_categories');
-    if (savedVer === CATALOG_VERSION && saved) {
-      try {
-        return JSON.parse(saved);
-      } catch (e) {
-        return initialCategories;
-      }
-    }
-    return initialCategories;
-  });
+  // Real-time synchronization when products/categories are added/edited in admin console
+  useEffect(() => {
+    const syncCatalog = () => {
+      setProducts(adminDataService.getProducts());
+      setCategories(adminDataService.getCategories());
+    };
+
+    window.addEventListener('libas_catalog_updated', syncCatalog);
+    window.addEventListener('storage', syncCatalog);
+    return () => {
+      window.removeEventListener('libas_catalog_updated', syncCatalog);
+      window.removeEventListener('storage', syncCatalog);
+    };
+  }, []);
 
   // Cart state
   const [cart, setCart] = useState(() => {
@@ -89,14 +78,7 @@ export const ShopProvider = ({ children }) => {
   const [quickViewProduct, setQuickViewProduct] = useState(null);
   const [toastMessage, setToastMessage] = useState(null);
 
-  // Sync to localStorage
-  useEffect(() => {
-    localStorage.setItem('the3monks_products', JSON.stringify(products));
-  }, [products]);
-
-  useEffect(() => {
-    localStorage.setItem('the3monks_categories', JSON.stringify(categories));
-  }, [categories]);
+  // Cart, coupon, wishlist sync to localStorage
 
   useEffect(() => {
     localStorage.setItem('the3monks_cart', JSON.stringify(cart));

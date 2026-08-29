@@ -10,6 +10,7 @@ const STORAGE_KEYS = {
   REVIEWS: 'libas_admin_reviews_v1',
   CONTENT: 'libas_admin_content_v1',
   SETTINGS: 'libas_admin_settings_v1',
+  PAYMENTS: 'libas_admin_payments_v1',
 };
 
 // Initial store settings with authoritative LIBAS info
@@ -41,6 +42,41 @@ const initialStoreSettings = {
     standardShippingFee: 99,
     returnWindowDays: 7,
   }
+};
+
+// Initial Payment Configuration
+export const initialPaymentSettings = {
+  upi: {
+    enabled: true,
+    title: 'UPI / QR (Google Pay, PhonePe, Paytm, BHIM)',
+    upiId: '7900455958-2@axl',
+    payeeName: 'LIBAS Fashion',
+    qrImage: '',
+    instructions: 'Scan the dynamic QR code with any UPI app or transfer to UPI ID. Then provide your 12-digit UTR number.',
+  },
+  cod: {
+    enabled: true,
+    title: 'Cash on Delivery (Store Pickup & Haldwani Local)',
+    minOrder: 0,
+    maxOrder: 25000,
+    fee: 0,
+    instructions: 'Pay in cash upon physical delivery at your doorstep or store pickup.',
+  },
+  card: {
+    enabled: true,
+    title: 'Credit / Debit Cards & Netbanking',
+    provider: 'Razorpay',
+    keyId: 'rzp_live_libas8921',
+    secretKey: '••••••••••••••••',
+    liveMode: true,
+    instructions: 'Accept all Visa, Mastercard, RuPay, and Netbanking payments securely.',
+  },
+  whatsapp: {
+    enabled: true,
+    title: 'Order via WhatsApp Direct',
+    phone: '917900455958',
+    instructions: 'Order directly with store staff via WhatsApp for personalized assistance.',
+  },
 };
 
 // Initial homepage CMS content
@@ -174,6 +210,9 @@ class AdminDataService {
     if (!localStorage.getItem(STORAGE_KEYS.SETTINGS)) {
       localStorage.setItem(STORAGE_KEYS.SETTINGS, JSON.stringify(initialStoreSettings));
     }
+    if (!localStorage.getItem(STORAGE_KEYS.PAYMENTS)) {
+      localStorage.setItem(STORAGE_KEYS.PAYMENTS, JSON.stringify(initialPaymentSettings));
+    }
   }
 
   resetDemoData() {
@@ -197,20 +236,42 @@ class AdminDataService {
   }
 
   saveProducts(products) {
-    localStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(products));
-    // Also sync to customer store catalog storage
-    localStorage.setItem('the3monks_products', JSON.stringify(products));
-    return products;
+    const normalized = products.map((p) => {
+      const image = p.image || p.images?.[0] || '/images/products/midnight-graphic-tee.png';
+      const images = (p.images && Array.isArray(p.images) && p.images.length > 0) ? p.images : [image];
+      return {
+        ...p,
+        image,
+        images,
+        tags: p.tags || [],
+        gender: p.gender || 'Men',
+      };
+    });
+    localStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(normalized));
+    localStorage.setItem('the3monks_products', JSON.stringify(normalized));
+    try {
+      window.dispatchEvent(new CustomEvent('libas_catalog_updated'));
+    } catch {}
+    return normalized;
   }
 
   addProduct(productData) {
     const products = this.getProducts();
     const id = `prod_custom_${Date.now()}`;
-    const slug = productData.slug || productData.title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+    const slug = productData.slug || productData.title.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-');
+    const image = productData.image || productData.images?.[0] || '/images/products/midnight-graphic-tee.png';
+    const images = (productData.images && Array.isArray(productData.images) && productData.images.length > 0)
+      ? productData.images
+      : (productData.galleryImages && productData.galleryImages.length > 0 ? productData.galleryImages : [image]);
+    
     const newProd = {
       ...productData,
       id,
       slug,
+      image,
+      images,
+      tags: productData.tags || [],
+      gender: productData.gender || 'Men',
       rating: productData.rating || 5.0,
       reviewsCount: productData.reviewsCount || 0,
       createdAt: new Date().toISOString(),
@@ -224,7 +285,19 @@ class AdminDataService {
     const products = this.getProducts();
     const idx = products.findIndex((p) => p.id === id);
     if (idx !== -1) {
-      products[idx] = { ...products[idx], ...updates, updatedAt: new Date().toISOString() };
+      const image = updates.image || updates.images?.[0] || products[idx].image;
+      const images = (updates.images && updates.images.length)
+        ? updates.images
+        : (updates.galleryImages && updates.galleryImages.length ? updates.galleryImages : (products[idx].images || [image]));
+      products[idx] = {
+        ...products[idx],
+        ...updates,
+        image,
+        images,
+        tags: updates.tags || products[idx].tags || [],
+        gender: updates.gender || products[idx].gender || 'Men',
+        updatedAt: new Date().toISOString(),
+      };
       this.saveProducts(products);
       return products[idx];
     }
@@ -266,6 +339,9 @@ class AdminDataService {
   saveCategories(categories) {
     localStorage.setItem(STORAGE_KEYS.CATEGORIES, JSON.stringify(categories));
     localStorage.setItem('the3monks_categories', JSON.stringify(categories));
+    try {
+      window.dispatchEvent(new CustomEvent('libas_catalog_updated'));
+    } catch {}
     return categories;
   }
 
@@ -586,6 +662,22 @@ class AdminDataService {
   saveSettings(settings) {
     localStorage.setItem(STORAGE_KEYS.SETTINGS, JSON.stringify(settings));
     return settings;
+  }
+
+  // --- PAYMENT SETTINGS ---
+  getPaymentSettings() {
+    try {
+      const stored = localStorage.getItem(STORAGE_KEYS.PAYMENTS);
+      return stored ? JSON.parse(stored) : initialPaymentSettings;
+    } catch {
+      return initialPaymentSettings;
+    }
+  }
+
+  savePaymentSettings(paymentSettings) {
+    localStorage.setItem(STORAGE_KEYS.PAYMENTS, JSON.stringify(paymentSettings));
+    localStorage.setItem('the3monks_payment_settings', JSON.stringify(paymentSettings));
+    return paymentSettings;
   }
 
   // --- DASHBOARD METRICS CALCULATION ---

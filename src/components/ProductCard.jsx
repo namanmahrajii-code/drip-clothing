@@ -21,7 +21,7 @@ const ProductCard = ({ product }) => {
       {/* 1. Image Container */}
       <div className="relative aspect-[3/4] w-full overflow-hidden bg-[#FAF8F5] flex items-center justify-center p-3 sm:p-4 border-b border-[#E5DDD3]/60 rounded-t-2xl">
         <img
-          src={product.images[0]}
+          src={product.images?.[0] || product.image || '/images/products/midnight-graphic-tee.png'}
           alt={product.title}
           className="w-full h-full object-contain object-center transition-transform duration-500 group-hover:scale-105"
           loading="lazy"

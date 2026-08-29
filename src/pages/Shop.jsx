@@ -1,9 +1,126 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { Search, X, Check, Sparkles, Filter, Layers } from 'lucide-react';
+import { Search, X, Check, Sparkles, Filter, Layers, ChevronDown } from 'lucide-react';
 import { useShop } from '../context/ShopContext';
 import ProductCard from '../components/ProductCard';
 import { getCatalogSections } from '../data/products';
+
+// ── Inline Levenshtein for smart search in Shop ──────────────────────────────
+function levenshtein(a, b) {
+  const m = a.length, n = b.length;
+  if (m === 0) return n;
+  if (n === 0) return m;
+  const dp = Array.from({ length: m + 1 }, (_, i) =>
+    Array.from({ length: n + 1 }, (_, j) => (i === 0 ? j : j === 0 ? i : 0))
+  );
+  for (let i = 1; i <= m; i++)
+    for (let j = 1; j <= n; j++)
+      dp[i][j] = a[i-1] === b[j-1] ? dp[i-1][j-1] : 1 + Math.min(dp[i-1][j], dp[i][j-1], dp[i-1][j-1]);
+  return dp[m][n];
+}
+
+const SHOP_SYNONYM_MAP = {
+  chikan: ['chikankari'], chikankari: ['chikankari'], lucknowi: ['chikankari'],
+  silk: ['silk'], georgette: ['georgette'], velvet: ['velvet'], brocade: ['brocade'],
+  kurta: ['kurta','men'], kurtas: ['kurta','men'], sherwani: ['sherwani','men','wedding'],
+  sherwanis: ['sherwani','men','wedding'], achkan: ['achkan','men','indo-western'],
+  bandhgala: ['achkan','men','indo-western'], anarkali: ['anarkali','women'],
+  lehenga: ['lehenga','women','bridal'], lehnga: ['lehenga','women','bridal'],
+  sharara: ['sharara','women','festive'], kurti: ['kurti','women'], palazzo: ['palazzo','women'],
+  kids: ['kids'], children: ['kids'], boys: ['kids','boys'], girls: ['kids','girls'],
+  dhoti: ['dhoti','kids','festive'], jacket: ['jacket','kids'],
+  wedding: ['wedding','bridal'], bridal: ['bridal','wedding'], haldi: ['haldi','festive','yellow'],
+  festive: ['festive'], sangeet: ['festive','sequin'], reception: ['wedding'],
+  yellow: ['yellow','haldi'], gold: ['gold','wedding'], white: ['white','ivory'],
+  ivory: ['ivory','white'], cream: ['ivory','white'], red: ['red','bridal'],
+  maroon: ['red','bridal'], navy: ['navy','blue'], blue: ['blue','navy'],
+  pink: ['pink','women'], blush: ['pink','women'], mint: ['mint','green'],
+  green: ['green','mint'], sage: ['green','sage'], black: ['black','sequin'],
+  rust: ['rust','festive'], mustard: ['yellow','festive'], silver: ['silver'],
+  mirror: ['mirror-work','festive'], sequin: ['sequin','festive'], zari: ['zari','embroidery'],
+  embroidery: ['embroidery'], embroidered: ['embroidery'], jacquard: ['jacquard','festive'],
+  'indo-western': ['indo-western'], indowestern: ['indo-western'], indo: ['indo-western'],
+  royal: ['royal','blue','wedding'],
+};
+
+const SHOP_PRODUCT_TAGS = {
+  prod_women_01: ['chikankari','anarkali','women','ivory','white','georgette','embroidery','festive','wedding'],
+  prod_women_02: ['lehenga','women','bridal','red','velvet','zari','embroidery','wedding'],
+  prod_women_03: ['sharara','women','pink','mirror-work','festive','georgette','embroidery'],
+  prod_women_04: ['kurti','palazzo','women','yellow','silk','festive','embroidery'],
+  prod_kids_01: ['kids','boys','jacket','kurta','blue','silk','brocade','festive','wedding'],
+  prod_kids_02: ['kids','boys','dhoti','kurta','yellow','haldi','festive'],
+  prod_kids_03: ['kids','girls','lehenga','pink','embroidery','festive','mirror-work'],
+  prod_kids_04: ['kids','boys','sherwani','ivory','white','gold','zari','wedding','royal'],
+  prod_libas_01: ['chikankari','kurta','men','ivory','white','silk','embroidery','festive'],
+  prod_libas_02: ['chikankari','kurta','men','white','georgette','embroidery'],
+  prod_libas_03: ['kurta','men','mint','green','silk','embroidery'],
+  prod_libas_04: ['kurta','men','green','sage','silk'],
+  prod_libas_05: ['kurta','men','yellow','haldi','festive','jacquard','silk'],
+  prod_libas_06: ['kurta','men','rust','festive','silk','embroidery'],
+  prod_libas_07: ['kurta','men','black','sequin','festive','wedding','georgette'],
+  prod_libas_08: ['achkan','indo-western','men','pink','embroidery','wedding','silk'],
+  prod_libas_11: ['achkan','indo-western','men','black','embroidery','wedding'],
+  prod_libas_12: ['achkan','indo-western','men','green','mint','embroidery'],
+  prod_libas_09: ['sherwani','men','navy','blue','royal','wedding','sequin','brocade'],
+  prod_libas_10: ['sherwani','men','ivory','gold','zari','wedding','bridal','silk'],
+  prod_libas_13: ['sherwani','men','ivory','white','chikankari','wedding','silk'],
+  prod_libas_14: ['sherwani','men','white','silver','wedding','reception','brocade'],
+};
+
+function shopSmartSearch(query, products) {
+  const words = query.toLowerCase().trim().split(/\s+/).filter(Boolean);
+  if (!words.length) return null; // null = no query, show all
+  const synonymKeys = Object.keys(SHOP_SYNONYM_MAP);
+
+  const expandedTags = new Set();
+  words.forEach((word) => {
+    if (SHOP_SYNONYM_MAP[word]) {
+      SHOP_SYNONYM_MAP[word].forEach((t) => expandedTags.add(t));
+      expandedTags.add(word);
+      return;
+    }
+    const maxDist = word.length <= 4 ? 1 : word.length <= 7 ? 2 : 3;
+    synonymKeys.forEach((key) => {
+      if (levenshtein(word, key) <= maxDist) SHOP_SYNONYM_MAP[key].forEach((t) => expandedTags.add(t));
+      if (key.startsWith(word) || word.startsWith(key.slice(0, Math.max(4, key.length - 2))))
+        SHOP_SYNONYM_MAP[key].forEach((t) => expandedTags.add(t));
+    });
+    expandedTags.add(word);
+  });
+
+  const tagArray = [...expandedTags];
+  const scored = products.map((p) => {
+    // Merge hardcoded tags + admin-added product.tags
+    const ptags = [...(SHOP_PRODUCT_TAGS[p.id] || []), ...(p.tags || [])];
+    let score = 0;
+    tagArray.forEach((t) => { if (ptags.includes(t)) score += 2; });
+    const txt = [
+      p.title,
+      p.subtitle,
+      p.color,
+      p.type,
+      p.description,
+      p.category,
+      p.categoryName,
+      ...(p.tags || []),
+    ]
+      .filter(Boolean)
+      .join(' ')
+      .toLowerCase();
+    const tokens = txt.split(/\s+/);
+    words.forEach((w) => {
+      if (txt.includes(w)) { score += 3; }
+      else {
+        const md = w.length <= 4 ? 1 : 2;
+        tokens.forEach((tok) => { if (tok.length >= 3 && levenshtein(w, tok) <= md) score += 1; });
+      }
+    });
+    return { p, score };
+  });
+  return scored.filter((s) => s.score > 0).sort((a, b) => b.score - a.score).map((s) => s.p);
+}
+// ─────────────────────────────────────────────────────────────────────────────
 
 const Shop = () => {
   const { products, wishlist } = useShop();
@@ -12,11 +129,12 @@ const Shop = () => {
   // URL state sync
   const initialCategory = searchParams.get('category') || 'all';
   const initialGender = searchParams.get('gender') || 'All';
+  const initialQ = searchParams.get('q') || '';
   const isWishlistView = searchParams.get('filter') === 'wishlist';
 
   const [selectedCategory, setSelectedCategory] = useState(initialCategory);
   const [selectedGender, setSelectedGender] = useState(initialGender);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState(initialQ);
   const [sortBy, setSortBy] = useState('featured');
   const [showInStockOnly, setShowInStockOnly] = useState(false);
 
@@ -25,6 +143,8 @@ const Shop = () => {
     if (cat) setSelectedCategory(cat);
     const gen = searchParams.get('gender');
     if (gen) setSelectedGender(gen);
+    const q = searchParams.get('q');
+    if (q) setSearchQuery(q);
   }, [searchParams]);
 
   // Update query params
@@ -73,18 +193,10 @@ const Shop = () => {
       }
     }
 
-    // Search query
+    // Smart search — uses tag+fuzzy engine (same as SearchModal)
     if (searchQuery.trim()) {
-      const q = searchQuery.toLowerCase();
-      result = result.filter(
-        (p) =>
-          p.title.toLowerCase().includes(q) ||
-          p.category.toLowerCase().includes(q) ||
-          (p.categoryName && p.categoryName.toLowerCase().includes(q)) ||
-          (p.color && p.color.toLowerCase().includes(q)) ||
-          (p.type && p.type.toLowerCase().includes(q)) ||
-          p.description?.toLowerCase().includes(q)
-      );
+      const smartResults = shopSmartSearch(searchQuery, result);
+      if (smartResults !== null) result = smartResults;
     }
 
     // In-Stock only
@@ -121,10 +233,10 @@ const Shop = () => {
       return [
         {
           id: 'new-arrivals',
-          sectionNumber: '07',
-          title: '07 — NEW ARRIVALS',
-          subtitle: 'Fresh Waffle / Raglan collection and latest architectural releases',
-          badge: 'FRESH DROP',
+          sectionNumber: '00',
+          title: '00 — NEW ARRIVALS',
+          subtitle: 'Freshly arrived festive kurtas, Chikankari sets & royal wedding sherwanis',
+          badge: 'FRESH DROPS',
           products: filteredProducts,
         }
       ];
@@ -147,21 +259,18 @@ const Shop = () => {
     setSearchParams({});
   };
 
-  const scrollToSection = (sectionId) => {
-    const el = document.getElementById(sectionId);
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  };
-
-  const categoriesNav = [
-    { id: 'all', num: 'ALL', name: 'ALL COLLECTIONS', count: sourceProducts.length },
-    { id: 'new-arrivals', num: '05', name: 'NEW ARRIVALS', count: sourceProducts.filter(p => p.isNew).length, isHot: true },
-    { id: 'kurtas', num: '01', name: 'CHIKANKARI & SILK', count: sourceProducts.filter(p => p.category === 'kurtas').length, isHot: true },
-    { id: 'festive-kurtas', num: '02', name: 'FESTIVE & WEDDING', count: sourceProducts.filter(p => p.category === 'festive-kurtas').length },
-    { id: 'indo-western', num: '03', name: 'INDO-WESTERN', count: sourceProducts.filter(p => p.category === 'indo-western').length },
-    { id: 'sherwanis', num: '04', name: 'WEDDING SHERWANIS', count: sourceProducts.filter(p => p.category === 'sherwanis').length },
-  ];
+  const categoriesOptions = useMemo(() => {
+    return [
+      { id: 'all', label: 'All Ethnic Collections', count: sourceProducts.length },
+      { id: 'new-arrivals', label: '00 — New Arrivals', count: sourceProducts.filter(p => p.isNew).length },
+      { id: 'women-ethnic', label: "01 — Women's Ethnic & Festive", count: sourceProducts.filter(p => p.category === 'women-ethnic').length },
+      { id: 'kids-ethnic', label: "02 — Kids' Ethnic Collection", count: sourceProducts.filter(p => p.category === 'kids-ethnic').length },
+      { id: 'kurtas', label: "03 — Men's Chikankari & Silk", count: sourceProducts.filter(p => p.category === 'kurtas').length },
+      { id: 'festive-kurtas', label: "04 — Men's Festive & Haldi", count: sourceProducts.filter(p => p.category === 'festive-kurtas').length },
+      { id: 'indo-western', label: "05 — Men's Indo-Western & Achkans", count: sourceProducts.filter(p => p.category === 'indo-western').length },
+      { id: 'sherwanis', label: '06 — Royal Wedding Sherwanis', count: sourceProducts.filter(p => p.category === 'sherwanis').length },
+    ];
+  }, [sourceProducts]);
 
   return (
     <div className="bg-[#F7F4EF] min-h-screen text-[#1E1E1E] py-8 sm:py-12 animate-page-fade">
@@ -182,48 +291,28 @@ const Shop = () => {
 
             <div className="text-xs text-[#6B6B6B] max-w-md font-normal space-y-1">
               <p>
-                Discover our curated ethnic and wedding collections structured across Chikankari & Pure Silk Kurtas, Festive Haldi Sets, Indo-Western Achkans and Royal Wedding Sherwanis.
+                Discover our curated ethnic and wedding collections for Men, Women & Kids — Chikankari Anarkalis, Bridal Lehengas, Festive Dhoti Sets, Silk Kurtas and Royal Wedding Sherwanis.
               </p>
               <p className="text-[11px] text-[#7D1E22] font-semibold uppercase tracking-wider">
-                Showing {filteredProducts.length} curated designs • Pure Silk & Georgette
+                Showing {filteredProducts.length} curated designs • Pure Silk, Georgette & Brocade
               </p>
             </div>
           </div>
         </div>
 
-        {/* Filter Controls & Search Panel */}
-        <div className="space-y-4 mb-10 bg-white p-4 sm:p-6 border border-[#E5DDD3] rounded-2xl shadow-xs">
-          {/* Top Row: Gender Tabs, Search Input, and Sort */}
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-            {/* Gender Filters */}
-            <div className="flex items-center gap-1.5 overflow-x-auto pb-1 lg:pb-0">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-[#6B6B6B] mr-1.5 shrink-0">
-                GENDER:
-              </span>
-              {['All', 'Men', 'Unisex'].map((g) => (
-                <button
-                  key={g}
-                  onClick={() => updateGenderFilter(g)}
-                  className={`text-xs font-bold uppercase tracking-wider px-4 py-2 rounded-full transition-all shrink-0 ${
-                    selectedGender === g
-                      ? 'bg-[#7D1E22] text-white shadow-md'
-                      : 'bg-[#FAF8F5] text-[#1E1E1E] border border-[#E5DDD3] hover:border-[#7D1E22] hover:text-[#7D1E22]'
-                  }`}
-                >
-                  {g}
-                </button>
-              ))}
-            </div>
-
+        {/* Clean Filter Controls & Dropdown Menu Panel */}
+        <div className="mb-8 bg-white p-4 sm:p-5 border border-[#E5DDD3] rounded-2xl shadow-xs space-y-4">
+          {/* Row 1: Search & Category Dropdown */}
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-3">
             {/* Real-time Search Input */}
-            <div className="relative flex-1 max-w-md">
+            <div className="relative md:col-span-6 lg:col-span-7">
               <Search size={16} className="absolute left-3.5 top-3 text-[#6B6B6B]" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search products, waffle, raglan, color, shirts..."
-                className="w-full bg-[#FAF8F5] border border-[#E5DDD3] rounded-full pl-10 pr-9 py-2.5 text-xs font-medium tracking-wider text-[#1E1E1E] placeholder-[#6B6B6B] focus:outline-none focus:border-[#7D1E22] shadow-2xs"
+                placeholder="Search Anarkali, Lehenga, Chikankari, Kids Kurta, Sherwani..."
+                className="w-full bg-[#FAF8F5] border border-[#E5DDD3] rounded-full pl-10 pr-9 py-2.5 text-xs font-medium tracking-wider text-[#1E1E1E] placeholder-[#8A8A8A] focus:outline-none focus:border-[#7D1E22] transition-colors shadow-2xs"
               />
               {searchQuery && (
                 <button
@@ -235,72 +324,89 @@ const Shop = () => {
               )}
             </div>
 
-            {/* Sort Dropdown */}
-            <div className="flex items-center gap-2">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-[#6B6B6B] shrink-0">
-                SORT BY:
-              </span>
-              <select
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value)}
-                className="bg-[#FAF8F5] border border-[#E5DDD3] rounded-full px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-[#1E1E1E] focus:outline-none focus:border-[#7D1E22] shadow-2xs"
-              >
-                <option value="featured">Featured Drops</option>
-                <option value="price-low">Price: Low to High</option>
-                <option value="price-high">Price: High to Low</option>
-                <option value="rating">Highest Rated</option>
-                <option value="newest">Newest First</option>
-              </select>
+            {/* Category Dropdown Menu */}
+            <div className="relative md:col-span-6 lg:col-span-5">
+              <div className="relative flex items-center">
+                <div className="absolute left-3.5 pointer-events-none flex items-center gap-1.5 text-[#7D1E22]">
+                  <Layers size={15} />
+                </div>
+                <select
+                  id="category-dropdown-select"
+                  value={selectedCategory}
+                  onChange={(e) => updateCategoryFilter(e.target.value)}
+                  className="w-full appearance-none bg-[#FAF8F5] border border-[#E5DDD3] hover:border-[#7D1E22] text-[#1E1E1E] font-bold text-xs uppercase tracking-wider rounded-full pl-10 pr-9 py-2.5 transition-all focus:outline-none focus:border-[#7D1E22] shadow-2xs cursor-pointer"
+                >
+                  {categoriesOptions.map((cat) => (
+                    <option key={cat.id} value={cat.id}>
+                      {cat.label} ({cat.count})
+                    </option>
+                  ))}
+                </select>
+                <ChevronDown size={16} className="absolute right-3.5 text-[#6B6B6B] pointer-events-none" />
+              </div>
             </div>
           </div>
 
-          {/* Category Bar with Section Jump Buttons */}
-          <div className="pt-3 border-t border-[#E5DDD3]/60 flex items-center gap-2 flex-wrap">
-            <span className="text-[10px] font-bold uppercase tracking-widest text-[#6B6B6B] mr-1 flex items-center gap-1">
-              <Filter size={11} />
-              <span>SECTIONS:</span>
-            </span>
+          {/* Row 2: Gender Tabs, Sort By Dropdown, and In-Stock Toggle */}
+          <div className="pt-3 border-t border-[#E5DDD3]/60 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            {/* Gender Filters */}
+            <div className="flex items-center gap-2">
+              <span className="text-[11px] font-bold uppercase tracking-wider text-[#6B6B6B] shrink-0">
+                GENDER:
+              </span>
+              <div className="flex items-center gap-1.5 bg-[#FAF8F5] p-1 rounded-full border border-[#E5DDD3] overflow-x-auto">
+                {['All', 'Men', 'Women', 'Kids'].map((g) => (
+                  <button
+                    key={g}
+                    onClick={() => updateGenderFilter(g)}
+                    className={`text-xs font-bold uppercase tracking-wider px-3.5 py-1 rounded-full transition-all shrink-0 ${
+                      selectedGender === g
+                        ? 'bg-[#7D1E22] text-white shadow-xs'
+                        : 'text-[#6B6B6B] hover:text-[#1E1E1E]'
+                    }`}
+                  >
+                    {g}
+                  </button>
+                ))}
+              </div>
+            </div>
 
-            {categoriesNav.map((cat) => (
+            {/* Right Controls: Sort & In Stock Toggle */}
+            <div className="flex items-center gap-3 flex-wrap sm:flex-nowrap justify-between sm:justify-end">
+              {/* In-Stock Filter toggle */}
               <button
-                key={cat.id}
-                onClick={() => {
-                  updateCategoryFilter(cat.id);
-                  if (cat.id !== 'all' && cat.id !== 'new-arrivals') {
-                    setTimeout(() => scrollToSection(`sec-${cat.id}`), 100);
-                  }
-                }}
-                className={`text-[11px] font-bold uppercase tracking-wider px-3.5 py-1.5 rounded-full transition-all flex items-center gap-1.5 ${
-                  selectedCategory === cat.id
-                    ? 'bg-[#7D1E22] text-white shadow-md'
-                    : 'bg-[#FAF8F5] text-[#1E1E1E] hover:border-[#7D1E22] hover:text-[#7D1E22] border border-[#E5DDD3]'
+                onClick={() => setShowInStockOnly(!showInStockOnly)}
+                className={`text-[11px] font-bold uppercase tracking-wider px-3.5 py-1.5 rounded-full border transition-all flex items-center gap-1.5 shrink-0 ${
+                  showInStockOnly
+                    ? 'bg-[#7D1E22] text-white border-[#7D1E22] shadow-xs'
+                    : 'bg-[#FAF8F5] text-[#1E1E1E] border border-[#E5DDD3] hover:border-[#7D1E22]'
                 }`}
               >
-                <span className="opacity-70 text-[9px] font-mono">{cat.num}</span>
-                <span>{cat.name}</span>
-                {cat.isHot && (
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#7D1E22] animate-pulse" />
-                )}
-                <span className={`text-[9px] px-1.5 py-0.2 rounded-full font-mono ${
-                  selectedCategory === cat.id ? 'bg-white text-[#7D1E22]' : 'bg-[#EFE8DE] text-[#6B6B6B]'
-                }`}>
-                  {cat.count}
-                </span>
+                <Check size={12} className={showInStockOnly ? 'opacity-100' : 'opacity-40'} />
+                <span>In Stock Only</span>
               </button>
-            ))}
 
-            {/* In-Stock Filter toggle */}
-            <button
-              onClick={() => setShowInStockOnly(!showInStockOnly)}
-              className={`text-[11px] font-bold uppercase tracking-wider px-3.5 py-1.5 rounded-full border ml-auto transition-all flex items-center gap-1.5 ${
-                showInStockOnly
-                  ? 'bg-[#7D1E22] text-white border-[#7D1E22] shadow-xs'
-                  : 'bg-[#FAF8F5] text-[#1E1E1E] border border-[#E5DDD3] hover:border-[#7D1E22]'
-              }`}
-            >
-              <Check size={12} className={showInStockOnly ? 'opacity-100' : 'opacity-40'} />
-              <span>In Stock Only</span>
-            </button>
+              {/* Sort Dropdown */}
+              <div className="flex items-center gap-1.5 shrink-0">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-[#6B6B6B]">
+                  SORT:
+                </span>
+                <div className="relative">
+                  <select
+                    value={sortBy}
+                    onChange={(e) => setSortBy(e.target.value)}
+                    className="appearance-none bg-[#FAF8F5] border border-[#E5DDD3] hover:border-[#7D1E22] rounded-full pl-3 pr-7 py-1.5 text-xs font-bold uppercase tracking-wider text-[#1E1E1E] focus:outline-none focus:border-[#7D1E22] shadow-2xs cursor-pointer"
+                  >
+                    <option value="featured">Featured</option>
+                    <option value="price-low">Price: Low to High</option>
+                    <option value="price-high">Price: High to Low</option>
+                    <option value="rating">Highest Rated</option>
+                    <option value="newest">Newest First</option>
+                  </select>
+                  <ChevronDown size={13} className="absolute right-2.5 top-2 text-[#6B6B6B] pointer-events-none" />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -310,16 +416,16 @@ const Shop = () => {
             <span className="text-[#6B6B6B] font-bold uppercase tracking-wider text-[10px]">
               Active Filters:
             </span>
+            {selectedCategory !== 'all' && (
+              <span className="bg-white px-3 py-1 text-[#1E1E1E] font-bold rounded-full flex items-center gap-1.5 border border-[#E5DDD3]">
+                Category: {categoriesOptions.find(c => c.id === selectedCategory)?.label || selectedCategory}
+                <button onClick={() => updateCategoryFilter('all')}><X size={12} /></button>
+              </span>
+            )}
             {selectedGender !== 'All' && (
               <span className="bg-white px-3 py-1 text-[#1E1E1E] font-bold rounded-full flex items-center gap-1.5 border border-[#E5DDD3]">
                 Gender: {selectedGender}
                 <button onClick={() => updateGenderFilter('All')}><X size={12} /></button>
-              </span>
-            )}
-            {selectedCategory !== 'all' && (
-              <span className="bg-white px-3 py-1 text-[#1E1E1E] font-bold rounded-full flex items-center gap-1.5 border border-[#E5DDD3]">
-                Category: {selectedCategory.toUpperCase()}
-                <button onClick={() => updateCategoryFilter('all')}><X size={12} /></button>
               </span>
             )}
             {searchQuery && (
@@ -355,13 +461,13 @@ const Shop = () => {
               No products found
             </h3>
             <p className="text-xs text-[#6B6B6B] max-w-sm mx-auto">
-              We couldn't find any items matching your active criteria. Try selecting "ALL ARCHIVE" or clearing your search terms.
+              We couldn't find any items matching your active criteria. Try selecting "All Ethnic Collections" or clearing your search terms.
             </p>
             <button
               onClick={handleResetFilters}
               className="bg-[#7D1E22] hover:bg-[#942429] text-white px-7 py-3 text-xs font-bold uppercase tracking-widest rounded-full transition-all shadow-md"
             >
-              SHOW ALL PRODUCTS
+              SHOW ALL ETHNIC DESIGNS
             </button>
           </div>
         ) : (
@@ -397,7 +503,7 @@ const Shop = () => {
 
                   <div className="flex items-center gap-2 self-start sm:self-auto">
                     <span className="text-xs font-bold uppercase tracking-wider text-[#6B6B6B] bg-white px-3 py-1 rounded-full border border-[#E5DDD3]">
-                      {section.products.length} {section.products.length === 1 ? 'Product' : 'Products'}
+                      {section.products.length} {section.products.length === 1 ? 'Design' : 'Designs'}
                     </span>
                   </div>
                 </div>
@@ -416,19 +522,19 @@ const Shop = () => {
         {/* Footer Guarantee Strip */}
         <div className="mt-20 pt-10 border-t border-[#E5DDD3] grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 text-center">
           <div className="p-4 sm:p-5 bg-white border border-[#E5DDD3] rounded-2xl shadow-xs">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#1E1E1E] block mb-1">PREMIUM QUALITY</span>
-            <span className="text-[11px] text-[#6B6B6B]">280–420 GSM Finest Fabrics</span>
+            <span className="text-xs font-bold uppercase tracking-wider text-[#1E1E1E] block mb-1">HANDCRAFTED ARTISTRY</span>
+            <span className="text-[11px] text-[#6B6B6B]">Fine Chikankari & Zardozi Work</span>
           </div>
           <div className="p-4 sm:p-5 bg-white border border-[#E5DDD3] rounded-2xl shadow-xs">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#1E1E1E] block mb-1">TRENDY DESIGNS</span>
-            <span className="text-[11px] text-[#6B6B6B]">Contemporary Fits & Drops</span>
+            <span className="text-xs font-bold uppercase tracking-wider text-[#1E1E1E] block mb-1">PREMIUM SILK & BROCADE</span>
+            <span className="text-[11px] text-[#6B6B6B]">Finest Fabrics & Pure Linings</span>
           </div>
           <div className="p-4 sm:p-5 bg-white border border-[#E5DDD3] rounded-2xl shadow-xs">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#1E1E1E] block mb-1">LIMITED DROPS</span>
-            <span className="text-[11px] text-[#6B6B6B]">Curated Collections</span>
+            <span className="text-xs font-bold uppercase tracking-wider text-[#1E1E1E] block mb-1">ROYAL TAILORING</span>
+            <span className="text-[11px] text-[#6B6B6B]">Curated Wedding & Festive Fits</span>
           </div>
           <div className="p-4 sm:p-5 bg-white border border-[#E5DDD3] rounded-2xl shadow-xs">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#1E1E1E] block mb-1">MADE TO STAND OUT</span>
+            <span className="text-xs font-bold uppercase tracking-wider text-[#1E1E1E] block mb-1">LIBAS HALDWANI</span>
             <span className="text-[11px] text-[#6B6B6B]">Style That Speaks For You</span>
           </div>
         </div>
